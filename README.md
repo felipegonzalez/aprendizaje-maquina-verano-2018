@@ -10,9 +10,9 @@ básicos de cálculo multivariado y álgebra lineal.
 
   Introducción a aprendizaje máquina y métodos lineales. Sesgo, varianza y error de predicción. Evaluación de modelos. Regularización para modelos lineales.
 
-2. **Redes neuronales**
+2. **Métodos de optimización para ML**
 
-  Redes totalmente conexas y convolucionales. Redes para procesamiento de imágenes y lenguaje natural. Estrategias de regularización para redes neuronales.
+  Descenso en grandiente, descenso en gradiente estocástico y métodos derivados.
 
 3. **Métodos basados en árboles**
 
