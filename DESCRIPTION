@@ -2,5 +2,5 @@ Package: placeholder
 Type: Book
 Title: Does not matter.
 Version: 0.0.1
-Imports: tidyverse, bookdown, ISLR, knitr, kknn, MASS, tabplot, ROCR,  rpart, rpart.plot, glmnet, tidytext, randomForest, gbm, methods, xgboost, irlba, ggrepel, tsne, DT
+Imports: tidyverse, bookdown, ISLR, knitr, kknn, MASS, tabplot, ROCR,  rpart, rpart.plot, glmnet, tidytext, randomForest, gbm, methods, xgboost, irlba, ggrepel, tsne, DT, kableExtra
 Remotes: rstudio/bookdown
