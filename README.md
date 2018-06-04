@@ -4,6 +4,8 @@ Minicurso de aprendizaje máquina (ITAM, Junio 2018). En este curso de orientaci
 se presentan las ideas fundamentales de aprendizaje máquina junto con ejemplos en R. Se suponen conocimientos
 básicos de cálculo multivariado y álgebra lineal.
 
+[Notas](https://felipegonzalez.github.io/aprendizaje-maquina-verano-2018/)
+
 ### Temario
 
 1. **Modelos lineales y regularización**

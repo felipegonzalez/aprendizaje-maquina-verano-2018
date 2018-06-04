@@ -1,0 +1,147 @@
+# Introducción 
+
+```{r echo=FALSE, include=FALSE}
+library(ggplot2)
+theme_set(theme_bw())
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
+## ¿Qué es aprendizaje de máquina (machine learning)? 
+
+Métodos **computacionales** para **aprender de datos**  con el fin
+de producir reglas para 
+mejorar el **desempeño** en alguna tarea o toma de decisión. 
+
+En este curso nos enfocamos en las tareas de aprendizaje supervisado 
+(predecir o estimar una variable respuesta a partir de datos de entrada) y
+aprendizaje no supervisado (describir estructuras interesantes en datos,
+donde no necesariamente hay una respuesta que predecir).
+
+#### Ejemplos de tareas de aprendizaje: {-}
+
+- Predecir si un cliente de tarjeta de crédito va a caer en impago en los próximos
+tres meses.
+- Reconocer palabras escritas a mano (OCR).
+- Detectar llamados de ballenas en grabaciones de boyas. 
+- Estimar el ingreso mensual de un hogar a partir de las características
+de la vivienda, posesiones y equipamiento y localización geográfica.
+- Dividir a los clientes de Netflix según sus gustos.
+- Recomendar artículos a clientes de un programa de lealtad o servicio online.
+
+Las razones usuales para intentar resolver estos problemas **computacionalmente**
+son diversas:
+
+- Quisiéramos obtener una respuesta barata, rápida, **automatizada**, y 
+con suficiente precisión.
+Por ejemplo, reconocer caracteres en una placa de coche de una fotografía se puede hacer por
+personas, pero eso es lento y costoso. Igual oír cada segundo de grabación
+de las boyas para saber si hay ballenas o no. Hacer mediciones directas
+del ingreso de un hogar requiere mucho tiempo y esfuerzo.
+- Quisiéramos **superar el desempeño actual** de los expertos o de reglas simples utilizando
+datos: por ejemplo, en la decisión de dar o no un préstamo a un solicitante,
+puede ser posible tomar mejores decisiones con algoritmos que con evaluaciones personales
+o con reglas simples que toman en cuenta el ingreso mensual, por ejemplo.
+- Queremos **entender de manera más completa y sistemática** el comportamiento de un fenómeno,
+identificando variables o patrones importantes.
+
+Es posible aproximarse a todos estos problemas usando reglas (por ejemplo,
+si los pixeles del centro de la imagen están vacíos, entonces es un cero, 
+si el crédito total es mayor al 50\% del ingreso anual, declinar el préstamo, etc)
+Las razones para intentar usar **aprendizaje** para producir reglas en lugar
+de intentar construir estas reglas directamente son, por ejemplo:
+
+- Cuando conjuntos de reglas creadas a mano se desempeñan mal (por ejemplo, para
+otorgar créditos, reconocer caracteres, etc.)
+- Reglas creadas a mano pueden ser difíciles de mantener (por ejemplo, un corrector
+ortográfico.)
+
+#### Ejemplo: reconocimiento de dígitos escritos a mano {-}
+
+
+¿Cómo reconocer los siguientes dígitos de  manera automática?
+
+```{r funcgraf, include = FALSE}
+graficar_digitos <- function(d_frame){
+  matriz_digitos <- lapply(1:nrow(d_frame), function(i){ 
+    	matrix(as.numeric(d_frame[i, 257:2]), 16, 16)[16:1, ]
+    })
+    par(mar=c(0,0,0,0))
+	image(Reduce("rbind", matriz_digitos), 
+    col = terrain.colors(30), axes = FALSE)
+	text(seq(0,1,1/10) + 0.05, 0.05, label = d_frame$X1, cex = 1.5)
+}
+```
+
+En los datos tenemos los valores de cada pixel (los caracteres son
+imagenes de 16x16 pixeles), y una *etiqueta* asociada, que es el número
+que la imagen representa. Podemos ver las imágenes y las etiquetas:
+
+
+```{r grafdigitos, fig.width = 8, fig.asp = 0.2, warning=FALSE, message = FALSE}
+library(tidyverse)
+zip_train <- read_csv(file = 'datos/zip-train.csv')
+muestra_1 <- sample_n(zip_train, 10)
+graficar_digitos(muestra_1)
+```
+
+```{r, fig.width = 8, fig.asp = 0.2}
+muestra_2 <- sample_n(zip_train, 10) 
+graficar_digitos(muestra_2)
+```
+
+Los 16x16=256 están escritos acomodando las filas de la imagen en 
+ vector de 256 valores (cada renglón de `zip_train`). Un dígito entonces
+ se representa como sigue:
+
+```{r}
+dim(zip_train)
+as.numeric(zip_train[1,])
+```
+
+- Un enfoque más utilizado anteriormente para resolver este tipo de problemas
+consistía en procesar estas imágenes con filtros hechos a mano (por ejemplo,
+calcular cuántos pixeles están prendidos, si existen ciertas curvas o trazos)
+para después construir reglas para determinar cada dígito. Actualmente,
+el enfoque más exitoso es utilizar métodos de aprendizaje que aprendan
+automáticamente esos filtros y esas reglas basadas en filtros (redes convolucionales).
+
+#### Ejemplo:  predecir ingreso trimestral {-}
+
+Consideramos la medición de ingreso total trimestral para una
+muestra de hogares de la encuesta de ENIGH. Cada una de estas mediciones
+es muy costosa en tiempo y dinero. 
+
+```{r, message = FALSE, warning = FALSE, fig.width=5, fig.asp=0.7}
+dat_ingreso <- read_csv(file = 'datos/enigh-ejemplo.csv')
+head(dat_ingreso) %>% DT::datatable()
+ggplot(dat_ingreso, aes(x=INGTOT)) +  
+  geom_histogram(bins = 100) + 
+  scale_x_log10()
+```
+
+Pero quizá podemos usar otras variables más fácilmente medibles
+para predecir el ingreso de un hogar. Por ejemplo, si consideramos el número
+de focos en la vivienda:
+
+```{r, message = FALSE, warning = FALSE, fig.width=5, fig.asp=0.7}
+ggplot(dat_ingreso, aes(x = FOCOS, y = INGTOT)) + 
+  geom_point() +
+  scale_y_log10() + xlim(c(0,50))
+```
+
+O el tamaño de la localidad:
+```{r, message = FALSE, warning = FALSE, fig.width=5, fig.asp=0.7}
+ggplot(dat_ingreso, aes(x = tamaño_localidad, y = INGTOT)) + 
+  geom_boxplot() +
+  scale_y_log10() 
+```
+
+
+- En algunas encuestas se pregunta directamente el ingreso mensual del hogar. La
+respuesta es generalmente una mala estimación del verdadero ingreso, por lo que
+actualmente se prefiere utilizar aprendizaje para estimar a partir de otras
+variables que son más fielmente reportadas por encuestados (años de estudio,
+ocupación, número de focos en el hogar, etc.)
+
+
+
