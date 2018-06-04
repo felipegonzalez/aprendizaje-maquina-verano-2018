@@ -66,12 +66,13 @@ que la imagen representa. Podemos ver las imágenes y las etiquetas:
 
 ```r
 library(tidyverse)
+library(kableExtra)
 zip_train <- read_csv(file = 'datos/zip-train.csv')
 muestra_1 <- sample_n(zip_train, 10)
 graficar_digitos(muestra_1)
 ```
 
-<img src="01-intro_files/figure-html/grafdigitos-1.png" width="768" />
+<img src="01-intro_files/figure-html/grafdigitos-1.png" width="400px" />
 
 
 ```r
@@ -79,7 +80,7 @@ muestra_2 <- sample_n(zip_train, 10)
 graficar_digitos(muestra_2)
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-2-1.png" width="768" />
+<img src="01-intro_files/figure-html/unnamed-chunk-2-1.png" width="400px" />
 
 Los 16x16=256 están escritos acomodando las filas de la imagen en 
  vector de 256 valores (cada renglón de `zip_train`). Un dígito entonces
@@ -143,11 +144,81 @@ es muy costosa en tiempo y dinero.
 
 ```r
 dat_ingreso <- read_csv(file = 'datos/enigh-ejemplo.csv')
-head(dat_ingreso) %>% DT::datatable()
+head(dat_ingreso) %>% 
+    select(TAM_HOG, INGCOR, NOM_ENT_1, FOCOS, 
+           PISOS, marginación, tamaño_localidad) %>%
+    knitr::kable()
 ```
 
-<!--html_preserve--><div id="htmlwidget-7670e812450eb9dc5115" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7670e812450eb9dc5115">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["145074","152145","214043","096266","081090","029004"],[0,0,0,0,0,0],[1145,204,1812,1596,445,1866],[2,2,3,1,2,1],["14121","15009","21115","09012","08050","02001"],[5,4,2,5,5,5],[4,4,2,4,2,4],[2,2,2,2,1,2],[1,1,2,1,1,1],[43,53,44,45,45,74],[6,10,1,6,8,6],[4,3,2,2,1,2],[2,1,1,1,1,1],[2,2,1,1,0,1],[4,3,2,2,1,2],[2,1,1,1,1,1],[2,2,1,1,0,1],[4,3,2,2,1,2],[0,0,0,0,0,0],[4,3,2,2,1,1],[0,0,0,0,0,1],[1,2,1,1,1,0],[1,3,1,1,1,2],[1,2,1,1,1,0],[30238.13,66188.41,6170.21,14639.79,40638.35,21172.35],[30238.13,61147.41,6170.21,14639.79,40638.35,21172.35],[24065.28,56610.43,4355.42,10127.47,37646.57,12098.4],[0,26112.38,4355.42,10127.47,37646.57,0],[0,24196.8,4355.42,7520.4,29917.8,0],[0,0,0,2607.07,5484.93,0],[0,0,0,0,0,0],[0,1915.58,0,0,2243.84,0],[0,504.1,0,0,0,0],[0,504.1,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,504.1,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,2772.55,0,0,0,0],[24065.28,0,0,0,0,0],[24065.28,0,0,0,0,0],[0,0,0,0,0,0],[0,27221.4,0,0,0,12098.4],[0,27221.4,0,0,0,12098.4],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[6172.85,4536.98,1814.79,4512.32,2991.78,9073.95],[0,0,0,0,0,0],[0,0,0,0,0,0],[156.43,0,0,0,0,0],[156.43,0,0,0,0,0],[0,0,0,0,0,0],[6016.42,4536.98,1814.79,4512.32,2991.78,9073.95],[0,5041,0,0,0,0],[0,5041,0,0,0,0],[0,5041,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[32029.35,57438.81,5721.15,14895.44,21550.06,16276.64],[32029.35,48667.47,5721.15,14895.44,21550.06,16276.64],[25856.5,44130.49,3906.36,10383.12,18558.28,7202.69],[10447.98,20970.87,2477.22,6981.87,2917.01,3335.68],[7580.17,16186.88,2477.22,6981.87,1944.68,3335.68],[827.76,3951.7,629.14,1147.14,453.77,904.37],[2033.55,4810.2,262.14,2059.63,453.75,760.2],[0,0,0,321.98,155.57,0],[2776.56,1127.18,301.46,1088.46,311.14,583.25],[104.28,235.92,262.14,130.36,207.44,196.6],[0,393.21,262.14,259.41,0,0],[0,131.07,0,182.5,0,0],[0,2188.83,760.2,958.11,77.79,366.99],[0,825.72,0,495.36,0,366.99],[0,235.92,0,0,0,157.28],[0,327.67,0,0,0,0],[0,249.03,0,52.14,0,0],[1668.56,1245.14,0,0,0,0],[169.46,465.29,0,286.78,285.22,0],[2867.81,4783.99,0,0,972.33,0],[0,0,0,0,0,0],[198.54,1290.5,0,0,1527.8,0],[0,1290.5,0,0,0,0],[198.54,0,0,0,1527.8,0],[3471.96,1632.3,400.76,451.23,1721.52,98.3],[0,0,0,0,0,0],[263.22,57.97,181.48,0,91,27.73],[200.55,0,105.86,0,493.64,0],[3008.19,1574.33,113.42,451.23,1136.88,70.57],[1022.79,1328.84,384.13,463.27,2964.86,196.6],[1022.79,986.05,384.13,463.27,2964.86,196.6],[0,100.82,0,0,0,0],[0,241.97,0,0,0,0],[0,0,0,50.14,0,0],[0,0,0,50.14,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[7186.59,8680.72,393.21,1814.91,1163.8,2782.68],[1564.26,2752.43,393.21,912.45,0,0],[481.31,302.46,0,0,0,0],[0,0,0,0,0,0],[3128.54,1935.77,0,0,0,2782.68],[0,604.92,0,0,0,0],[3128.54,1330.85,0,0,0,2782.68],[2012.48,3690.06,0,902.46,1163.8,0],[1438.92,2601.2,0,0,4637.26,0],[1052.87,0,0,0,0,0],[386.05,2601.2,0,0,4637.26,0],[0,0,0,0,0,0],[2089.72,4455.27,251.04,621.7,3626.03,789.43],[1588.35,1355.05,251.04,421.15,3626.03,789.43],[0,100.82,0,200.55,0,0],[501.37,2999.4,0,0,0,0],[0,3170.79,0,0,0,0],[0,8771.34,0,0,0,0],[0,8771.34,0,0,0,0],[0,0,0,0,0,0],[0,8771.34,0,0,0,0],[0,7259.04,0,0,0,0],[0,1512.3,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[4902.3,4902.3,4902.3,5171.4,4902.3,5171.4],["1422","1522","2131","0912","0823","0214"],["18200","22980","27130","10680","07100","00950"],[1,1,1,1,1,1],[8,7,8,8,8,8],[9,9,3,9,9,6],[3,2,1,2,3,2],[12,44,30,7,0,40],[null,null,null,null,1,null],[1,1,2,1,1,1],[2,2,null,2,2,2],[3,3,1,2,1,2],[4,6,1,5,6,3],[1,1,1,1,1,1],[2,1,1,1,1,1],[1,1,1,1,1,1],[2,2,1,2,2,2],[1,1,2,2,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[11,10,1,5,8,4],[3,3,1,3,3,3],[null,null,2,null,null,null],[1,1,4,1,1,1],[4,4,2,4,2,4],["01","02",null,"01",null,"01"],[0,1,null,1,null,0],["02",null,null,null,null,null],[0,null,null,null,null,null],[3,1,null,1,null,1],[5,1,null,5,null,5],[0,0,0,0,0,0],[0,0,0,0,0,0],[2000,1500,600,1500,1000,3000],[6016.42,4536.98,1814.79,4512.32,2991.78,9073.95],[0,0,0,0,0,0],[0,0,0,0,0,0],[null,null,null,null,null,null],[3,1,null,3,null,3],[null,1,null,null,null,null],[1,1,1,1,1,2],[1,1,2,2,1,1],[1,1,2,1,1,1],[1,1,2,1,2,2],[1,2,2,2,2,2],[1,2,1,2,2,2],[1,1,2,1,1,1],[1,1,1,2,1,1],[1,2,2,2,2,2],[1,1,2,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[4,3,2,2,1,2],[1,1,1,1,1,1],[0,0,0,0,0,0],[2,2,2,2,2,2],[0,0,0,0,0,0],[0,0,0,0,0,0],[2,2,2,2,2,2],[0,0,0,0,0,0],[0,0,0,0,0,0],[2,2,1,2,2,2],[2,2,1,2,2,2],[2,2,1,2,2,2],[2,2,1,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[null,null,1,null,null,null],[null,null,1,null,null,null],[null,null,2,null,null,null],[null,null,1,null,null,null],[null,null,1,null,null,null],[null,null,1,null,null,null],[null,null,1,null,null,null],[null,null,1,null,null,null],[null,null,2,null,null,null],[null,null,1,null,null,null],[1,1,2,1,1,2],[1,1,2,1,1,2],[1,1,2,2,1,2],[1,1,2,2,2,2],[1,3,0,0,1,1],["08","07",null,null,"07","02"],[0,0,0,0,0,0],[null,null,null,null,null,null],[1,0,0,0,0,0],["08",null,null,null,null,null],[0,2,0,0,0,0],[null,"05",null,null,null,null],[0,1,0,0,0,0],[null,"70",null,null,null,null],[0,0,0,0,0,0],[null,null,null,null,null,null],[0,0,0,0,0,0],[null,null,null,null,null,null],[0,0,0,0,0,0],[null,null,null,null,null,null],[0,0,0,0,0,0],[null,null,null,null,null,null],[1,1,0,1,1,1],["02","05",null,"05","02","90"],[0,0,0,0,0,0],[null,null,null,null,null,null],[0,0,0,0,0,0],[null,null,null,null,null,null],[3,2,1,2,1,2],["06","04","08","05","08","04"],[1,1,0,1,1,1],["09","03",null,"05","07","04"],[0,0,0,0,0,0],[null,null,null,null,null,null],[1,1,1,1,1,1],["01","95","09","05","02","95"],[1,0,0,0,0,1],["01",null,null,null,null,"92"],[1,1,0,1,1,1],["01","08",null,"06","08","00"],[1,1,0,1,1,1],["00","08",null,"05","06","00"],[1,1,1,1,1,1],["00","05","07","05","00","00"],[1,2,0,1,1,1],["00","07",null,"05","07","04"],[1,1,1,1,1,1],["07","08","05","05","06","00"],[0,1,0,0,0,1],[null,"05",null,null,null,"90"],[3,0,0,0,0,1],["02",null,null,null,null,"09"],[0,0,0,0,0,0],[null,null,null,null,null,null],[1,3,0,0,0,0],["07","09",null,null,null,null],[1,1,0,0,0,0],["07","09",null,null,null,null],[0,0,0,0,0,0],[null,null,null,null,null,null],[0,4,0,0,0,0],[0,0,30,40,15,5],[1,0,0,0,0,0],[0,0,0,0,0,0],[24,0,0,0,0,0],[null,null,null,null,1,null],[null,2,2,2,null,null],[null,null,null,null,null,null],[null,null,null,null,null,null],[null,5,null,null,5,5],[6,null,null,null,null,null],[2,1,2,2,2,null],[null,null,null,null,null,null],[1,1,1,1,1,1],[2,2,2,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[2,2,2,2,2,2],[3800,6500,700,1500,1600,2000],[500,500,150,280,0,0],[1145,204,1812,1596,445,1866],[2,2,3,1,2,1],["14121","15009","21115","09012","08050","02001"],[5,4,2,5,5,5],["1422","1522","2131","0912","0823","0214"],["18200","22980","27130","10680","07100","00950"],[14,15,21,9,8,2],[121,9,115,12,50,1],["De 15 mil a 100 mil","De 15 mil a 100 mil","De 2500 a 15 mil","100 mil o más","De 15 mil a 100 mil","100 mil o más"],["Muy bajo","Bajo","Alto","Muy bajo","Muy bajo","Muy bajo"],[14,15,21,9,8,2],["Jalisco","México","Puebla","Distrito Federal","Chihuahua","Baja California"],[0.593588186308115,0.880075765799194,0.0410124985846622,0.245020969011429,0.725832256438428,0.409424505436617],["[10.28,10.51)","[10.76,11.14)","[ 0.00, 9.05)","[ 9.40, 9.66)","[10.51,10.76)","[ 9.88,10.08)"],[10.3168920600383,11.10027575934,8.72765020788304,9.59156674780805,10.61249208803,9.96049859440625],[7.60761984728961,8.21366895865512,0,6.80623183677775,7.06030467744242,0],[-2.70927221274873,-2.88660680068493,-8.72765020788304,-2.78533491103031,-3.55218741058755,-9.96049859440625],[5,4,2,5,5,5],[2,2,3,1,2,1],["Jalisco","México","Puebla","Distrito Federal","Chihuahua","Baja California"],["Zapotiltic","Amecameca","Quecholac","Tlalpan","Nuevo Casas Grandes","Ensenada"],[30957529,44306251,50643674,139753252,101061021,1980549333],[5807667,8581318,9651415,26960561,28476664,530609223],[36708,113458,113041,415378,137491,454765],[29192,48421,47281,650567,59337,466814],[14149,23175,22988,312014,28929,232283],[14979,25145,24181,338334,30170,229609],[1537,2637,3425,26642,3284,25153],[791,1351,1736,13691,1681,12763],[746,1286,1689,12951,1603,12390],[27519,45329,42975,606707,55655,433910],[13322,21647,20866,289827,27170,218101],[14197,23682,22109,316880,28485,215809],[26457,43426,40574,586980,53130,416105],[12792,20674,19661,279830,25940,209029],[13665,22752,20913,307150,27190,207076],[22612,36606,32201,516479,44724,353615],[10895,17285,15337,243918,21758,177417],[11717,19321,16864,272561,22966,176198],[20945,33882,28886,486355,41299,326426],[10037,15899,13649,228566,20005,163622],[10908,17983,15237,257789,21294,162804],[19174,31022,25629,454056,37749,298661],[9126,14474,12032,212256,18223,149430],[10048,16548,13597,241800,19526,149231],[1561,2872,3561,29543,3782,26543],[778,1446,1833,15002,1841,13558],[783,1426,1728,14541,1941,12985],[3346,5851,7213,60685,7149,53752],[1649,2916,3696,30907,3571,27126],[1697,2935,3517,29778,3578,26626],[3872,6566,8097,70711,8229,63814],[1941,3318,4159,36147,4137,32367],[1931,3248,3938,34564,4092,31447],[1667,2724,3315,30124,3425,27189],[858,1386,1688,15352,1753,13795],[809,1338,1627,14772,1672,13394],[1771,2860,3257,32299,3550,27765],[911,1425,1617,16310,1782,14192],[860,1435,1640,15989,1768,13573],[3705,6079,6330,79861,7559,62966],[1805,2954,2947,39567,3746,32144],[1900,3125,3383,40294,3813,30822],[7780,13649,12234,184749,15961,126271],[3555,4211,3167,66090,5400,35069],[1742,1914,1502,28880,2580,16975],[1813,2297,1665,37210,2820,18094],[1589.98,3072.29,4106.7,11616.88,2727.76,62179.06],[51.86,74,116.8,211.43,77.56,1203.57],[27461,42799,44773,496924,53946,265377],[13307,20586,21933,242947,26263,133893],[14154,22213,22840,253977,27683,131484],[1185,5028,1436,129909,3628,183076],[610,2343,582,57521,1896,91400],[575,2685,854,72388,1732,91676],[25444,42387,39591,563173,50867,378746],[12166,20159,19105,268389,24703,188693],[13278,22228,20486,294784,26164,190053],[329,688,458,17242,693,28466],[172,302,203,8096,369,15010],[157,386,255,9146,324,13456],[39,155,80,10334,289,23531],[21,75,43,4723,156,11924],[18,80,37,5611,133,11607],[0,1,0,54,24,1350],[0,0,0,11,7,449],[0,1,0,43,17,901],[12,75,36,8705,127,20609],[7,33,19,3990,72,10711],[5,42,17,4715,55,9898],[36,153,78,10283,277,23040],[0,1,0,51,19,1203],[11,75,36,8674,122,20308],[82,406,216,23368,535,45938],[1721,1750,1485,25847,2964,16282],[1089,1006,781,14731,1711,9375],[449,393,384,6792,911,3963],[133,154,199,1988,226,1363],[195,191,149,2890,313,1352],[120,79,90,1603,152,874],[128,81,64,1442,96,707],[156,142,99,2921,222,1597],[27299,45962,44615,602361,55714,437337],[700,1255,2374,10041,2243,13729],[371,642,1201,5082,1073,7103],[329,613,1173,4959,1170,6626],[76,157,473,1256,185,2095],[41,84,261,638,100,1090],[35,73,212,618,85,1005],[145,149,882,1353,288,2101],[68,77,486,784,161,1084],[77,72,396,569,127,1017],[1133,2009,1179,24900,2518,19106],[560,1006,538,12459,1246,9615],[573,1003,641,12441,1272,9491],[897,1708,587,35215,2496,19015],[460,832,265,17955,1230,9679],[437,876,322,17260,1266,9336],[70,107,609,889,122,2280],[43,63,367,514,72,1244],[27,44,242,375,50,1036],[1239,1220,5500,10839,879,15330],[565,434,2258,3351,455,6530],[674,786,3242,7488,424,8800],[1397,1351,5261,17375,1152,19181],[679,500,2196,6386,588,8758],[718,851,3065,10989,564,10423],[3546,3125,7363,28611,5027,39421],[1616,1274,3562,11539,2586,20423],[1930,1851,3801,17072,2441,18998],[4144,5769,7578,54858,8510,44620],[1879,2613,3726,24260,3967,21960],[2265,3156,3852,30598,4543,22660],[1163,1284,1401,21986,2166,24578],[649,714,727,12248,1340,13865],[514,570,674,9738,826,10713],[4773,9880,4400,94108,8927,66709],[2390,4968,2105,45999,4157,33695],[2383,4912,2295,48109,4770,33014],[5111,11152,2386,251452,12926,118211],[2477,5244,1120,120802,6304,58762],[2634,5908,1266,130650,6622,59449],[94.93,236.15,167.99,821.86,167.24,3720.47],[93.69,236.91,166.87,819.68,168.69,3683.18],[96.4,234.74,166.93,824.76,166.17,3740.62],[10558,18346,16004,294585,23245,204364],[7442,12652,12262,174263,15561,128103],[3116,5694,3742,120322,7684,76261],[11923,18102,16028,219031,21187,144845],[3374,4530,2986,68204,6026,45716],[8549,13572,13042,150827,15161,99129],[9700,17401,15304,280680,21772,196553],[6777,11877,11627,164759,14526,122253],[2923,5524,3677,115921,7246,74300],[858,945,700,13905,1473,7811],[665,775,635,9504,1035,5850],[193,170,65,4401,438,1961],[9923,24744,29172,263632,15802,108225],[19111,23103,17124,367523,42842,346854],[12291,8527,2070,189196,27170,172870],[640,2163,210,87660,2648,25046],[52,1410,48,628,241,16742],[6108,7423,14596,39363,9015,119621],[8148,12370,10991,190787,14400,123523],[12369,20652,19051,267792,25063,190213],[2074,3520,2103,56412,5031,39131],[27489,43145,44542,531806,47237,303417],[1254,3195,1229,44163,8320,86546],[1,108,5,1790,1,616],[253,556,91,40734,2151,61900],[7481,11227,10043,170369,16876,127204],[5713,8609,8172,121148,12690,94109],[1768,2618,1871,49221,4186,33095],[29039,47941,46407,629837,58924,454073],[23452,38259,39040,473593,46722,348443],[5587,9682,7367,156244,12202,105630],[7527,11366,10319,176086,16975,129657],[9200,12897,11332,188583,20795,164562],[7481,11227,10043,170369,16876,127204],[1415,1087,812,12462,3058,25230],[304,583,477,5752,861,12128],[29039,47941,46407,629837,58924,454073],[54.16,130.28,173.39,385.57,116.55,1667.49],[14.96,44.31,70.71,139.83,36.55,629.74],[7059,10187,8915,166633,16684,120034],[413,1001,1097,2337,121,4433],[2066,4461,4820,52780,4945,43151],[5410,6741,5188,116826,11861,81618],[152,1156,1224,12796,449,12022],[984,2654,2916,22254,1693,18874],[6323,7368,5856,134239,14644,93689],[7420,11105,9812,169388,16776,121783],[57,87,194,419,53,3043],[7032,10789,8669,147569,16662,112712],[440,390,1342,21609,142,11776],[7395,11008,9457,168403,16604,123164],[7394,10384,8962,167792,16366,104654],[79,792,1030,1282,382,19586],[6942,10065,7806,146573,16238,98904],[64,138,593,527,30,1959],[6341,9559,5464,157860,14953,99651],[7221,10763,9018,166598,16297,117853],[6757,7724,3947,151917,16320,108645],[6024,6239,3471,134366,14888,96389],[3875,3349,2428,93095,12587,84966],[1821,2392,460,88544,5664,50430],[3550,3758,1362,123912,7524,56639],[4779,7050,3260,134358,12916,102392],[1119,1505,258,73181,3379,39688],[50,75,92,182,109,1915],[25431,39115,38339,641550,55553,398122],["[10.28,10.76)","[10.76,14.35]","[ 0.00, 9.40)","[ 9.40, 9.88)","[10.28,10.76)","[ 9.88,10.28)"],[3,7,0,6,4,3],["01","01","01","01","01","01"],[8301,null,9111,5242,8341,null],[83,null,91,52,83,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>FOLIOVIV<\/th>\n      <th>FOLIOHOG<\/th>\n      <th>FACTOR<\/th>\n      <th>TAM_LOC<\/th>\n      <th>UBICA_GEO<\/th>\n      <th>CONAPO<\/th>\n      <th>TENENCIA<\/th>\n      <th>CLASE_HOG<\/th>\n      <th>SEXO<\/th>\n      <th>EDAD<\/th>\n      <th>ED_FORMAL<\/th>\n      <th>TAM_HOG<\/th>\n      <th>HOMBRES<\/th>\n      <th>MUJERES<\/th>\n      <th>TOT_RESI<\/th>\n      <th>TOT_HOM<\/th>\n      <th>TOT_MUJ<\/th>\n      <th>MAYORES<\/th>\n      <th>MENORES<\/th>\n      <th>P12_64<\/th>\n      <th>P65MAS<\/th>\n      <th>N_OCUP<\/th>\n      <th>PERING<\/th>\n      <th>PEROCU<\/th>\n      <th>INGTOT<\/th>\n      <th>INGCOR<\/th>\n      <th>INGMON<\/th>\n      <th>TRABAJO<\/th>\n      <th>SUELDOS<\/th>\n      <th>HOREXT<\/th>\n      <th>COMIS<\/th>\n      <th>OTRA_REM<\/th>\n      <th>NEGOCIO<\/th>\n      <th>NOAGROP<\/th>\n      <th>INDUSTRIA<\/th>\n      <th>COMERCIO<\/th>\n      <th>SERVICIOS<\/th>\n      <th>AGROPE<\/th>\n      <th>AGRICOLAS<\/th>\n      <th>PECUARIOS<\/th>\n      <th>REPRODUCC<\/th>\n      <th>PESCA<\/th>\n      <th>OTROS_TRAB<\/th>\n      <th>RENTAS<\/th>\n      <th>UTILIDAD<\/th>\n      <th>ARRENDA<\/th>\n      <th>TRANSFER<\/th>\n      <th>JUBILA<\/th>\n      <th>BECA<\/th>\n      <th>DONATIVO<\/th>\n      <th>REMESA<\/th>\n      <th>BENE_GOB<\/th>\n      <th>OTROS<\/th>\n      <th>GASNOM<\/th>\n      <th>AUTOC<\/th>\n      <th>REM_ESP<\/th>\n      <th>REGA<\/th>\n      <th>ESP_HOG<\/th>\n      <th>ESP_INST<\/th>\n      <th>ESTI<\/th>\n      <th>PERTOT<\/th>\n      <th>PERMON<\/th>\n      <th>RETIRO<\/th>\n      <th>PRESTAMO<\/th>\n      <th>OTRAS_PR<\/th>\n      <th>ERONOM<\/th>\n      <th>GASTOT<\/th>\n      <th>GASCOR<\/th>\n      <th>GASMON<\/th>\n      <th>ALIMENTOS<\/th>\n      <th>ALI_DENT<\/th>\n      <th>CEREALES<\/th>\n      <th>CARNES<\/th>\n      <th>PESCADO<\/th>\n      <th>LECHE<\/th>\n      <th>HUEVO<\/th>\n      <th>ACEITES<\/th>\n      <th>TUBERCULO<\/th>\n      <th>VERDURAS<\/th>\n      <th>FRUTAS<\/th>\n      <th>AZUCAR<\/th>\n      <th>CAFE<\/th>\n      <th>ESPECIAS<\/th>\n      <th>OTRO_ALI<\/th>\n      <th>BEBIDAS<\/th>\n      <th>FUERA_HOG<\/th>\n      <th>TABACO<\/th>\n      <th>VESTIDO_C<\/th>\n      <th>VESTIDO<\/th>\n      <th>CALZADO<\/th>\n      <th>VIVIENDA<\/th>\n      <th>ALQUILER<\/th>\n      <th>PRED_CONS<\/th>\n      <th>AGUA<\/th>\n      <th>ENERGIA<\/th>\n      <th>LIMPIEZA<\/th>\n      <th>CUIDADOS<\/th>\n      <th>UTENSILIOS<\/th>\n      <th>ENSERES<\/th>\n      <th>SALUD<\/th>\n      <th>ATEN_PRI<\/th>\n      <th>HOSPITAL<\/th>\n      <th>MEDICA<\/th>\n      <th>TRANSPORTE<\/th>\n      <th>PUBLICO<\/th>\n      <th>FORANEO<\/th>\n      <th>ADQUI<\/th>\n      <th>MANTE<\/th>\n      <th>REFA<\/th>\n      <th>COMBUS<\/th>\n      <th>COMUNICA<\/th>\n      <th>EDUCACION<\/th>\n      <th>EDUCA<\/th>\n      <th>ESPARCI<\/th>\n      <th>PAQUETE<\/th>\n      <th>PERSONAL<\/th>\n      <th>CUIDADO<\/th>\n      <th>ACCESORIO<\/th>\n      <th>OTROS_GAS<\/th>\n      <th>TRANSFE<\/th>\n      <th>EROTOT<\/th>\n      <th>EROMON<\/th>\n      <th>CUOTA<\/th>\n      <th>MAT_SERV<\/th>\n      <th>MATERIAL<\/th>\n      <th>SERVICIO<\/th>\n      <th>DEPOSITO<\/th>\n      <th>TERCEROS<\/th>\n      <th>PAGO_TAR<\/th>\n      <th>DEUDAS<\/th>\n      <th>BALANCE<\/th>\n      <th>OTRA_ERO<\/th>\n      <th>SMG<\/th>\n      <th>EST_DIS<\/th>\n      <th>UPM<\/th>\n      <th>CLAVIV<\/th>\n      <th>PARED<\/th>\n      <th>TECHOS<\/th>\n      <th>PISOS<\/th>\n      <th>ANTIGUA<\/th>\n      <th>ANTIGUA_NE<\/th>\n      <th>CUA_COC<\/th>\n      <th>COC_DUER<\/th>\n      <th>DORMI<\/th>\n      <th>CUART<\/th>\n      <th>DIS_AGUA<\/th>\n      <th>DOT_AGUA<\/th>\n      <th>EXCUS<\/th>\n      <th>USO_COM<\/th>\n      <th>ADM_AG<\/th>\n      <th>DRENAJE<\/th>\n      <th>ELECT<\/th>\n      <th>FOCOS<\/th>\n      <th>COMBUS_1<\/th>\n      <th>ESTUFA<\/th>\n      <th>ELI_BA<\/th>\n      <th>TENEN<\/th>\n      <th>TENEN_NR1<\/th>\n      <th>TENEN_NH1<\/th>\n      <th>TENEN_NR2<\/th>\n      <th>TENEN_NH2<\/th>\n      <th>ESCRI<\/th>\n      <th>FINAN<\/th>\n      <th>RENTA<\/th>\n      <th>RENTA_TRI<\/th>\n      <th>ESTIM<\/th>\n      <th>ESTIM_TRI<\/th>\n      <th>PAGOVIV<\/th>\n      <th>PAGOVIV_TR<\/th>\n      <th>PAGO_MESP<\/th>\n      <th>ADQUI_1<\/th>\n      <th>VIV_USADA<\/th>\n      <th>LAVAD<\/th>\n      <th>FREGAD<\/th>\n      <th>REGAD<\/th>\n      <th>TIN_AZO<\/th>\n      <th>CISTE<\/th>\n      <th>PILETA<\/th>\n      <th>CALEN<\/th>\n      <th>MED_LUZ<\/th>\n      <th>BOM_AG<\/th>\n      <th>TAN_GAS<\/th>\n      <th>AIRE_ACO<\/th>\n      <th>CALEF<\/th>\n      <th>RESIDENTES<\/th>\n      <th>HOGARES2<\/th>\n      <th>HOGARES3<\/th>\n      <th>HUESPEDES4<\/th>\n      <th>HUESPEDES5<\/th>\n      <th>HUESPEDES6<\/th>\n      <th>DOMESTICO7<\/th>\n      <th>DOMESTICO8<\/th>\n      <th>DOMESTICO9<\/th>\n      <th>ALIM1<\/th>\n      <th>ALIM2<\/th>\n      <th>ALIM3<\/th>\n      <th>ALIM4<\/th>\n      <th>ALIM5<\/th>\n      <th>ALIM6<\/th>\n      <th>ALIM7<\/th>\n      <th>ALIM8<\/th>\n      <th>ALIM9<\/th>\n      <th>ALIM10<\/th>\n      <th>ALIM11<\/th>\n      <th>ALIM12<\/th>\n      <th>ALIM13<\/th>\n      <th>ALIM14<\/th>\n      <th>ALIM15<\/th>\n      <th>ALIM16<\/th>\n      <th>SERV_1<\/th>\n      <th>SERV_2<\/th>\n      <th>SERV_3<\/th>\n      <th>SERV_4<\/th>\n      <th>VEHI1_N<\/th>\n      <th>VEHI1_A<\/th>\n      <th>VEHI2_N<\/th>\n      <th>VEHI2_A<\/th>\n      <th>VEHI3_N<\/th>\n      <th>VEHI3_A<\/th>\n      <th>VEHI4_N<\/th>\n      <th>VEHI4_A<\/th>\n      <th>VEHI5_N<\/th>\n      <th>VEHI5_A<\/th>\n      <th>VEHI6_N<\/th>\n      <th>VEHI6_A<\/th>\n      <th>VEHI7_N<\/th>\n      <th>VEHI7_A<\/th>\n      <th>VEHI8_N<\/th>\n      <th>VEHI8_A<\/th>\n      <th>VEHI9_N<\/th>\n      <th>VEHI9_A<\/th>\n      <th>EQH1_N<\/th>\n      <th>EQH1_A<\/th>\n      <th>EQH2_N<\/th>\n      <th>EQH2_A<\/th>\n      <th>EQH3_N<\/th>\n      <th>EQH3_A<\/th>\n      <th>EQH4_N<\/th>\n      <th>EQH4_A<\/th>\n      <th>EQH5_N<\/th>\n      <th>EQH5_A<\/th>\n      <th>EQH6_N<\/th>\n      <th>EQH6_A<\/th>\n      <th>EQH7_N<\/th>\n      <th>EQH7_A<\/th>\n      <th>EQH8_N<\/th>\n      <th>EQH8_A<\/th>\n      <th>EQH9_N<\/th>\n      <th>EQH9_A<\/th>\n      <th>EQH10_N<\/th>\n      <th>EQH10_A<\/th>\n      <th>EQH11_N<\/th>\n      <th>EQH11_A<\/th>\n      <th>EQH12_N<\/th>\n      <th>EQH12_A<\/th>\n      <th>EQH13_N<\/th>\n      <th>EQH13_A<\/th>\n      <th>EQH14_N<\/th>\n      <th>EQH14_A<\/th>\n      <th>EQH15_N<\/th>\n      <th>EQH15_A<\/th>\n      <th>EQH16_N<\/th>\n      <th>EQH16_A<\/th>\n      <th>EQH17_N<\/th>\n      <th>EQH17_A<\/th>\n      <th>EQH18_N<\/th>\n      <th>EQH18_A<\/th>\n      <th>EQH19_N<\/th>\n      <th>EQH19_A<\/th>\n      <th>TSALUD1_H<\/th>\n      <th>TSALUD1_M<\/th>\n      <th>TSALUD1_C<\/th>\n      <th>TSALUD2_H<\/th>\n      <th>TSALUD2_M<\/th>\n      <th>HABITO_1<\/th>\n      <th>HABITO_2<\/th>\n      <th>HABITO_3<\/th>\n      <th>HABITO_4<\/th>\n      <th>HABITO_5<\/th>\n      <th>HABITO_6<\/th>\n      <th>CONSUMO<\/th>\n      <th>NR_VIV<\/th>\n      <th>TARJETA<\/th>\n      <th>PAGOTARJET<\/th>\n      <th>REGALOTAR<\/th>\n      <th>REGALODADO<\/th>\n      <th>AUTOCONS<\/th>\n      <th>REGALOS<\/th>\n      <th>REMUNERA<\/th>\n      <th>TRANSFEREN<\/th>\n      <th>PARTO_G<\/th>\n      <th>EMBARAZO_G<\/th>\n      <th>NEGCUA<\/th>\n      <th>EST_ALIM<\/th>\n      <th>EST_TRANS<\/th>\n      <th>FACTOR_1<\/th>\n      <th>TAM_LOC_1<\/th>\n      <th>UBICA_GEO_1<\/th>\n      <th>CONAPO_1<\/th>\n      <th>EST_DIS_1<\/th>\n      <th>UPM_1<\/th>\n      <th>ENT<\/th>\n      <th>MUN<\/th>\n      <th>tamaño_localidad<\/th>\n      <th>marginación<\/th>\n      <th>ENTIDAD<\/th>\n      <th>NOM_ENT<\/th>\n      <th>percentil<\/th>\n      <th>decil<\/th>\n      <th>log.ingreso<\/th>\n      <th>log.comunica<\/th>\n      <th>log.prop<\/th>\n      <th>conapo.f<\/th>\n      <th>tam_loc.f<\/th>\n      <th>NOM_ENT_1<\/th>\n      <th>NOM_MUN<\/th>\n      <th>LONGITUD<\/th>\n      <th>LATITUD<\/th>\n      <th>ALTITUD<\/th>\n      <th>POBTOT<\/th>\n      <th>POBMAS<\/th>\n      <th>POBFEM<\/th>\n      <th>P_0A2<\/th>\n      <th>P_0A2_M<\/th>\n      <th>P_0A2_F<\/th>\n      <th>P_3YMAS<\/th>\n      <th>P_3YMAS_M<\/th>\n      <th>P_3YMAS_F<\/th>\n      <th>P_5YMAS<\/th>\n      <th>P_5YMAS_M<\/th>\n      <th>P_5YMAS_F<\/th>\n      <th>P_12YMAS<\/th>\n      <th>P_12YMAS_M<\/th>\n      <th>P_12YMAS_F<\/th>\n      <th>P_15YMAS<\/th>\n      <th>P_15YMAS_M<\/th>\n      <th>P_15YMAS_F<\/th>\n      <th>P_18YMAS<\/th>\n      <th>P_18YMAS_M<\/th>\n      <th>P_18YMAS_F<\/th>\n      <th>P_3A5<\/th>\n      <th>P_3A5_M<\/th>\n      <th>P_3A5_F<\/th>\n      <th>P_6A11<\/th>\n      <th>P_6A11_M<\/th>\n      <th>P_6A11_F<\/th>\n      <th>P_8A14<\/th>\n      <th>P_8A14_M<\/th>\n      <th>P_8A14_F<\/th>\n      <th>P_12A14<\/th>\n      <th>P_12A14_M<\/th>\n      <th>P_12A14_F<\/th>\n      <th>P_15A17<\/th>\n      <th>P_15A17_M<\/th>\n      <th>P_15A17_F<\/th>\n      <th>P_18A24<\/th>\n      <th>P_18A24_M<\/th>\n      <th>P_18A24_F<\/th>\n      <th>P_15A49_F<\/th>\n      <th>P_60YMAS<\/th>\n      <th>P_60YMAS_M<\/th>\n      <th>P_60YMAS_F<\/th>\n      <th>REL_H_M<\/th>\n      <th>PROM_HNV<\/th>\n      <th>PNACENT<\/th>\n      <th>PNACENT_M<\/th>\n      <th>PNACENT_F<\/th>\n      <th>PNACOE<\/th>\n      <th>PNACOE_M<\/th>\n      <th>PNACOE_F<\/th>\n      <th>PRES2005<\/th>\n      <th>PRES2005_M<\/th>\n      <th>PRES2005_F<\/th>\n      <th>PRESOE05<\/th>\n      <th>PRESOE05_M<\/th>\n      <th>PRESOE05_F<\/th>\n      <th>P3YM_HLI<\/th>\n      <th>P3YM_HLI_M<\/th>\n      <th>P3YM_HLI_F<\/th>\n      <th>P3HLINHE<\/th>\n      <th>P3HLINHE_M<\/th>\n      <th>P3HLINHE_F<\/th>\n      <th>P3HLI_HE<\/th>\n      <th>P3HLI_HE_M<\/th>\n      <th>P3HLI_HE_F<\/th>\n      <th>P5_HLI<\/th>\n      <th>P5_HLI_NHE<\/th>\n      <th>P5_HLI_HE<\/th>\n      <th>PHOG_IND<\/th>\n      <th>PCON_LIM<\/th>\n      <th>PCLIM_MOT<\/th>\n      <th>PCLIM_VIS<\/th>\n      <th>PCLIM_LENG<\/th>\n      <th>PCLIM_AUD<\/th>\n      <th>PCLIM_MOT2<\/th>\n      <th>PCLIM_MEN<\/th>\n      <th>PCLIM_MEN2<\/th>\n      <th>PSIN_LIM<\/th>\n      <th>P3A5_NOA<\/th>\n      <th>P3A5_NOA_M<\/th>\n      <th>P3A5_NOA_F<\/th>\n      <th>P6A11_NOA<\/th>\n      <th>P6A11_NOAM<\/th>\n      <th>P6A11_NOAF<\/th>\n      <th>P12A14NOA<\/th>\n      <th>P12A14NOAM<\/th>\n      <th>P12A14NOAF<\/th>\n      <th>P15A17A<\/th>\n      <th>P15A17A_M<\/th>\n      <th>P15A17A_F<\/th>\n      <th>P18A24A<\/th>\n      <th>P18A24A_M<\/th>\n      <th>P18A24A_F<\/th>\n      <th>P8A14AN<\/th>\n      <th>P8A14AN_M<\/th>\n      <th>P8A14AN_F<\/th>\n      <th>P15YM_AN<\/th>\n      <th>P15YM_AN_M<\/th>\n      <th>P15YM_AN_F<\/th>\n      <th>P15YM_SE<\/th>\n      <th>P15YM_SE_M<\/th>\n      <th>P15YM_SE_F<\/th>\n      <th>P15PRI_IN<\/th>\n      <th>P15PRI_INM<\/th>\n      <th>P15PRI_INF<\/th>\n      <th>P15PRI_CO<\/th>\n      <th>P15PRI_COM<\/th>\n      <th>P15PRI_COF<\/th>\n      <th>P15SEC_IN<\/th>\n      <th>P15SEC_INM<\/th>\n      <th>P15SEC_INF<\/th>\n      <th>P15SEC_CO<\/th>\n      <th>P15SEC_COM<\/th>\n      <th>P15SEC_COF<\/th>\n      <th>P18YM_PB<\/th>\n      <th>P18YM_PB_M<\/th>\n      <th>P18YM_PB_F<\/th>\n      <th>GRAPROES<\/th>\n      <th>GRAPROES_M<\/th>\n      <th>GRAPROES_F<\/th>\n      <th>PEA<\/th>\n      <th>PEA_M<\/th>\n      <th>PEA_F<\/th>\n      <th>PE_INAC<\/th>\n      <th>PE_INAC_M<\/th>\n      <th>PE_INAC_F<\/th>\n      <th>POCUPADA<\/th>\n      <th>POCUPADA_M<\/th>\n      <th>POCUPADA_F<\/th>\n      <th>PDESOCUP<\/th>\n      <th>PDESOCUP_M<\/th>\n      <th>PDESOCUP_F<\/th>\n      <th>PSINDER<\/th>\n      <th>PDER_SS<\/th>\n      <th>PDER_IMSS<\/th>\n      <th>PDER_ISTE<\/th>\n      <th>PDER_ISTEE<\/th>\n      <th>PDER_SEGP<\/th>\n      <th>P12YM_SOLT<\/th>\n      <th>P12YM_CASA<\/th>\n      <th>P12YM_SEPA<\/th>\n      <th>PCATOLICA<\/th>\n      <th>PNCATOLICA<\/th>\n      <th>POTRAS_REL<\/th>\n      <th>PSIN_RELIG<\/th>\n      <th>TOTHOG<\/th>\n      <th>HOGJEF_M<\/th>\n      <th>HOGJEF_F<\/th>\n      <th>POBHOG<\/th>\n      <th>PHOGJEF_M<\/th>\n      <th>PHOGJEF_F<\/th>\n      <th>TVIVHAB<\/th>\n      <th>TVIVPAR<\/th>\n      <th>VIVPAR_HAB<\/th>\n      <th>VIVPAR_DES<\/th>\n      <th>VIVPAR_UT<\/th>\n      <th>OCUPVIVPAR<\/th>\n      <th>PROM_OCUP<\/th>\n      <th>PRO_OCUP_C<\/th>\n      <th>VPH_PISODT<\/th>\n      <th>VPH_PISOTI<\/th>\n      <th>VPH_1DOR<\/th>\n      <th>VPH_2YMASD<\/th>\n      <th>VPH_1CUART<\/th>\n      <th>VPH_2CUART<\/th>\n      <th>VPH_3YMASC<\/th>\n      <th>VPH_C_ELEC<\/th>\n      <th>VPH_S_ELEC<\/th>\n      <th>VPH_AGUADV<\/th>\n      <th>VPH_AGUAFV<\/th>\n      <th>VPH_EXCSA<\/th>\n      <th>VPH_DRENAJ<\/th>\n      <th>VPH_NODREN<\/th>\n      <th>VPH_C_SERV<\/th>\n      <th>VPH_SNBIEN<\/th>\n      <th>VPH_RADIO<\/th>\n      <th>VPH_TV<\/th>\n      <th>VPH_REFRI<\/th>\n      <th>VPH_LAVAD<\/th>\n      <th>VPH_AUTOM<\/th>\n      <th>VPH_PC<\/th>\n      <th>VPH_TELEF<\/th>\n      <th>VPH_CEL<\/th>\n      <th>VPH_INTER<\/th>\n      <th>TAM_LOC_2<\/th>\n      <th>POBTOT_Urbana<\/th>\n      <th>quintil<\/th>\n      <th>NIVELAPROB<\/th>\n      <th>NUMREN<\/th>\n      <th>CUO<\/th>\n      <th>cuo.2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,159,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,216,218,220,222,224,226,227,228,230,232,234,236,238,240,242,244,246,248,250,252,254,256,258,260,262,264,266,268,270,271,272,273,274,275,276,277,278,279,280,281,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,299,302,303,306,308,310,311,312,313,314,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,508,510,511]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> TAM_HOG </th>
+   <th style="text-align:right;"> INGCOR </th>
+   <th style="text-align:left;"> NOM_ENT_1 </th>
+   <th style="text-align:right;"> FOCOS </th>
+   <th style="text-align:right;"> PISOS </th>
+   <th style="text-align:left;"> marginación </th>
+   <th style="text-align:left;"> tamaño_localidad </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 30238.13 </td>
+   <td style="text-align:left;"> Jalisco </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> Muy bajo </td>
+   <td style="text-align:left;"> De 15 mil a 100 mil </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 61147.41 </td>
+   <td style="text-align:left;"> México </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> Bajo </td>
+   <td style="text-align:left;"> De 15 mil a 100 mil </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 6170.21 </td>
+   <td style="text-align:left;"> Puebla </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Alto </td>
+   <td style="text-align:left;"> De 2500 a 15 mil </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 14639.79 </td>
+   <td style="text-align:left;"> Distrito Federal </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> Muy bajo </td>
+   <td style="text-align:left;"> 100 mil o más </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 40638.35 </td>
+   <td style="text-align:left;"> Chihuahua </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> Muy bajo </td>
+   <td style="text-align:left;"> De 15 mil a 100 mil </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 21172.35 </td>
+   <td style="text-align:left;"> Baja California </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> Muy bajo </td>
+   <td style="text-align:left;"> 100 mil o más </td>
+  </tr>
+</tbody>
+</table>
 
 ```r
 ggplot(dat_ingreso, aes(x=INGTOT)) +  
@@ -155,7 +226,7 @@ ggplot(dat_ingreso, aes(x=INGTOT)) +
   scale_x_log10()
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-4-2.png" width="480" />
+<img src="01-intro_files/figure-html/unnamed-chunk-4-1.png" width="480" />
 
 Pero quizá podemos usar otras variables más fácilmente medibles
 para predecir el ingreso de un hogar. Por ejemplo, si consideramos el número
@@ -187,5 +258,466 @@ actualmente se prefiere utilizar aprendizaje para estimar a partir de otras
 variables que son más fielmente reportadas por encuestados (años de estudio,
 ocupación, número de focos en el hogar, etc.)
 
+
+## Aprendizaje Supervisado
+
+Por el momento nos concentramos en problemas supervisados de regresión, es
+decir predicción de variables numéricas.
+
+¿Cómo entendemos el problema de predicción?
+
+### Proceso generador de datos (modelo teórico)
+
+Para entender lo que estamos intentando hacer, pensaremos en términos
+de **modelos probabilísticos que generan los datos**. La idea es que
+estos representan los procesos que generan los datos o las observaciones.
+
+Si $Y$ es la respuesta
+que queremos predecir, y $X$ es una entrada que queremos usar para predecir
+$Y$,  
+consideramos que las variables aleatorias $Y$ y $X$ están relacionadas como sigue:
+$$Y=f(X)+\epsilon,$$
+donde $\epsilon$ es una término de error aleatorio que no depende de $X$, y
+que tiene valor esperado $\textrm{E}(\epsilon)=0$.
+
+
+- $f$ expresa la relación sistemática que hay entre $Y$ y $X$: para cada valor
+posible de $X$, la `contribución` de $X$ a $Y$ es $f(X)$.
+- Pero $X$ **no determina** a $Y$, como en el ejemplo anterior de rendimiento
+de coches.
+Entonces agregamos una error aleatorio $\epsilon$, con media cero (si la media
+no es cero podemos agregar una constante a $f$), que no contiene información
+acerca de $X$ (independiente de $X$).
+- $\epsilon$ representa, por ejemplo, el efecto de variables que no hemos
+medido o  procesos aleatorios que determinan la respuesta.
+
+
+
+#### Ejemplo {-}
+
+Vamos a usar simulación para entender estas ideas: supongamos que $X$
+es el número de años de estudio de una persona y $Y$ es su ingreso mensual.
+En primer lugar, estas son el número de años de estudio de 8 personas:
+
+
+```r
+x <- c(1,7,10,0,0,5,9,13,2,4,17,18,1,2)
+```
+
+Ahora *supondremos* que la dependencia de Y de X está dada por
+$Y=f(X)+\epsilon$ por una función $f$ que no conocemos (esta función está
+determinada por el fenómeno)
+
+```r
+f <- function(x){
+  ifelse(x < 10, 1000*sqrt(x), 1000*sqrt(10))
+}
+```
+
+El ingreso no se determina
+únicamente por número de años de estudio. Suponemos entonces que hay algunas 
+variables
+adicional que perturba los niveles de $f(X)$ por una cantidad aleatoria. Los
+valores que observamos de $Y$ están dados entonces por $Y=f(X)+\epsilon$.
+
+Entonces podríamos obtener, por ejemplo:
+
+```r
+x_g <- seq(0,20,0.5)
+y_g <- f(x_g)
+dat_g <- data.frame(x = x_g, y = y_g)
+set.seed(281)
+error <- rnorm(length(x), 0, 500)
+y <- f(x) + error
+datos <- data_frame(x = x, y = y)
+datos$y_media <- f(datos$x)
+ggplot(datos, aes(x = x, y = y)) + geom_point() +
+  geom_line(data=dat_g, colour = 'blue', size = 1.1) +
+  geom_segment(aes(x = x, xend = x, y = y, yend = y_media), col='red')
+```
+
+<img src="01-intro_files/figure-html/unnamed-chunk-9-1.png" width="480" />
+
+
+En problemas de aprendizaje nunca conocemos esta $f$ verdadera,
+aunque quizá sabemos algo acerca de sus propiedades (por ejemplo, continua, de 
+variación suave). Lo que tenemos son los datos, que también podrían haber resultado
+en (para otra muestra de personas, por ejemplo):
+
+
+```r
+set.seed(28015)
+error <- rnorm(length(x), 0, 500)
+y <- f(x) + error
+datos <- data.frame(x = x, y = y)
+ggplot(datos, aes(x = x, y = y)) + geom_point() 
+```
+
+<img src="01-intro_files/figure-html/unnamed-chunk-10-1.png" width="480" />
+
+La siguiente observación nos da una idea de lo que intentamos hacer, aunque
+todavía es vaga y requiere refinamiento:
+
+<div class="comentario">
+<p>Bajo los supuestos del modelo <span class="math inline">\(Y=f(X)+\epsilon\)</span>, <strong>aprender de los datos</strong> significa intentar recuperar o estimar la forma de la función <span class="math inline">\(f\)</span> que no conocemos. <span class="math inline">\(f\)</span> representa la relación sistemática entre <span class="math inline">\(Y\)</span> y <span class="math inline">\(X\)</span>.</p>
+</div>
+
+¿Qué tan bien podemos estimar esa $f$ que no conocemos, con
+los datos disponibles? ¿Qué significa *estimar bien*?
+Incluso este ejemplo tan simple muestra las dificultades que vamos a
+enfrentar, y la importancia de determinar con cuidado qué tanta información
+tenemos, y qué tan buenas pueden ser nuestras predicciones.
+
+## Predicciones
+
+La idea es entonces producir una estimación de f que nos permita hacer predicciones.
+
+Si denotamos por $\hat{f}$ a una estimación de $f$ construida a partir de los datos,
+podemos hacer predicciones aplicando $\hat{f}$ a valores de $X$.
+La predicción de Y la denotamos por $\hat{Y}$, y $$\hat{Y}=\hat{f}(X).$$
+El error de predicción (residual) está dado por el valor observado menos la predicción:
+$$Y-\hat{Y}.$$
+
+
+En nuestro ejemplo anterior, podríamos construir, por ejemplo, una recta
+ajustada por mínimos cuadrados:
+
+
+```r
+curva_1 <- geom_smooth(data=datos,
+  method = "lm", se=FALSE, color="red", formula = y ~ x, size = 1.1)
+```
+
+
+```r
+ggplot(datos, aes(x = x, y = y)) + geom_point() + curva_1
+```
+
+<img src="01-intro_files/figure-html/unnamed-chunk-13-1.png" width="480" />
+
+En este caso $\hat{f}$  es una recta, y la podemos usar para hacer predicciones.
+Por ejemplo, si tenemos una observación con
+$x_0=8$ años de estudio, nuestra predicción del ingreso 
+$\hat{y}=\hat{f}(8)$ sería
+
+
+```r
+lineal <- lm(y ~ x,data = datos)
+pred_1 <- predict(lineal, newdata = data.frame(x=8))
+pred_1
+```
+
+```
+##        1 
+## 2193.561
+```
+
+
+```r
+ggplot(datos, aes(x = x, y = y)) + geom_point() + curva_1 +
+  geom_segment(x = 0, xend = 8, y = pred_1, yend = pred_1, colour = 'salmon') +
+  geom_segment(x = 8, xend = 8, y = 0, yend = pred_1, colour = 'salmon') +
+  annotate('text', x = 0.5, y = pred_1 + 100, label = round(pred_1, 1)) +
+  geom_point( x= 8, y =3200, col='green', size = 4)
+```
+
+<img src="01-intro_files/figure-html/unnamed-chunk-15-1.png" width="480" />
+
+Si observamos que para esta observación con $x_0=8$, resulta que 
+el correspondiente ingreso es $y_0=3200$, entonces el error sería
+
+```r
+y_0 <- 3200
+y_0 - pred_1
+```
+
+```
+##        1 
+## 1006.439
+```
+
+
+<div class="comentario">
+<p>En aprendizaje buscamos que estos errores sean lo más cercano a cero que sea posible.</p>
+</div>
+
+## Cuantificación de error o precisión
+
+El elemento faltante para definir la tarea de aprendizaje supervisado es 
+qué significa aproximar *bien* a $f$, o tener predicciones precisas. Para
+esto definimos una **función de pérdida**:
+
+$$L(Y, \hat{f}(X)),$$
+
+que nos dice cuánto nos cuesta hacer la predicción $\hat{f}(X)$ cuando el
+verdadero valor es $Y$ y las variables de entrada son $X$. 
+Una opción conveniente para problemas de regresión
+es la pérdida cuadrática:
+
+$$L(Y, \hat{f}(X)) =  (Y - \hat{f}(X))^2$$
+Esta es una cantidad aleatoria, de modo que en algunos casos este error
+puede ser más grande o más chico. Usualmente buscamos una $\hat{f}$ de
+modo que el error promedio sea chico:
+
+$$Err = E[(Y - \hat{f}(X))^2]$$
+
+**Nota**: Intenta demostrar que bajo error cuadrático medio y suponiendo
+el modelo aditivo $Y=f(X)+\epsilon$, el mejor predictor
+de $Y$ es $f(x)= E[Y|X=x]$. Es decir: lo que nos interesa es aproximar
+lo mejor que se pueda la esperanza condicional
+
+## Tarea de aprendizaje supervisado {#aprendizaje}
+
+Ahora tenemos los elementos para definir con precisión el problema
+de aprendizaje supervisado. 
+
+Consideramos un proceso generador de datos $(X,Y)$. En primer lugar,
+tenemos datos de los que vamos a aprender.
+
+Supongamos que tenemos un conjunto de datos *etiquetados* (generados según $(X,Y)$)
+
+$${\mathcal L}=\{ (x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}), \ldots, (x^{(N)}, y^{(N)}) \}$$
+que llamamos **conjunto de entrenamiento**. Nótese que usamos minúsculas
+para denotar observaciones particulares de $(X,Y)$.
+
+Un **algoritmo de aprendizaje** es una regla que asigna a cada conjunto de
+entrenamiento ${\mathcal L}$ una función $\hat{f}$:
+
+$${\mathcal L} \to \hat{f}.$$
+El desempeño del predictor particular $\hat{f}$ se mide como sigue: si
+en el futuro observamos otra muestra ${\mathcal T}$ (que podemos llamar **muestra de prueba**)
+
+$${\mathcal T}=\{ (x_0^{(1)},y_0^{(1)}),(x_0^{(2)},y_0^{(2)}), \ldots, (x_0^{(m)}, y_0^{(m)}) \}$$
+
+entonces decimos que el **error de predicción** (cuadrático) de $\hat{f}$ para el
+ejemplo $(x_0^{(j)},y_0^{(j)})$ está dado por
+$$(y_0^{(j)} - \hat{f}(x_0^{(j)}))^2$$
+
+y el error sobre la muestra ${\mathcal T}$ es
+
+$$\hat{Err} =   \frac{1}{m}\sum_{j=1}^m (y_0^{(j)} - \hat{f}(x_0^{(j)}))^2$$
+
+Es muy importante considerar dos muestras separadas en esta definición:
+
+- No tiene mucho sentido medir el desempeño de nuestro algoritmo sobre 
+la muestra de entrenamiento, pues el algoritmo puede ver las etiquetas.
+
+- Considerar el error sobre una muestra diferente a la de entrenamiento
+nos permite evaluar si nuestro algoritmo **generaliza**, que se puede
+pensar como "verdadero" aprendizaje.
+
+- Nótese que $\hat{Err}$ es una estimación de $Err$ (por la ley de los grandes
+números, si ${\mathcal T}$ es muestra i.i.d. de $(X,Y)$).
+
+También consideramos el **error de entrenamiento**, dado por
+
+$$\overline{err} = \frac{1}{N}\sum_{i=1}^N (y^{(i)} - \hat{f}(x^{(i)}))^2$$
+- Pregunta: ¿Por qué $\overline{err}$ no necesariamente es una buena estimación
+  de $Err$?
+
+#### Ejemplo
+
+En el ejemplo que hemos estado usando, ¿que curva preferirías para
+predecir, la gris, la roja o la azul? ¿Cuál tiene menor error de entrenamiento?
+
+
+```r
+set.seed(280572)
+error <- rnorm(length(x), 0, 500)
+y <- f(x) + error
+datos_entrena <- data.frame(x=x, y=y)
+head(datos_entrena)
+```
+
+```
+##    x          y
+## 1  1   86.22033
+## 2  7 2353.75863
+## 3 10 3078.71029
+## 4  0 -397.80229
+## 5  0  424.73363
+## 6  5 3075.92998
+```
+
+```r
+curva.1 <- geom_smooth(data=datos_entrena,
+  method = "loess", se=FALSE, color="gray", span=1, size=1.1)
+curva.2 <- geom_smooth(data=datos_entrena,
+  method = "loess", se=FALSE, color="red", span=0.3, size=1.1)
+curva.3 <- geom_smooth(data=datos_entrena,
+  method = "lm", se=FALSE, color="blue", size=1.1)
+```
+
+
+```r
+ggplot(datos_entrena, aes(x=x, y=y)) + geom_point() + curva.1 + curva.2 + curva.3
+```
+
+<img src="01-intro_files/figure-html/unnamed-chunk-19-1.png" width="480" />
+
+
+Calculamos los errores de entrenamiento de cada curva:
+
+
+```r
+mod_rojo <- loess(y ~ x, data = datos_entrena, span=0.3)
+mod_gris <- loess(y ~ x, data = datos_entrena, span=1)
+mod_recta <- lm(y ~ x, data = datos_entrena)
+df_mods <- data_frame(nombre = c('recta', 'rojo','gris'))
+df_mods$modelo <- list(mod_recta, mod_rojo, mod_gris)
+```
+
+
+```r
+error_f <- function(df){
+  function(mod){
+    preds <- predict(mod, newdata = df)
+    round(sqrt(mean((preds-df$y)^2)))
+  }
+}
+error_ent <- error_f(datos_entrena)
+
+df_mods <- df_mods %>% 
+  mutate(error_entrena = map_dbl(modelo, error_ent))
+df_mods
+```
+
+```
+## # A tibble: 3 x 3
+##   nombre modelo      error_entrena
+##   <chr>  <list>              <dbl>
+## 1 recta  <S3: lm>              782
+## 2 rojo   <S3: loess>           189
+## 3 gris   <S3: loess>           389
+```
+
+El error de entrenamiento es considerablemente menor para la curva
+roja, y es más grande para la recta.
+
+Sin embargo, consideremos que tenemos una nueva muestra (de prueba).
+
+
+```r
+set.seed(218052272)
+x_0 <- sample(0:13, 100, replace = T)
+error <- rnorm(length(x_0), 0, 500)
+y_0 <- f(x_0) + error
+datos_prueba <- data_frame(x = x_0, y = y_0)
+datos_prueba
+```
+
+```
+## # A tibble: 100 x 2
+##        x      y
+##    <int>  <dbl>
+##  1     9  2156.
+##  2    11  3227.
+##  3     3  2382.
+##  4    10  3482.
+##  5     7  2733.
+##  6     7  2326.
+##  7    12  3464.
+##  8     0  -564.
+##  9    10  3296.
+## 10     0   366.
+## # ... with 90 more rows
+```
+
+
+```r
+error_p <- error_f(datos_prueba)
+df_mods <- df_mods %>% 
+  mutate(error_prueba = map_dbl(modelo, error_p))
+df_mods
+```
+
+```
+## # A tibble: 3 x 4
+##   nombre modelo      error_entrena error_prueba
+##   <chr>  <list>              <dbl>        <dbl>
+## 1 recta  <S3: lm>              782          801
+## 2 rojo   <S3: loess>           189          628
+## 3 gris   <S3: loess>           389          520
+```
+
+
+### Observaciones
+
+- El mejor modelo entrenamiento es uno que "sobreajusta" a los datos, pero es
+el peor con una muestra de prueba. La curva roja aprende del una componente
+de ruido del modelo - lo cual realmente no es aprendizaje.
+
+- El modelo de la recta no es bueno en entrenamiento ni en prueba. Este modelo
+no tiene la capacidad para aprender de la señal en los datos.
+
+- El mejor modelo en la muestra de prueba es uno que está entre la recta y
+la curva roja en términos de flexibilidad. 
+
+- Nuestra intuición para escoger el modelo gris desde el principio se refleja
+en que *generaliza* mejor que los otros, y eso a su vez se refleja en
+un error de prueba más bajo.
+
+
+
+## ¿Por qué tenemos errores?
+
+
+ ¿De dónde
+provienen los errores en la predicción? Si establemos que el error es una función
+creciente de $Y-\hat{Y}$, vemos que
+$$ Y-\hat{Y} = f(X) + \epsilon - \hat{f}(X)= (f(X) - \hat{f}(X)) + \epsilon,$$
+donde vemos que hay dos componentes que pueden hacer grande a $Y-\hat{Y}$:
+
+- La diferencia $f(X) - \hat{f}(X)$ está asociada a **error reducible**, pues
+depende de qué tan bien estimemos $f(X)$ con $\hat{f}(X)$
+- El error aleatorio $\epsilon$, asociado a  **error irreducible**.
+
+Cualquiera de estas dos cantidades pueden hacer que nuestras predicciones no sean
+precisas. 
+
+En nuestro ejemplo anterior, el error reducible:
+
+- Es grande para el modelo rojo, pues responde demasiado fuerte a ruido en los datos (tiene varianza alta).
+- Es grande para el modelo de la recta, pues no tiene capacidad para acercarse a
+la verdadera curva (está sesgado).
+
+
+<div class="comentario">
+<p>En aprendizaje supervisado, nuestro objetivo es reducir el error reducible tanto como sea posible (obtener la mejor estimación de <span class="math inline">\(f\)</span>). No podemos hacer nada acerca del error irreducible, pues este se debe a aleatoriedad en el fenómeno o a variables que no conocemos.</p>
+</div>
+
+
+
+
+#### Notación {-}
+
+Las observaciones o datos que usaremos para construir nuestras estimaciones
+las denotamos como sigue.
+
+Cada *observación* (o caso, o ejemplo) 
+está dada por el valor de una variable de entrada $X$
+y un valor de la variable de salida $Y$. 
+Cuando tenemos $N$ ejemplos de entrenamiento, los
+escribimos como los pares
+$$(x^{(1)},y^{(1)}), (x^{(2)},y^{(2)}) \ldots, (x^{(N)},y^{(N)})$$.
+Cuando los datos de entrada contienen $p$ variables o atributos, escribimos
+$$x^{(i)} = (x_1^{(i)}, x_2^{(i)},\ldots, x_p^{(i)})$$
+
+Escribimos también la matriz de entradas de dimensión Nxp:
+$$\underline{X} =  \left ( \begin{array}{cccc}
+x_1^{(1)} & x_2^{(1)} & \ldots  & x_p^{(1)} \\
+x_1^{(2)} & x_2^{(2)} & \ldots  & x_p^{(2)}\\
+\vdots & \vdots &   &  \vdots \\
+x_1^{(N)} & x_2^{(N)} & \ldots  & x_p^{(N)} \\
+ \end{array} \right)$$
+y $$\underline{y} =(y^{(1)},y^{(2)}, \ldots, y^{(N)})^t.$$
+
+Adicionalmente, usamos la notación
+
+$${\mathcal L}=\{ (x^{(1)},y^{(1)}), (x^{(2)},y^{(2)}), \ldots, (x^{(N)},y^{(N)}) \}$$
+
+para denotar al conjunto de datos con los que construimos nuestro
+modelo. A este conjunto le llamaremos *conjunto o muestra de entrenamiento*
+(learning set)
 
 
