@@ -252,6 +252,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.7" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#tarea-para-23-de-octubre"><i class="fa fa-check"></i><b>7.3.7</b> Tarea (para 23 de octubre)</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html"><i class="fa fa-check"></i><b>8</b> Validación de modelos: problemas comunes</a><ul>
+<li class="chapter" data-level="8.1" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#filtracion-de-datos"><i class="fa fa-check"></i><b>8.1</b> Filtración de datos</a></li>
+<li class="chapter" data-level="8.2" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#series-de-tiempo"><i class="fa fa-check"></i><b>8.2</b> Series de tiempo</a></li>
+<li class="chapter" data-level="8.3" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#filtracion-en-el-preprocesamiento"><i class="fa fa-check"></i><b>8.3</b> Filtración en el preprocesamiento</a></li>
+<li class="chapter" data-level="8.4" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#uso-de-variables-fuera-de-rango-temporal"><i class="fa fa-check"></i><b>8.4</b> Uso de variables fuera de rango temporal</a></li>
+<li class="chapter" data-level="8.5" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#datos-en-conglomerados-y-muestreo-complejo"><i class="fa fa-check"></i><b>8.5</b> Datos en conglomerados y muestreo complejo</a><ul>
+<li class="chapter" data-level="" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#ejemplo-32"><i class="fa fa-check"></i>Ejemplo</a></li>
+<li class="chapter" data-level="8.5.1" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#censura-y-evaluacion-incompleta"><i class="fa fa-check"></i><b>8.5.1</b> Censura y evaluación incompleta</a></li>
+<li class="chapter" data-level="8.5.2" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#ejemplo-tiendas-cerradas"><i class="fa fa-check"></i><b>8.5.2</b> Ejemplo: tiendas cerradas</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#muestras-de-validacion-chicas"><i class="fa fa-check"></i><b>8.6</b> Muestras de validación chicas</a><ul>
+<li class="chapter" data-level="" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#ejercicio-5"><i class="fa fa-check"></i>Ejercicio</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#otros-ejemplos"><i class="fa fa-check"></i><b>8.7</b> Otros ejemplos</a></li>
+<li class="chapter" data-level="8.8" data-path="validacion-de-modelos-problemas-comunes.html"><a href="validacion-de-modelos-problemas-comunes.html#resumen-1"><i class="fa fa-check"></i><b>8.8</b> Resumen</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
 
@@ -1123,69 +1139,7 @@ preds_ent &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_ub, 
 <pre class="sourceCode r"><code class="sourceCode r">preds_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_ub, <span class="dt">newx =</span> <span class="kw">cbind</span>(x_1p,x_2p), <span class="dt">type=</span><span class="st">&#39;class&#39;</span>, <span class="dt">lambda =</span><span class="st">&#39;lambda.min&#39;</span>)
 <span class="kw">mean</span>(preds_<span class="dv">1</span> <span class="op">!=</span><span class="st"> </span>mod_x<span class="op">$</span>prueba<span class="op">$</span>y)</code></pre>
 <pre><code>## [1] 0.1129412</code></pre>
-<div id="ejemplo-opcional" class="section level4">
-<h4><span class="header-section-number">6.8.0.1</span> Ejemplo (opcional)</h4>
-<p>En este ejemplo no tenemos muchos datos, pero puedes intentar
-de todas formas ajustar una red neuronal adaptada al problema
-(word embeddings, que veremos más adelante, y convoluciones
-de una dimensión a lo largo de oraciones). Quizá es buena
-idea empezar con un conjunto de datos más grandes, como
-dataset_imdb() en el paquete keras.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span>(<span class="kw">Sys.info</span>()[<span class="st">&#39;nodename&#39;</span>] <span class="op">==</span><span class="st"> &#39;vainilla.local&#39;</span>){
-  <span class="co"># esto es por mi instalación particular de tensorflow - típicamente</span>
-  <span class="co"># no es necesario que corras esta línea.</span>
-  <span class="kw">Sys.setenv</span>(<span class="dt">TENSORFLOW_PYTHON=</span><span class="st">&quot;/usr/local/bin/python&quot;</span>)
-}
-<span class="kw">library</span>(keras)
-vocabulario &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent_grande, <span class="dv">2000</span>, <span class="dt">remove_stop =</span> <span class="ot">FALSE</span>)
-<span class="kw">dim</span>(vocabulario)
-entrena &lt;-<span class="st"> </span><span class="kw">convertir_lista</span>(df_ent_grande, vocabulario)
-prueba &lt;-<span class="st"> </span><span class="kw">convertir_lista</span>(df_pr, vocabulario)
-<span class="kw">quantile</span>(<span class="kw">sapply</span>(entrena<span class="op">$</span>x, length))
-x_train &lt;-<span class="st"> </span>entrena<span class="op">$</span>x <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">pad_sequences</span>(<span class="dt">maxlen =</span> <span class="dv">2000</span>, <span class="dt">truncating=</span><span class="st">&quot;post&quot;</span>)
-x_test &lt;-<span class="st"> </span>prueba<span class="op">$</span>x <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">pad_sequences</span>(<span class="dt">maxlen =</span> <span class="dv">2000</span>, <span class="dt">truncating=</span><span class="st">&#39;post&#39;</span>)</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">keras_model_sequential</span>()
-model <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">layer_embedding</span>(<span class="dt">input_dim =</span> <span class="kw">nrow</span>(vocabulario)<span class="op">+</span><span class="dv">1</span>, <span class="dt">output_dim =</span> <span class="dv">30</span>, 
-                  <span class="dt">input_length=</span><span class="dv">2000</span>,
-                  <span class="dt">embeddings_regularizer =</span> <span class="kw">regularizer_l2</span>(<span class="fl">0.01</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="co">#layer_dropout(0.5) %&gt;%</span>
-<span class="st">  </span><span class="kw">layer_conv_1d</span>(
-    <span class="dt">filters =</span> <span class="dv">20</span>, <span class="dt">kernel_size=</span><span class="dv">3</span>, 
-    <span class="dt">padding =</span> <span class="st">&quot;valid&quot;</span>, <span class="dt">activation =</span> <span class="st">&quot;relu&quot;</span>, <span class="dt">strides =</span> <span class="dv">1</span>,
-    <span class="dt">kernel_regularizer =</span> <span class="kw">regularizer_l2</span>(<span class="fl">0.01</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="co">#  layer_dropout(0.5) %&gt;%</span>
-<span class="st">  </span><span class="kw">layer_global_max_pooling_1d</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">layer_dense</span>(<span class="dv">20</span>, <span class="dt">activation =</span><span class="st">&#39;relu&#39;</span>,
-              <span class="dt">kernel_regularizer =</span> <span class="kw">regularizer_l2</span>(<span class="fl">0.001</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="co">#layer_dropout(0.5) %&gt;%</span>
-<span class="st">  </span><span class="kw">layer_dense</span>(<span class="dv">1</span>, <span class="dt">activation=</span><span class="st">&#39;sigmoid&#39;</span>, <span class="dt">kernel_regularizer =</span> <span class="kw">regularizer_l2</span>(<span class="fl">0.001</span>)) 
 
-
-<span class="co"># Compile model</span>
-model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compile</span>(
-  <span class="dt">loss =</span> <span class="st">&quot;binary_crossentropy&quot;</span>,
-  <span class="co">#optimizer = optimizer_sgd(lr=0.001, momentum=0.0),</span>
-  <span class="dt">optimizer =</span> <span class="kw">optimizer_adam</span>(),
-  <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">&quot;accuracy&quot;</span>,<span class="st">&quot;binary_crossentropy&quot;</span>)
-)
-
-model <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">fit</span>(
-    x_train, entrena<span class="op">$</span>y,
-    <span class="dt">batch_size =</span> <span class="dv">128</span>,
-    <span class="dt">epochs =</span> <span class="dv">200</span>,
-    <span class="co">#  callback = callback_early_stopping(monitor=&#39;val_loss&#39;, patience=50),</span>
-    <span class="dt">validation_data =</span> <span class="kw">list</span>(x_test, prueba<span class="op">$</span>y)
-  )
-<span class="kw">print</span>(<span class="st">&quot;Entrenamiento&quot;</span>)
-<span class="kw">evaluate</span>(model, x_train, entrena<span class="op">$</span>y)
-<span class="kw">print</span>(<span class="st">&quot;Prueba&quot;</span>)
-<span class="kw">evaluate</span>(model, x_test, prueba<span class="op">$</span>y )</code></pre>
-
-</div>
 </div>
 </div>
             </section>
