@@ -25,7 +25,7 @@
 <meta name="author" content="Felipe González">
 
 
-<meta name="date" content="2018-06-04">
+<meta name="date" content="2018-06-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="index.html">
-
+<link rel="next" href="regresion-lineal.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -145,9 +145,112 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#predicciones"><i class="fa fa-check"></i><b>1.3</b> Predicciones</a></li>
 <li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#cuantificacion-de-error-o-precision"><i class="fa fa-check"></i><b>1.4</b> Cuantificación de error o precisión</a></li>
 <li class="chapter" data-level="1.5" data-path="introduccion.html"><a href="introduccion.html#aprendizaje"><i class="fa fa-check"></i><b>1.5</b> Tarea de aprendizaje supervisado</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="introduccion.html"><a href="introduccion.html#observaciones"><i class="fa fa-check"></i><b>1.5.1</b> Observaciones</a></li>
+<li class="chapter" data-level="" data-path="introduccion.html"><a href="introduccion.html#observaciones"><i class="fa fa-check"></i>Observaciones</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="introduccion.html"><a href="introduccion.html#por-que-tenemos-errores"><i class="fa fa-check"></i><b>1.6</b> ¿Por qué tenemos errores?</a></li>
+<li class="chapter" data-level="1.7" data-path="introduccion.html"><a href="introduccion.html#resumen"><i class="fa fa-check"></i><b>1.7</b> Resumen</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="regresion-lineal.html"><a href="regresion-lineal.html"><i class="fa fa-check"></i><b>2</b> Regresión lineal</a><ul>
+<li class="chapter" data-level="2.1" data-path="regresion-lineal.html"><a href="regresion-lineal.html#introduccion-1"><i class="fa fa-check"></i><b>2.1</b> Introducción</a></li>
+<li class="chapter" data-level="2.2" data-path="regresion-lineal.html"><a href="regresion-lineal.html#aprendizaje-de-coeficientes-ajuste"><i class="fa fa-check"></i><b>2.2</b> Aprendizaje de coeficientes (ajuste)</a></li>
+<li class="chapter" data-level="2.3" data-path="regresion-lineal.html"><a href="regresion-lineal.html#descenso-en-gradiente"><i class="fa fa-check"></i><b>2.3</b> Descenso en gradiente</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="regresion-lineal.html"><a href="regresion-lineal.html#seleccion-de-tamano-de-paso-eta"><i class="fa fa-check"></i><b>2.3.1</b> Selección de tamaño de paso <span class="math inline">\(\eta\)</span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="regresion-lineal.html"><a href="regresion-lineal.html#funciones-de-varias-variables"><i class="fa fa-check"></i><b>2.3.2</b> Funciones de varias variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="regresion-lineal.html"><a href="regresion-lineal.html#descenso-en-gradiente-para-regresion-lineal"><i class="fa fa-check"></i><b>2.4</b> Descenso en gradiente para regresión lineal</a></li>
+<li class="chapter" data-level="2.5" data-path="regresion-lineal.html"><a href="regresion-lineal.html#normalizacion-de-entradas"><i class="fa fa-check"></i><b>2.5</b> Normalización de entradas</a></li>
+<li class="chapter" data-level="2.6" data-path="regresion-lineal.html"><a href="regresion-lineal.html#interpretacion-de-modelos-lineales"><i class="fa fa-check"></i><b>2.6</b> Interpretación de modelos lineales</a></li>
+<li class="chapter" data-level="2.7" data-path="regresion-lineal.html"><a href="regresion-lineal.html#por-que-el-modelo-lineal-funciona-bien-muchas-veces"><i class="fa fa-check"></i><b>2.7</b> ¿Por qué el modelo lineal funciona bien (muchas veces)?</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="regresion-lineal.html"><a href="regresion-lineal.html#k-vecinos-mas-cercanos"><i class="fa fa-check"></i><b>2.7.1</b> k vecinos más cercanos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regresion-lineal.html"><a href="regresion-lineal.html#ejercicio-1"><i class="fa fa-check"></i>Ejercicio</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="regresion-logistica.html"><a href="regresion-logistica.html"><i class="fa fa-check"></i><b>3</b> Regresión logística</a><ul>
+<li class="chapter" data-level="3.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#el-problema-de-clasificacion"><i class="fa fa-check"></i><b>3.1</b> El problema de clasificación</a><ul>
+<li class="chapter" data-level="" data-path="regresion-logistica.html"><a href="regresion-logistica.html#que-estimar-en-problemas-de-clasificacion"><i class="fa fa-check"></i>¿Qué estimar en problemas de clasificación?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#estimacion-de-probabilidades-de-clase"><i class="fa fa-check"></i><b>3.2</b> Estimación de probabilidades de clase</a><ul>
+<li class="chapter" data-level="" data-path="regresion-logistica.html"><a href="regresion-logistica.html#ejemplo-9"><i class="fa fa-check"></i>Ejemplo</a></li>
+<li class="chapter" data-level="3.2.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#k-vecinos-mas-cercanos-1"><i class="fa fa-check"></i><b>3.2.1</b> k-vecinos más cercanos</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="regresion-logistica.html"><a href="regresion-logistica.html#error-para-modelos-de-clasificacion"><i class="fa fa-check"></i><b>3.3</b> Error para modelos de clasificación</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#ejercicio-2"><i class="fa fa-check"></i><b>3.3.1</b> Ejercicio</a></li>
+<li class="chapter" data-level="3.3.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#error-de-clasificacion-y-funcion-de-perdida-0-1"><i class="fa fa-check"></i><b>3.3.2</b> Error de clasificación y función de pérdida 0-1</a></li>
+<li class="chapter" data-level="3.3.3" data-path="regresion-logistica.html"><a href="regresion-logistica.html#discusion-relacion-entre-devianza-y-error-de-clasificacion"><i class="fa fa-check"></i><b>3.3.3</b> Discusión: relación entre devianza y error de clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-1"><i class="fa fa-check"></i><b>3.4</b> Regresión logística</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-simple"><i class="fa fa-check"></i><b>3.4.1</b> Regresión logística simple</a></li>
+<li class="chapter" data-level="3.4.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#funcion-logistica"><i class="fa fa-check"></i><b>3.4.2</b> Función logística</a></li>
+<li class="chapter" data-level="3.4.3" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-2"><i class="fa fa-check"></i><b>3.4.3</b> Regresión logística</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="regresion-logistica.html"><a href="regresion-logistica.html#aprendizaje-de-coeficientes-para-regresion-logistica-binomial."><i class="fa fa-check"></i><b>3.5</b> Aprendizaje de coeficientes para regresión logística (binomial).</a></li>
+<li class="chapter" data-level="3.6" data-path="regresion-logistica.html"><a href="regresion-logistica.html#observaciones-adicionales"><i class="fa fa-check"></i><b>3.6</b> Observaciones adicionales</a></li>
+<li class="chapter" data-level="" data-path="regresion-logistica.html"><a href="regresion-logistica.html#ejercicio-datos-de-diabetes"><i class="fa fa-check"></i>Ejercicio: datos de diabetes</a></li>
+<li class="chapter" data-level="3.7" data-path="regresion-logistica.html"><a href="regresion-logistica.html#mas-sobre-problemas-de-clasificacion"><i class="fa fa-check"></i><b>3.7</b> Más sobre problemas de clasificación</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#analisis-de-error-para-clasificadores-binarios"><i class="fa fa-check"></i><b>3.7.1</b> Análisis de error para clasificadores binarios</a></li>
+<li class="chapter" data-level="3.7.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-para-problemas-de-mas-de-2-clases"><i class="fa fa-check"></i><b>3.7.2</b> Regresión logística para problemas de más de 2 clases</a></li>
+<li class="chapter" data-level="3.7.3" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-multinomial"><i class="fa fa-check"></i><b>3.7.3</b> Regresión logística multinomial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html"><i class="fa fa-check"></i><b>4</b> Regresión regularizada</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#sesgo-y-varianza-en-modelos-lineales"><i class="fa fa-check"></i><b>4.0.1</b> Sesgo y varianza en modelos lineales</a></li>
+<li class="chapter" data-level="4.0.2" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#reduciendo-varianza-de-los-coeficientes"><i class="fa fa-check"></i><b>4.0.2</b> Reduciendo varianza de los coeficientes</a></li>
+<li class="chapter" data-level="4.1" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#regularizacion-ridge"><i class="fa fa-check"></i><b>4.1</b> Regularización ridge</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#seleccion-de-coeficiente-de-regularizacion"><i class="fa fa-check"></i><b>4.1.1</b> Selección de coeficiente de regularización</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#entrenamiento-validacion-y-prueba"><i class="fa fa-check"></i><b>4.2</b> Entrenamiento, Validación y Prueba</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#validacion-cruzada"><i class="fa fa-check"></i><b>4.2.1</b> Validación cruzada</a></li>
+<li class="chapter" data-level="" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#ejercicio-4"><i class="fa fa-check"></i>Ejercicio</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#regularizacion-lasso"><i class="fa fa-check"></i><b>4.3</b> Regularización lasso</a></li>
+<li class="chapter" data-level="4.4" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#tarea"><i class="fa fa-check"></i><b>4.4</b> Tarea</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html"><i class="fa fa-check"></i><b>5</b> Descenso estocástico</a><ul>
+<li class="chapter" data-level="5.1" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#algoritmo-de-descenso-estocastico"><i class="fa fa-check"></i><b>5.1</b> Algoritmo de descenso estocástico</a></li>
+<li class="chapter" data-level="5.2" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#por-que-usar-descenso-estocastico-por-minilotes"><i class="fa fa-check"></i><b>5.2</b> ¿Por qué usar descenso estocástico por minilotes?</a></li>
+<li class="chapter" data-level="5.3" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#escogiendo-la-tasa-de-aprendizaje"><i class="fa fa-check"></i><b>5.3</b> Escogiendo la tasa de aprendizaje</a></li>
+<li class="chapter" data-level="5.4" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#mejoras-al-algoritmo-de-descenso-estocastico."><i class="fa fa-check"></i><b>5.4</b> Mejoras al algoritmo de descenso estocástico.</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#decaimiento-de-tasa-de-aprendizaje"><i class="fa fa-check"></i><b>5.4.1</b> Decaimiento de tasa de aprendizaje</a></li>
+<li class="chapter" data-level="5.4.2" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#momento"><i class="fa fa-check"></i><b>5.4.2</b> Momento</a></li>
+<li class="chapter" data-level="5.4.3" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#otras-variaciones"><i class="fa fa-check"></i><b>5.4.3</b> Otras variaciones</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html"><i class="fa fa-check"></i><b>6</b> Diagnóstico y mejora de modelos</a><ul>
+<li class="chapter" data-level="6.1" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#aspectos-generales"><i class="fa fa-check"></i><b>6.1</b> Aspectos generales</a></li>
+<li class="chapter" data-level="6.2" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#que-hacer-cuando-el-desempeno-no-es-satisfactorio"><i class="fa fa-check"></i><b>6.2</b> ¿Qué hacer cuando el desempeño no es satisfactorio?</a></li>
+<li class="chapter" data-level="6.3" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#pipeline-de-procesamiento"><i class="fa fa-check"></i><b>6.3</b> Pipeline de procesamiento</a></li>
+<li class="chapter" data-level="6.4" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#diagnosticos-sesgo-y-varianza"><i class="fa fa-check"></i><b>6.4</b> Diagnósticos: sesgo y varianza</a></li>
+<li class="chapter" data-level="6.5" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#refinando-el-pipeline"><i class="fa fa-check"></i><b>6.5</b> Refinando el pipeline</a></li>
+<li class="chapter" data-level="6.6" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#consiguiendo-mas-datos"><i class="fa fa-check"></i><b>6.6</b> Consiguiendo más datos</a></li>
+<li class="chapter" data-level="6.7" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#usar-datos-adicionales"><i class="fa fa-check"></i><b>6.7</b> Usar datos adicionales</a></li>
+<li class="chapter" data-level="6.8" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#examen-de-modelo-y-analisis-de-errores"><i class="fa fa-check"></i><b>6.8</b> Examen de modelo y Análisis de errores</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html"><i class="fa fa-check"></i><b>7</b> Métodos basados en árboles</a><ul>
+<li class="chapter" data-level="7.1" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#arboles-para-regresion-y-clasificacion."><i class="fa fa-check"></i><b>7.1</b> Árboles para regresión y clasificación.</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#arboles-para-clasificacion"><i class="fa fa-check"></i><b>7.1.1</b> Árboles para clasificación</a></li>
+<li class="chapter" data-level="7.1.2" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#tipos-de-particion"><i class="fa fa-check"></i><b>7.1.2</b> Tipos de partición</a></li>
+<li class="chapter" data-level="7.1.3" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#medidas-de-impureza"><i class="fa fa-check"></i><b>7.1.3</b> Medidas de impureza</a></li>
+<li class="chapter" data-level="7.1.4" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#reglas-de-particion-y-tamano-del-arobl"><i class="fa fa-check"></i><b>7.1.4</b> Reglas de partición y tamaño del árobl</a></li>
+<li class="chapter" data-level="7.1.5" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#costo---complejidad-breiman"><i class="fa fa-check"></i><b>7.1.5</b> Costo - Complejidad (Breiman)</a></li>
+<li class="chapter" data-level="7.1.6" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#opcional-predicciones-con-cart"><i class="fa fa-check"></i><b>7.1.6</b> (Opcional) Predicciones con CART</a></li>
+<li class="chapter" data-level="7.1.7" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#arboles-para-regresion"><i class="fa fa-check"></i><b>7.1.7</b> Árboles para regresión</a></li>
+<li class="chapter" data-level="7.1.8" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#variabilidad-en-el-proceso-de-construccion"><i class="fa fa-check"></i><b>7.1.8</b> Variabilidad en el proceso de construcción</a></li>
+<li class="chapter" data-level="7.1.9" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#relaciones-lineales"><i class="fa fa-check"></i><b>7.1.9</b> Relaciones lineales</a></li>
+<li class="chapter" data-level="7.1.10" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ventajas-y-desventajas-de-arboles"><i class="fa fa-check"></i><b>7.1.10</b> Ventajas y desventajas de árboles</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#bagging-de-arboles"><i class="fa fa-check"></i><b>7.2</b> Bagging de árboles</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ejemplo-28"><i class="fa fa-check"></i><b>7.2.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="7.2.2" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#mejorando-bagging"><i class="fa fa-check"></i><b>7.2.2</b> Mejorando bagging</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#bosques-aleatorios"><i class="fa fa-check"></i><b>7.3</b> Bosques aleatorios</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#sabiduria-de-las-masas"><i class="fa fa-check"></i><b>7.3.1</b> Sabiduría de las masas</a></li>
+<li class="chapter" data-level="7.3.2" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ejemplo-29"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
+<li class="chapter" data-level="7.3.3" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#mas-detalles-de-bosques-aleatorios."><i class="fa fa-check"></i><b>7.3.3</b> Más detalles de bosques aleatorios.</a></li>
+<li class="chapter" data-level="7.3.4" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#importancia-de-variables"><i class="fa fa-check"></i><b>7.3.4</b> Importancia de variables</a></li>
+<li class="chapter" data-level="7.3.5" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ajustando-arboles-aleatorios."><i class="fa fa-check"></i><b>7.3.5</b> Ajustando árboles aleatorios.</a></li>
+<li class="chapter" data-level="7.3.6" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ventajas-y-desventajas-de-arboles-aleatorios"><i class="fa fa-check"></i><b>7.3.6</b> Ventajas y desventajas de árboles aleatorios</a></li>
+<li class="chapter" data-level="7.3.7" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#tarea-para-23-de-octubre"><i class="fa fa-check"></i><b>7.3.7</b> Tarea (para 23 de octubre)</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
@@ -176,10 +279,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Métodos <strong>computacionales</strong> para <strong>aprender de datos</strong> con el fin
 de producir reglas para
 mejorar el <strong>desempeño</strong> en alguna tarea o toma de decisión.</p>
-<p>En este curso nos enfocamos en las tareas de aprendizaje supervisado
-(predecir o estimar una variable respuesta a partir de datos de entrada) y
-aprendizaje no supervisado (describir estructuras interesantes en datos,
-donde no necesariamente hay una respuesta que predecir).</p>
+<p>En este curso nos enfocamos en las tareas de aprendizaje supervisado,
+donde intentamos
+predecir o estimar una variable respuesta a partir de datos de entrada.</p>
 <div id="ejemplos-de-tareas-de-aprendizaje" class="section level4 unnumbered">
 <h4>Ejemplos de tareas de aprendizaje:</h4>
 <ul>
@@ -227,7 +329,6 @@ ortográfico.)</li>
 imagenes de 16x16 pixeles), y una <em>etiqueta</em> asociada, que es el número
 que la imagen representa. Podemos ver las imágenes y las etiquetas:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(kableExtra)
 zip_train &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&#39;datos/zip-train.csv&#39;</span>)
 muestra_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sample_n</span>(zip_train, <span class="dv">10</span>)
 <span class="kw">graficar_digitos</span>(muestra_<span class="dv">1</span>)</code></pre>
@@ -237,7 +338,7 @@ muestra_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"
 <p><img src="01-intro_files/figure-html/unnamed-chunk-2-1.png" width="400px" /></p>
 <p>Los 16x16=256 están escritos acomodando las filas de la imagen en
 vector de 256 valores (cada renglón de <code>zip_train</code>). Un dígito entonces
-se representa como sigue:</p>
+se representa como in vector de 256 números:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(zip_train)</code></pre>
 <pre><code>## [1] 7291  257</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(zip_train[<span class="dv">1</span>,])</code></pre>
@@ -267,14 +368,12 @@ se representa como sigue:</p>
 ## [231]  1.000  1.000  1.000  1.000  1.000  1.000  0.219 -0.943 -1.000 -1.000
 ## [241] -1.000 -1.000 -1.000 -1.000 -1.000 -0.974 -0.429  0.304  0.823  1.000
 ## [251]  0.482 -0.474 -0.991 -1.000 -1.000 -1.000 -1.000</code></pre>
-<ul>
-<li>Un enfoque más utilizado anteriormente para resolver este tipo de problemas
-consistía en procesar estas imágenes con filtros hechos a mano (por ejemplo,
+<p>¿Cómo combinamos esta información en un cálculo para reconocer el dígito
+computacionalmente? Un enfoque más utilizado anteriormente para resolver este tipo de problemas consistía en procesar estas imágenes con filtros hechos a mano (por ejemplo,
 calcular cuántos pixeles están prendidos, si existen ciertas curvas o trazos)
 para después construir reglas para determinar cada dígito. Actualmente,
 el enfoque más exitoso es utilizar métodos de aprendizaje que aprendan
-automáticamente esos filtros y esas reglas basadas en filtros (redes convolucionales).</li>
-</ul>
+automáticamente esos filtros y esas reglas basadas en filtros (redes convolucionales).</p>
 </div>
 <div id="ejemplo-predecir-ingreso-trimestral" class="section level4 unnumbered">
 <h4>Ejemplo: predecir ingreso trimestral</h4>
@@ -284,198 +383,98 @@ es muy costosa en tiempo y dinero.</p>
 <pre class="sourceCode r"><code class="sourceCode r">dat_ingreso &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&#39;datos/enigh-ejemplo.csv&#39;</span>)
 <span class="kw">head</span>(dat_ingreso) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">select</span>(TAM_HOG, INGCOR, NOM_ENT_<span class="dv">1</span>, FOCOS, 
-           PISOS, marginación, tamaño_localidad) <span class="op">%&gt;%</span>
+           PISOS, marginación, tamaño_localidad)  <span class="op">%&gt;%</span>
 <span class="st">    </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
 <table>
 <thead>
-<tr>
-<th style="text-align:right;">
-TAM_HOG
-</th>
-<th style="text-align:right;">
-INGCOR
-</th>
-<th style="text-align:left;">
-NOM_ENT_1
-</th>
-<th style="text-align:right;">
-FOCOS
-</th>
-<th style="text-align:right;">
-PISOS
-</th>
-<th style="text-align:left;">
-marginación
-</th>
-<th style="text-align:left;">
-tamaño_localidad
-</th>
+<tr class="header">
+<th align="right">TAM_HOG</th>
+<th align="right">INGCOR</th>
+<th align="left">NOM_ENT_1</th>
+<th align="right">FOCOS</th>
+<th align="right">PISOS</th>
+<th align="left">marginación</th>
+<th align="left">tamaño_localidad</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-30238.13
-</td>
-<td style="text-align:left;">
-Jalisco
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-Muy bajo
-</td>
-<td style="text-align:left;">
-De 15 mil a 100 mil
-</td>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">30238.13</td>
+<td align="left">Jalisco</td>
+<td align="right">11</td>
+<td align="right">3</td>
+<td align="left">Muy bajo</td>
+<td align="left">De 15 mil a 100 mil</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-61147.41
-</td>
-<td style="text-align:left;">
-México
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-Bajo
-</td>
-<td style="text-align:left;">
-De 15 mil a 100 mil
-</td>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">61147.41</td>
+<td align="left">México</td>
+<td align="right">10</td>
+<td align="right">2</td>
+<td align="left">Bajo</td>
+<td align="left">De 15 mil a 100 mil</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-6170.21
-</td>
-<td style="text-align:left;">
-Puebla
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Alto
-</td>
-<td style="text-align:left;">
-De 2500 a 15 mil
-</td>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">6170.21</td>
+<td align="left">Puebla</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">Alto</td>
+<td align="left">De 2500 a 15 mil</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-14639.79
-</td>
-<td style="text-align:left;">
-Distrito Federal
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-Muy bajo
-</td>
-<td style="text-align:left;">
-100 mil o más
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">14639.79</td>
+<td align="left">Distrito Federal</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="left">Muy bajo</td>
+<td align="left">100 mil o más</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-40638.35
-</td>
-<td style="text-align:left;">
-Chihuahua
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-Muy bajo
-</td>
-<td style="text-align:left;">
-De 15 mil a 100 mil
-</td>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">40638.35</td>
+<td align="left">Chihuahua</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="left">Muy bajo</td>
+<td align="left">De 15 mil a 100 mil</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-21172.35
-</td>
-<td style="text-align:left;">
-Baja California
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-Muy bajo
-</td>
-<td style="text-align:left;">
-100 mil o más
-</td>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">21172.35</td>
+<td align="left">Baja California</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="left">Muy bajo</td>
+<td align="left">100 mil o más</td>
 </tr>
 </tbody>
 </table>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dat_ingreso, <span class="kw">aes</span>(<span class="dt">x=</span>INGTOT)) <span class="op">+</span><span class="st">  </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">100</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_x_log10</span>()</code></pre>
-<p><img src="01-intro_files/figure-html/unnamed-chunk-4-1.png" width="480" /></p>
+<p><img src="01-intro_files/figure-html/unnamed-chunk-5-1.png" width="480" /></p>
 <p>Pero quizá podemos usar otras variables más fácilmente medibles
 para predecir el ingreso de un hogar. Por ejemplo, si consideramos el número
 de focos en la vivienda:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dat_ingreso, <span class="kw">aes</span>(<span class="dt">x =</span> FOCOS, <span class="dt">y =</span> INGTOT)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_log10</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))</code></pre>
-<p><img src="01-intro_files/figure-html/unnamed-chunk-5-1.png" width="480" /></p>
+<p><img src="01-intro_files/figure-html/unnamed-chunk-6-1.png" width="480" /></p>
 <p>O el tamaño de la localidad:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dat_ingreso, <span class="kw">aes</span>(<span class="dt">x =</span> tamaño_localidad, <span class="dt">y =</span> INGTOT)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_log10</span>() </code></pre>
-<p><img src="01-intro_files/figure-html/unnamed-chunk-6-1.png" width="480" /></p>
-<ul>
-<li>En algunas encuestas se pregunta directamente el ingreso mensual del hogar. La
+<p><img src="01-intro_files/figure-html/unnamed-chunk-7-1.png" width="480" /></p>
+<p>En algunas encuestas se pregunta directamente el ingreso mensual del hogar. La
 respuesta es generalmente una mala estimación del verdadero ingreso, por lo que
 actualmente se prefiere utilizar aprendizaje para estimar a partir de otras
 variables que son más fielmente reportadas por encuestados (años de estudio,
-ocupación, número de focos en el hogar, etc.)</li>
-</ul>
+ocupación, número de focos en el hogar, etc.)</p>
 </div>
 </div>
 <div id="aprendizaje-supervisado" class="section level2">
@@ -497,7 +496,7 @@ donde <span class="math inline">\(\epsilon\)</span> es una término de error ale
 que tiene valor esperado <span class="math inline">\(\textrm{E}(\epsilon)=0\)</span>.</p>
 <ul>
 <li><span class="math inline">\(f\)</span> expresa la relación sistemática que hay entre <span class="math inline">\(Y\)</span> y <span class="math inline">\(X\)</span>: para cada valor
-posible de <span class="math inline">\(X\)</span>, la <code>contribución</code> de <span class="math inline">\(X\)</span> a <span class="math inline">\(Y\)</span> es <span class="math inline">\(f(X)\)</span>.</li>
+posible de <span class="math inline">\(X\)</span>, la <strong>contribución</strong> de <span class="math inline">\(X\)</span> a <span class="math inline">\(Y\)</span> es <span class="math inline">\(f(X)\)</span>.</li>
 <li>Pero <span class="math inline">\(X\)</span> <strong>no determina</strong> a <span class="math inline">\(Y\)</span>, como en el ejemplo anterior de rendimiento
 de coches.
 Entonces agregamos una error aleatorio <span class="math inline">\(\epsilon\)</span>, con media cero (si la media
@@ -505,6 +504,7 @@ no es cero podemos agregar una constante a <span class="math inline">\(f\)</span
 acerca de <span class="math inline">\(X\)</span> (independiente de <span class="math inline">\(X\)</span>).</li>
 <li><span class="math inline">\(\epsilon\)</span> representa, por ejemplo, el efecto de variables que no hemos
 medido o procesos aleatorios que determinan la respuesta.</li>
+<li>La función <span class="math inline">\(f\)</span> típicamente es complicada y desconocida.</li>
 </ul>
 <div id="ejemplo" class="section level4 unnumbered">
 <h4>Ejemplo</h4>
@@ -521,7 +521,7 @@ determinada por el fenómeno)</p>
 <p>El ingreso no se determina
 únicamente por número de años de estudio. Suponemos entonces que hay algunas
 variables
-adicional que perturba los niveles de <span class="math inline">\(f(X)\)</span> por una cantidad aleatoria. Los
+adicionales que perturban los niveles de <span class="math inline">\(f(X)\)</span> por una cantidad aleatoria. Los
 valores que observamos de <span class="math inline">\(Y\)</span> están dados entonces por <span class="math inline">\(Y=f(X)+\epsilon\)</span>.</p>
 <p>Entonces podríamos obtener, por ejemplo:</p>
 <pre class="sourceCode r"><code class="sourceCode r">x_g &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">20</span>,<span class="fl">0.5</span>)
@@ -533,9 +533,9 @@ y &lt;-<span class="st"> </span><span class="kw">f</span>(x) <span class="op">+<
 datos &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)
 datos<span class="op">$</span>y_media &lt;-<span class="st"> </span><span class="kw">f</span>(datos<span class="op">$</span>x)
 <span class="kw">ggplot</span>(datos, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data=</span>dat_g, <span class="dt">colour =</span> <span class="st">&#39;blue&#39;</span>, <span class="dt">size =</span> <span class="fl">1.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data=</span>dat_g, <span class="dt">colour =</span> <span class="st">&#39;gray&#39;</span>, <span class="dt">size =</span> <span class="fl">1.1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">xend =</span> x, <span class="dt">y =</span> y, <span class="dt">yend =</span> y_media), <span class="dt">col=</span><span class="st">&#39;red&#39;</span>)</code></pre>
-<p><img src="01-intro_files/figure-html/unnamed-chunk-9-1.png" width="480" /></p>
+<p><img src="01-intro_files/figure-html/unnamed-chunk-10-1.png" width="480" /></p>
 <p>En problemas de aprendizaje nunca conocemos esta <span class="math inline">\(f\)</span> verdadera,
 aunque quizá sabemos algo acerca de sus propiedades (por ejemplo, continua, de
 variación suave). Lo que tenemos son los datos, que también podrían haber resultado
@@ -545,7 +545,7 @@ error &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="k
 y &lt;-<span class="st"> </span><span class="kw">f</span>(x) <span class="op">+</span><span class="st"> </span>error
 datos &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)
 <span class="kw">ggplot</span>(datos, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() </code></pre>
-<p><img src="01-intro_files/figure-html/unnamed-chunk-10-1.png" width="480" /></p>
+<p><img src="01-intro_files/figure-html/unnamed-chunk-11-1.png" width="480" /></p>
 <p>La siguiente observación nos da una idea de lo que intentamos hacer, aunque
 todavía es vaga y requiere refinamiento:</p>
 <div class="comentario">
@@ -563,7 +563,7 @@ tenemos, y qué tan buenas pueden ser nuestras predicciones.</p>
 </div>
 <div id="predicciones" class="section level2">
 <h2><span class="header-section-number">1.3</span> Predicciones</h2>
-<p>La idea es entonces producir una estimación de f que nos permita hacer predicciones.</p>
+<p>La idea es entonces producir una estimación de <span class="math inline">\(f\)</span> que nos permita hacer predicciones.</p>
 <p>Si denotamos por <span class="math inline">\(\hat{f}\)</span> a una estimación de <span class="math inline">\(f\)</span> construida a partir de los datos,
 podemos hacer predicciones aplicando <span class="math inline">\(\hat{f}\)</span> a valores de <span class="math inline">\(X\)</span>.
 La predicción de Y la denotamos por <span class="math inline">\(\hat{Y}\)</span>, y <span class="math display">\[\hat{Y}=\hat{f}(X).\]</span>
@@ -574,7 +574,7 @@ ajustada por mínimos cuadrados:</p>
 <pre class="sourceCode r"><code class="sourceCode r">curva_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span>datos,
   <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span><span class="ot">FALSE</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x, <span class="dt">size =</span> <span class="fl">1.1</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(datos, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>curva_<span class="dv">1</span></code></pre>
-<p><img src="01-intro_files/figure-html/unnamed-chunk-13-1.png" width="480" /></p>
+<p><img src="01-intro_files/figure-html/unnamed-chunk-14-1.png" width="480" /></p>
 <p>En este caso <span class="math inline">\(\hat{f}\)</span> es una recta, y la podemos usar para hacer predicciones.
 Por ejemplo, si tenemos una observación con
 <span class="math inline">\(x_0=8\)</span> años de estudio, nuestra predicción del ingreso
@@ -589,7 +589,7 @@ pred_<span class="dv">1</span></code></pre>
 <span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">x =</span> <span class="dv">8</span>, <span class="dt">xend =</span> <span class="dv">8</span>, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">yend =</span> pred_<span class="dv">1</span>, <span class="dt">colour =</span> <span class="st">&#39;salmon&#39;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">annotate</span>(<span class="st">&#39;text&#39;</span>, <span class="dt">x =</span> <span class="fl">0.5</span>, <span class="dt">y =</span> pred_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">100</span>, <span class="dt">label =</span> <span class="kw">round</span>(pred_<span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>( <span class="dt">x=</span> <span class="dv">8</span>, <span class="dt">y =</span><span class="dv">3200</span>, <span class="dt">col=</span><span class="st">&#39;green&#39;</span>, <span class="dt">size =</span> <span class="dv">4</span>)</code></pre>
-<p><img src="01-intro_files/figure-html/unnamed-chunk-15-1.png" width="480" /></p>
+<p><img src="01-intro_files/figure-html/unnamed-chunk-16-1.png" width="480" /></p>
 <p>Si observamos que para esta observación con <span class="math inline">\(x_0=8\)</span>, resulta que
 el correspondiente ingreso es <span class="math inline">\(y_0=3200\)</span>, entonces el error sería</p>
 <pre class="sourceCode r"><code class="sourceCode r">y_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">3200</span>
@@ -634,15 +634,23 @@ que llamamos <strong>conjunto de entrenamiento</strong>. Nótese que usamos min�
 para denotar observaciones particulares de <span class="math inline">\((X,Y)\)</span>.</p>
 <p>Un <strong>algoritmo de aprendizaje</strong> es una regla que asigna a cada conjunto de
 entrenamiento <span class="math inline">\({\mathcal L}\)</span> una función <span class="math inline">\(\hat{f}\)</span>:</p>
-<p><span class="math display">\[{\mathcal L} \to \hat{f}.\]</span>
-El desempeño del predictor particular <span class="math inline">\(\hat{f}\)</span> se mide como sigue: si
+<p><span class="math display">\[{\mathcal L} \to \hat{f}.\]</span></p>
+<p>Para medir el desempeño de un predictor particular <span class="math inline">\(\hat{f}\)</span> queremos
+ver cómo se va a comportar haciendo predicciones <strong>que no fueron vistos
+en el entrenamiento</strong>. Esto es porque esta es justamente la tarea que queremos resolver:</p>
+<ul>
+<li>Tenemos un conjunto de datos de entrenamiento, y construimos nuestro predictor <span class="math inline">\(\hat{f}\)</span>.</li>
+<li>En el futuro llegan nuevos datos, y queremos aplicar nuestro predictor para
+hacer predicciones.</li>
+</ul>
+<p>Entonces, el desempeño del predictor particular <span class="math inline">\(\hat{f}\)</span> se mide como sigue: si
 en el futuro observamos otra muestra <span class="math inline">\({\mathcal T}\)</span> (que podemos llamar <strong>muestra de prueba</strong>)</p>
 <p><span class="math display">\[{\mathcal T}=\{ (x_0^{(1)},y_0^{(1)}),(x_0^{(2)},y_0^{(2)}), \ldots, (x_0^{(m)}, y_0^{(m)}) \}\]</span></p>
 <p>entonces decimos que el <strong>error de predicción</strong> (cuadrático) de <span class="math inline">\(\hat{f}\)</span> para el
 ejemplo <span class="math inline">\((x_0^{(j)},y_0^{(j)})\)</span> está dado por
 <span class="math display">\[(y_0^{(j)} - \hat{f}(x_0^{(j)}))^2\]</span></p>
 <p>y el error sobre la muestra <span class="math inline">\({\mathcal T}\)</span> es</p>
-<p><span class="math display">\[\hat{Err} =   \frac{1}{m}\sum_{j=1}^m (y_0^{(j)} - \hat{f}(x_0^{(j)}))^2\]</span></p>
+<p><span class="math display">\[\widehat{Err} =   \frac{1}{m}\sum_{j=1}^m (y_0^{(j)} - \hat{f}(x_0^{(j)}))^2\]</span></p>
 <p>Es muy importante considerar dos muestras separadas en esta definición:</p>
 <ul>
 <li><p>No tiene mucho sentido medir el desempeño de nuestro algoritmo sobre
@@ -650,13 +658,17 @@ la muestra de entrenamiento, pues el algoritmo puede ver las etiquetas.</p></li>
 <li><p>Considerar el error sobre una muestra diferente a la de entrenamiento
 nos permite evaluar si nuestro algoritmo <strong>generaliza</strong>, que se puede
 pensar como “verdadero” aprendizaje.</p></li>
-<li><p>Nótese que <span class="math inline">\(\hat{Err}\)</span> es una estimación de <span class="math inline">\(Err\)</span> (por la ley de los grandes
+<li><p>Nótese que <span class="math inline">\(\widehat{Err}\)</span> es una estimación de <span class="math inline">\(Err\)</span> (por la ley de los grandes
 números, si <span class="math inline">\({\mathcal T}\)</span> es muestra i.i.d. de <span class="math inline">\((X,Y)\)</span>).</p></li>
 </ul>
 <p>También consideramos el <strong>error de entrenamiento</strong>, dado por</p>
-<p><span class="math display">\[\overline{err} = \frac{1}{N}\sum_{i=1}^N (y^{(i)} - \hat{f}(x^{(i)}))^2\]</span>
-- Pregunta: ¿Por qué <span class="math inline">\(\overline{err}\)</span> no necesariamente es una buena estimación
-de <span class="math inline">\(Err\)</span>?</p>
+<p><span class="math display">\[\overline{err} = \frac{1}{N}\sum_{i=1}^N (y^{(i)} - \hat{f}(x^{(i)}))^2\]</span></p>
+<p>Nótese sin embargo que el error de entrenamiento <strong>no necesariamente es
+una buena estimación del error de prueba, que mide el desempeño verdadero
+del modelo</strong>. La razón es que modelos suficientemente flexibles pueden
+<strong>memorizar</strong> los datos de entrenamiento en lugar de <strong>aprender</strong> a generalizar
+de ellos. Un error de entrenamiento bajo no garantiza un desempeño bueno
+en el futuro. Discutiremos este punto más adelante.</p>
 <div id="ejemplo-1" class="section level4">
 <h4><span class="header-section-number">1.5.0.1</span> Ejemplo</h4>
 <p>En el ejemplo que hemos estado usando, ¿que curva preferirías para
@@ -680,7 +692,7 @@ curva<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">g
 curva<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span>datos_entrena,
   <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span><span class="ot">FALSE</span>, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="fl">1.1</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(datos_entrena, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>curva<span class="fl">.1</span> <span class="op">+</span><span class="st"> </span>curva<span class="fl">.2</span> <span class="op">+</span><span class="st"> </span>curva<span class="fl">.3</span></code></pre>
-<p><img src="01-intro_files/figure-html/unnamed-chunk-19-1.png" width="480" /></p>
+<p><img src="01-intro_files/figure-html/unnamed-chunk-20-1.png" width="480" /></p>
 <p>Calculamos los errores de entrenamiento de cada curva:</p>
 <pre class="sourceCode r"><code class="sourceCode r">mod_rojo &lt;-<span class="st"> </span><span class="kw">loess</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> datos_entrena, <span class="dt">span=</span><span class="fl">0.3</span>)
 mod_gris &lt;-<span class="st"> </span><span class="kw">loess</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> datos_entrena, <span class="dt">span=</span><span class="dv">1</span>)
@@ -738,9 +750,16 @@ df_mods</code></pre>
 ## 2 rojo   &lt;S3: loess&gt;           189          628
 ## 3 gris   &lt;S3: loess&gt;           389          520</code></pre>
 </div>
-<div id="observaciones" class="section level3">
-<h3><span class="header-section-number">1.5.1</span> Observaciones</h3>
+<div id="observaciones" class="section level3 unnumbered">
+<h3>Observaciones</h3>
+
+<div class="comentario">
 <ul>
+<li>En la tarea de aprendizaje estadístico, las dos partes, <strong>entrenamiento</strong>
+y <strong>prueba</strong>, son cruciales. Una no tiene sentido sin la otra.</li>
+<li>Si no hacemos entrenamiento, no podemos construir
+modelos que respondan a los datos. Si no hacemos prueba, no podemos saber si nuestro modelo ajustado en entrenamiento es bueno o malo.
+</div></li>
 <li><p>El mejor modelo entrenamiento es uno que “sobreajusta” a los datos, pero es
 el peor con una muestra de prueba. La curva roja aprende del una componente
 de ruido del modelo - lo cual realmente no es aprendizaje.</p></li>
@@ -804,8 +823,32 @@ y <span class="math display">\[\underline{y} =(y^{(1)},y^{(2)}, \ldots, y^{(N)})
 <p>para denotar al conjunto de datos con los que construimos nuestro
 modelo. A este conjunto le llamaremos <em>conjunto o muestra de entrenamiento</em>
 (learning set)</p>
-
 </div>
+</div>
+<div id="resumen" class="section level2">
+<h2><span class="header-section-number">1.7</span> Resumen</h2>
+<ul>
+<li><p>Aprendizaje de máquina: algoritmos que aprenden de los datos para predecir cantidades
+numéricas, o clasificar (aprendizaje supervisado), o para encontrar estructura en los
+datos (aprendizaje no supervisado).</p></li>
+<li>En aprendizaje supervisado, el esquema general es:
+<ul>
+<li>Un algoritmo aprende de una
+muestra de entrenamiento <span class="math inline">\({\mathcal L}\)</span>, que es generada por el proceso generador de datos que nos interesa. Eso quiere decir que produce una función <span class="math inline">\(\hat{f}\)</span> (a partir de <span class="math inline">\({\mathcal L}\)</span>) que nos sirve para hacer predicciones <span class="math inline">\(x \to \hat{f}(x)\)</span> de <span class="math inline">\(y\)</span></li>
+<li>El error de predicción del algoritmo es <span class="math inline">\(Err\)</span>, que mide en promedio qué tan lejos están las predicciones de valores reales.</li>
+<li>Para estimar esta cantidad usamos una muestra de prueba <span class="math inline">\({\mathcal T}\)</span>, que
+es independiente de <span class="math inline">\({\mathcal L}\)</span>.</li>
+<li>Esta es porque nos interesa el desempeño futuro de <span class="math inline">\(\hat{f}\)</span> para nuevos casos
+que el algoritmo no ha visto (esto es aprender).</li>
+</ul></li>
+<li><p>El error en la muestra de entrenamiento no necesariamente es buen indicador
+del desempeño futuro de nuestro algoritmo.</p></li>
+<li><p>Para obtener las mejores predicciones posibles, es necesario que el algoritmo
+sea capaz de capturar patrones en los datos, pero no tanto que tienda a absorber ruido
+en la estimación - es un balance de complejidad y rigidez. En términos estadísticos,
+se trata de un balance de varianza y sesgo.</p></li>
+</ul>
+
 </div>
 </div>
             </section>
@@ -813,8 +856,8 @@ modelo. A este conjunto le llamaremos <em>conjunto o muestra de entrenamiento</e
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regresion-lineal.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

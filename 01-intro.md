@@ -8,10 +8,9 @@ Métodos **computacionales** para **aprender de datos**  con el fin
 de producir reglas para 
 mejorar el **desempeño** en alguna tarea o toma de decisión. 
 
-En este curso nos enfocamos en las tareas de aprendizaje supervisado 
-(predecir o estimar una variable respuesta a partir de datos de entrada) y
-aprendizaje no supervisado (describir estructuras interesantes en datos,
-donde no necesariamente hay una respuesta que predecir).
+En este curso nos enfocamos en las tareas de aprendizaje supervisado, 
+ donde intentamos 
+ predecir o estimar una variable respuesta a partir de datos de entrada.
 
 #### Ejemplos de tareas de aprendizaje: {-}
 
@@ -66,7 +65,6 @@ que la imagen representa. Podemos ver las imágenes y las etiquetas:
 
 ```r
 library(tidyverse)
-library(kableExtra)
 zip_train <- read_csv(file = 'datos/zip-train.csv')
 muestra_1 <- sample_n(zip_train, 10)
 graficar_digitos(muestra_1)
@@ -84,7 +82,7 @@ graficar_digitos(muestra_2)
 
 Los 16x16=256 están escritos acomodando las filas de la imagen en 
  vector de 256 valores (cada renglón de `zip_train`). Un dígito entonces
- se representa como sigue:
+ se representa como in vector de 256 números:
 
 
 ```r
@@ -128,8 +126,8 @@ as.numeric(zip_train[1,])
 ## [251]  0.482 -0.474 -0.991 -1.000 -1.000 -1.000 -1.000
 ```
 
-- Un enfoque más utilizado anteriormente para resolver este tipo de problemas
-consistía en procesar estas imágenes con filtros hechos a mano (por ejemplo,
+¿Cómo combinamos esta información en un cálculo para reconocer el dígito
+computacionalmente?  Un enfoque más utilizado anteriormente para resolver este tipo de problemas consistía en procesar estas imágenes con filtros hechos a mano (por ejemplo,
 calcular cuántos pixeles están prendidos, si existen ciertas curvas o trazos)
 para después construir reglas para determinar cada dígito. Actualmente,
 el enfoque más exitoso es utilizar métodos de aprendizaje que aprendan
@@ -146,79 +144,21 @@ es muy costosa en tiempo y dinero.
 dat_ingreso <- read_csv(file = 'datos/enigh-ejemplo.csv')
 head(dat_ingreso) %>% 
     select(TAM_HOG, INGCOR, NOM_ENT_1, FOCOS, 
-           PISOS, marginación, tamaño_localidad) %>%
+           PISOS, marginación, tamaño_localidad)  %>%
     knitr::kable()
 ```
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:right;"> TAM_HOG </th>
-   <th style="text-align:right;"> INGCOR </th>
-   <th style="text-align:left;"> NOM_ENT_1 </th>
-   <th style="text-align:right;"> FOCOS </th>
-   <th style="text-align:right;"> PISOS </th>
-   <th style="text-align:left;"> marginación </th>
-   <th style="text-align:left;"> tamaño_localidad </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 30238.13 </td>
-   <td style="text-align:left;"> Jalisco </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> Muy bajo </td>
-   <td style="text-align:left;"> De 15 mil a 100 mil </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 61147.41 </td>
-   <td style="text-align:left;"> México </td>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> Bajo </td>
-   <td style="text-align:left;"> De 15 mil a 100 mil </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 6170.21 </td>
-   <td style="text-align:left;"> Puebla </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> Alto </td>
-   <td style="text-align:left;"> De 2500 a 15 mil </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 14639.79 </td>
-   <td style="text-align:left;"> Distrito Federal </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> Muy bajo </td>
-   <td style="text-align:left;"> 100 mil o más </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 40638.35 </td>
-   <td style="text-align:left;"> Chihuahua </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> Muy bajo </td>
-   <td style="text-align:left;"> De 15 mil a 100 mil </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 21172.35 </td>
-   <td style="text-align:left;"> Baja California </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> Muy bajo </td>
-   <td style="text-align:left;"> 100 mil o más </td>
-  </tr>
-</tbody>
-</table>
+
+
+ TAM_HOG     INGCOR  NOM_ENT_1           FOCOS   PISOS  marginación   tamaño_localidad    
+--------  ---------  -----------------  ------  ------  ------------  --------------------
+       4   30238.13  Jalisco                11       3  Muy bajo      De 15 mil a 100 mil 
+       3   61147.41  México                 10       2  Bajo          De 15 mil a 100 mil 
+       2    6170.21  Puebla                  1       1  Alto          De 2500 a 15 mil    
+       2   14639.79  Distrito Federal        5       2  Muy bajo      100 mil o más       
+       1   40638.35  Chihuahua               8       3  Muy bajo      De 15 mil a 100 mil 
+       2   21172.35  Baja California         4       2  Muy bajo      100 mil o más       
+
 
 ```r
 ggplot(dat_ingreso, aes(x=INGTOT)) +  
@@ -226,7 +166,7 @@ ggplot(dat_ingreso, aes(x=INGTOT)) +
   scale_x_log10()
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-4-1.png" width="480" />
+<img src="01-intro_files/figure-html/unnamed-chunk-5-1.png" width="480" />
 
 Pero quizá podemos usar otras variables más fácilmente medibles
 para predecir el ingreso de un hogar. Por ejemplo, si consideramos el número
@@ -239,7 +179,7 @@ ggplot(dat_ingreso, aes(x = FOCOS, y = INGTOT)) +
   scale_y_log10() + xlim(c(0,50))
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-5-1.png" width="480" />
+<img src="01-intro_files/figure-html/unnamed-chunk-6-1.png" width="480" />
 
 O el tamaño de la localidad:
 
@@ -249,10 +189,9 @@ ggplot(dat_ingreso, aes(x = tamaño_localidad, y = INGTOT)) +
   scale_y_log10() 
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-6-1.png" width="480" />
+<img src="01-intro_files/figure-html/unnamed-chunk-7-1.png" width="480" />
 
-
-- En algunas encuestas se pregunta directamente el ingreso mensual del hogar. La
+En algunas encuestas se pregunta directamente el ingreso mensual del hogar. La
 respuesta es generalmente una mala estimación del verdadero ingreso, por lo que
 actualmente se prefiere utilizar aprendizaje para estimar a partir de otras
 variables que son más fielmente reportadas por encuestados (años de estudio,
@@ -282,7 +221,7 @@ que tiene valor esperado $\textrm{E}(\epsilon)=0$.
 
 
 - $f$ expresa la relación sistemática que hay entre $Y$ y $X$: para cada valor
-posible de $X$, la `contribución` de $X$ a $Y$ es $f(X)$.
+posible de $X$, la **contribución** de $X$ a $Y$ es $f(X)$.
 - Pero $X$ **no determina** a $Y$, como en el ejemplo anterior de rendimiento
 de coches.
 Entonces agregamos una error aleatorio $\epsilon$, con media cero (si la media
@@ -290,7 +229,7 @@ no es cero podemos agregar una constante a $f$), que no contiene información
 acerca de $X$ (independiente de $X$).
 - $\epsilon$ representa, por ejemplo, el efecto de variables que no hemos
 medido o  procesos aleatorios que determinan la respuesta.
-
+- La función $f$ típicamente es complicada y desconocida.
 
 
 #### Ejemplo {-}
@@ -317,7 +256,7 @@ f <- function(x){
 El ingreso no se determina
 únicamente por número de años de estudio. Suponemos entonces que hay algunas 
 variables
-adicional que perturba los niveles de $f(X)$ por una cantidad aleatoria. Los
+adicionales que perturban los niveles de $f(X)$ por una cantidad aleatoria. Los
 valores que observamos de $Y$ están dados entonces por $Y=f(X)+\epsilon$.
 
 Entonces podríamos obtener, por ejemplo:
@@ -332,11 +271,11 @@ y <- f(x) + error
 datos <- data_frame(x = x, y = y)
 datos$y_media <- f(datos$x)
 ggplot(datos, aes(x = x, y = y)) + geom_point() +
-  geom_line(data=dat_g, colour = 'blue', size = 1.1) +
+  geom_line(data=dat_g, colour = 'gray', size = 1.1) +
   geom_segment(aes(x = x, xend = x, y = y, yend = y_media), col='red')
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-9-1.png" width="480" />
+<img src="01-intro_files/figure-html/unnamed-chunk-10-1.png" width="480" />
 
 
 En problemas de aprendizaje nunca conocemos esta $f$ verdadera,
@@ -353,7 +292,7 @@ datos <- data.frame(x = x, y = y)
 ggplot(datos, aes(x = x, y = y)) + geom_point() 
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-10-1.png" width="480" />
+<img src="01-intro_files/figure-html/unnamed-chunk-11-1.png" width="480" />
 
 La siguiente observación nos da una idea de lo que intentamos hacer, aunque
 todavía es vaga y requiere refinamiento:
@@ -370,7 +309,7 @@ tenemos, y qué tan buenas pueden ser nuestras predicciones.
 
 ## Predicciones
 
-La idea es entonces producir una estimación de f que nos permita hacer predicciones.
+La idea es entonces producir una estimación de $f$ que nos permita hacer predicciones.
 
 Si denotamos por $\hat{f}$ a una estimación de $f$ construida a partir de los datos,
 podemos hacer predicciones aplicando $\hat{f}$ a valores de $X$.
@@ -393,7 +332,7 @@ curva_1 <- geom_smooth(data=datos,
 ggplot(datos, aes(x = x, y = y)) + geom_point() + curva_1
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-13-1.png" width="480" />
+<img src="01-intro_files/figure-html/unnamed-chunk-14-1.png" width="480" />
 
 En este caso $\hat{f}$  es una recta, y la podemos usar para hacer predicciones.
 Por ejemplo, si tenemos una observación con
@@ -421,7 +360,7 @@ ggplot(datos, aes(x = x, y = y)) + geom_point() + curva_1 +
   geom_point( x= 8, y =3200, col='green', size = 4)
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-15-1.png" width="480" />
+<img src="01-intro_files/figure-html/unnamed-chunk-16-1.png" width="480" />
 
 Si observamos que para esta observación con $x_0=8$, resulta que 
 el correspondiente ingreso es $y_0=3200$, entonces el error sería
@@ -484,7 +423,16 @@ Un **algoritmo de aprendizaje** es una regla que asigna a cada conjunto de
 entrenamiento ${\mathcal L}$ una función $\hat{f}$:
 
 $${\mathcal L} \to \hat{f}.$$
-El desempeño del predictor particular $\hat{f}$ se mide como sigue: si
+
+Para medir el desempeño de un predictor particular $\hat{f}$ queremos
+ver cómo se va a comportar haciendo predicciones **que no fueron vistos
+en el entrenamiento**. Esto es porque esta es justamente la tarea que queremos resolver:
+
+- Tenemos un conjunto de datos de entrenamiento, y construimos nuestro predictor $\hat{f}$.
+- En el futuro llegan nuevos datos, y queremos aplicar nuestro predictor para
+hacer predicciones.
+
+Entonces, el desempeño del predictor particular $\hat{f}$ se mide como sigue: si
 en el futuro observamos otra muestra ${\mathcal T}$ (que podemos llamar **muestra de prueba**)
 
 $${\mathcal T}=\{ (x_0^{(1)},y_0^{(1)}),(x_0^{(2)},y_0^{(2)}), \ldots, (x_0^{(m)}, y_0^{(m)}) \}$$
@@ -495,7 +443,7 @@ $$(y_0^{(j)} - \hat{f}(x_0^{(j)}))^2$$
 
 y el error sobre la muestra ${\mathcal T}$ es
 
-$$\hat{Err} =   \frac{1}{m}\sum_{j=1}^m (y_0^{(j)} - \hat{f}(x_0^{(j)}))^2$$
+$$\widehat{Err} =   \frac{1}{m}\sum_{j=1}^m (y_0^{(j)} - \hat{f}(x_0^{(j)}))^2$$
 
 Es muy importante considerar dos muestras separadas en esta definición:
 
@@ -506,14 +454,26 @@ la muestra de entrenamiento, pues el algoritmo puede ver las etiquetas.
 nos permite evaluar si nuestro algoritmo **generaliza**, que se puede
 pensar como "verdadero" aprendizaje.
 
-- Nótese que $\hat{Err}$ es una estimación de $Err$ (por la ley de los grandes
+- Nótese que $\widehat{Err}$ es una estimación de $Err$ (por la ley de los grandes
 números, si ${\mathcal T}$ es muestra i.i.d. de $(X,Y)$).
+
+
+
+
 
 También consideramos el **error de entrenamiento**, dado por
 
 $$\overline{err} = \frac{1}{N}\sum_{i=1}^N (y^{(i)} - \hat{f}(x^{(i)}))^2$$
-- Pregunta: ¿Por qué $\overline{err}$ no necesariamente es una buena estimación
-  de $Err$?
+
+Nótese sin embargo que el error de entrenamiento **no necesariamente es
+una buena estimación del error de prueba, que mide el desempeño verdadero
+del modelo**. La razón es que modelos suficientemente flexibles pueden
+**memorizar** los datos de entrenamiento en lugar de **aprender** a generalizar
+de ellos. Un error de entrenamiento bajo no garantiza un desempeño bueno
+en el futuro. Discutiremos este punto más adelante.
+
+
+
 
 #### Ejemplo
 
@@ -553,7 +513,7 @@ curva.3 <- geom_smooth(data=datos_entrena,
 ggplot(datos_entrena, aes(x=x, y=y)) + geom_point() + curva.1 + curva.2 + curva.3
 ```
 
-<img src="01-intro_files/figure-html/unnamed-chunk-19-1.png" width="480" />
+<img src="01-intro_files/figure-html/unnamed-chunk-20-1.png" width="480" />
 
 
 Calculamos los errores de entrenamiento de cada curva:
@@ -641,7 +601,14 @@ df_mods
 ```
 
 
-### Observaciones
+
+
+### Observaciones {-}
+
+\BeginKnitrBlock{comentario}<div class="comentario">- En la tarea de aprendizaje estadístico, las dos partes, **entrenamiento**
+    y **prueba**, son cruciales. Una no tiene sentido sin la otra.
+- Si no hacemos entrenamiento, no podemos construir
+modelos que respondan a los datos.  Si no hacemos prueba, no podemos saber si nuestro modelo ajustado en entrenamiento es bueno o malo. </div>\EndKnitrBlock{comentario}
 
 - El mejor modelo entrenamiento es uno que "sobreajusta" a los datos, pero es
 el peor con una muestra de prueba. La curva roja aprende del una componente
@@ -720,4 +687,26 @@ para denotar al conjunto de datos con los que construimos nuestro
 modelo. A este conjunto le llamaremos *conjunto o muestra de entrenamiento*
 (learning set)
 
+## Resumen
+
+- Aprendizaje de máquina: algoritmos que aprenden de los datos para predecir cantidades
+numéricas, o clasificar (aprendizaje supervisado), o para encontrar estructura en los
+datos (aprendizaje no supervisado).
+
+- En aprendizaje supervisado, el esquema general es: 
+  - Un algoritmo aprende de una
+muestra de entrenamiento ${\mathcal L}$, que es generada por el proceso generador de datos que nos interesa. Eso quiere decir que produce una función $\hat{f}$ (a partir de ${\mathcal L}$) que nos sirve para hacer predicciones $x \to \hat{f}(x)$ de $y$
+  - El error de predicción del algoritmo es $Err$, que mide en promedio qué tan lejos están las predicciones de valores reales.
+  - Para estimar esta cantidad usamos una muestra de prueba ${\mathcal T}$, que
+  es independiente de ${\mathcal L}$.
+  - Esta es porque nos interesa el desempeño futuro de $\hat{f}$ para nuevos casos
+  que el algoritmo no ha visto (esto es aprender).
+  
+- El error en la muestra de entrenamiento no necesariamente es buen indicador
+del desempeño futuro de nuestro algoritmo.
+
+- Para obtener las mejores predicciones posibles, es necesario que el algoritmo
+sea capaz de capturar patrones en los datos, pero no tanto que tienda a absorber ruido
+en la estimación - es un balance de complejidad y rigidez. En términos estadísticos,
+se trata de un balance de varianza y sesgo.
 

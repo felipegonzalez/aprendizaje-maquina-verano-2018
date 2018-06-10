@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Minicurso de verano de Aprendizaje Máquina</title>
+  <meta name="description" content="Minicurso de Aprendizaje Máquina, ITAM 2018.">
+  <meta name="generator" content="bookdown 0.7.12 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Minicurso de verano de Aprendizaje Máquina" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Minicurso de Aprendizaje Máquina, ITAM 2018." />
+  <meta name="github-repo" content="felipegonzalez/aprendizaje-maquina-verano-2018" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Minicurso de verano de Aprendizaje Máquina" />
+  
+  <meta name="twitter:description" content="Minicurso de Aprendizaje Máquina, ITAM 2018." />
+  
+
+<meta name="author" content="Felipe González">
+
+
+<meta name="date" content="2018-06-10">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="regresion-regularizada.html">
+<link rel="next" href="diagnostico-y-mejora-de-modelos.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="toc.css" type="text/css" />
+<link rel="stylesheet" href="font-awesome.min.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Minicurso aprendizaje máquina</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Temario</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#referencias"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software"><i class="fa fa-check"></i>Software</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduccion.html"><a href="introduccion.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduccion.html"><a href="introduccion.html#que-es-aprendizaje-de-maquina-machine-learning"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es aprendizaje de máquina (machine learning)?</a></li>
+<li class="chapter" data-level="1.2" data-path="introduccion.html"><a href="introduccion.html#aprendizaje-supervisado"><i class="fa fa-check"></i><b>1.2</b> Aprendizaje Supervisado</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduccion.html"><a href="introduccion.html#proceso-generador-de-datos-modelo-teorico"><i class="fa fa-check"></i><b>1.2.1</b> Proceso generador de datos (modelo teórico)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduccion.html"><a href="introduccion.html#predicciones"><i class="fa fa-check"></i><b>1.3</b> Predicciones</a></li>
+<li class="chapter" data-level="1.4" data-path="introduccion.html"><a href="introduccion.html#cuantificacion-de-error-o-precision"><i class="fa fa-check"></i><b>1.4</b> Cuantificación de error o precisión</a></li>
+<li class="chapter" data-level="1.5" data-path="introduccion.html"><a href="introduccion.html#aprendizaje"><i class="fa fa-check"></i><b>1.5</b> Tarea de aprendizaje supervisado</a><ul>
+<li class="chapter" data-level="" data-path="introduccion.html"><a href="introduccion.html#observaciones"><i class="fa fa-check"></i>Observaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="introduccion.html"><a href="introduccion.html#por-que-tenemos-errores"><i class="fa fa-check"></i><b>1.6</b> ¿Por qué tenemos errores?</a></li>
+<li class="chapter" data-level="1.7" data-path="introduccion.html"><a href="introduccion.html#resumen"><i class="fa fa-check"></i><b>1.7</b> Resumen</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="regresion-lineal.html"><a href="regresion-lineal.html"><i class="fa fa-check"></i><b>2</b> Regresión lineal</a><ul>
+<li class="chapter" data-level="2.1" data-path="regresion-lineal.html"><a href="regresion-lineal.html#introduccion-1"><i class="fa fa-check"></i><b>2.1</b> Introducción</a></li>
+<li class="chapter" data-level="2.2" data-path="regresion-lineal.html"><a href="regresion-lineal.html#aprendizaje-de-coeficientes-ajuste"><i class="fa fa-check"></i><b>2.2</b> Aprendizaje de coeficientes (ajuste)</a></li>
+<li class="chapter" data-level="2.3" data-path="regresion-lineal.html"><a href="regresion-lineal.html#descenso-en-gradiente"><i class="fa fa-check"></i><b>2.3</b> Descenso en gradiente</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="regresion-lineal.html"><a href="regresion-lineal.html#seleccion-de-tamano-de-paso-eta"><i class="fa fa-check"></i><b>2.3.1</b> Selección de tamaño de paso <span class="math inline">\(\eta\)</span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="regresion-lineal.html"><a href="regresion-lineal.html#funciones-de-varias-variables"><i class="fa fa-check"></i><b>2.3.2</b> Funciones de varias variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="regresion-lineal.html"><a href="regresion-lineal.html#descenso-en-gradiente-para-regresion-lineal"><i class="fa fa-check"></i><b>2.4</b> Descenso en gradiente para regresión lineal</a></li>
+<li class="chapter" data-level="2.5" data-path="regresion-lineal.html"><a href="regresion-lineal.html#normalizacion-de-entradas"><i class="fa fa-check"></i><b>2.5</b> Normalización de entradas</a></li>
+<li class="chapter" data-level="2.6" data-path="regresion-lineal.html"><a href="regresion-lineal.html#interpretacion-de-modelos-lineales"><i class="fa fa-check"></i><b>2.6</b> Interpretación de modelos lineales</a></li>
+<li class="chapter" data-level="2.7" data-path="regresion-lineal.html"><a href="regresion-lineal.html#por-que-el-modelo-lineal-funciona-bien-muchas-veces"><i class="fa fa-check"></i><b>2.7</b> ¿Por qué el modelo lineal funciona bien (muchas veces)?</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="regresion-lineal.html"><a href="regresion-lineal.html#k-vecinos-mas-cercanos"><i class="fa fa-check"></i><b>2.7.1</b> k vecinos más cercanos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regresion-lineal.html"><a href="regresion-lineal.html#ejercicio-1"><i class="fa fa-check"></i>Ejercicio</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="regresion-logistica.html"><a href="regresion-logistica.html"><i class="fa fa-check"></i><b>3</b> Regresión logística</a><ul>
+<li class="chapter" data-level="3.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#el-problema-de-clasificacion"><i class="fa fa-check"></i><b>3.1</b> El problema de clasificación</a><ul>
+<li class="chapter" data-level="" data-path="regresion-logistica.html"><a href="regresion-logistica.html#que-estimar-en-problemas-de-clasificacion"><i class="fa fa-check"></i>¿Qué estimar en problemas de clasificación?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#estimacion-de-probabilidades-de-clase"><i class="fa fa-check"></i><b>3.2</b> Estimación de probabilidades de clase</a><ul>
+<li class="chapter" data-level="" data-path="regresion-logistica.html"><a href="regresion-logistica.html#ejemplo-9"><i class="fa fa-check"></i>Ejemplo</a></li>
+<li class="chapter" data-level="3.2.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#k-vecinos-mas-cercanos-1"><i class="fa fa-check"></i><b>3.2.1</b> k-vecinos más cercanos</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="regresion-logistica.html"><a href="regresion-logistica.html#error-para-modelos-de-clasificacion"><i class="fa fa-check"></i><b>3.3</b> Error para modelos de clasificación</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#ejercicio-2"><i class="fa fa-check"></i><b>3.3.1</b> Ejercicio</a></li>
+<li class="chapter" data-level="3.3.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#error-de-clasificacion-y-funcion-de-perdida-0-1"><i class="fa fa-check"></i><b>3.3.2</b> Error de clasificación y función de pérdida 0-1</a></li>
+<li class="chapter" data-level="3.3.3" data-path="regresion-logistica.html"><a href="regresion-logistica.html#discusion-relacion-entre-devianza-y-error-de-clasificacion"><i class="fa fa-check"></i><b>3.3.3</b> Discusión: relación entre devianza y error de clasificación</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-1"><i class="fa fa-check"></i><b>3.4</b> Regresión logística</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-simple"><i class="fa fa-check"></i><b>3.4.1</b> Regresión logística simple</a></li>
+<li class="chapter" data-level="3.4.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#funcion-logistica"><i class="fa fa-check"></i><b>3.4.2</b> Función logística</a></li>
+<li class="chapter" data-level="3.4.3" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-2"><i class="fa fa-check"></i><b>3.4.3</b> Regresión logística</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="regresion-logistica.html"><a href="regresion-logistica.html#aprendizaje-de-coeficientes-para-regresion-logistica-binomial."><i class="fa fa-check"></i><b>3.5</b> Aprendizaje de coeficientes para regresión logística (binomial).</a></li>
+<li class="chapter" data-level="3.6" data-path="regresion-logistica.html"><a href="regresion-logistica.html#observaciones-adicionales"><i class="fa fa-check"></i><b>3.6</b> Observaciones adicionales</a></li>
+<li class="chapter" data-level="" data-path="regresion-logistica.html"><a href="regresion-logistica.html#ejercicio-datos-de-diabetes"><i class="fa fa-check"></i>Ejercicio: datos de diabetes</a></li>
+<li class="chapter" data-level="3.7" data-path="regresion-logistica.html"><a href="regresion-logistica.html#mas-sobre-problemas-de-clasificacion"><i class="fa fa-check"></i><b>3.7</b> Más sobre problemas de clasificación</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#analisis-de-error-para-clasificadores-binarios"><i class="fa fa-check"></i><b>3.7.1</b> Análisis de error para clasificadores binarios</a></li>
+<li class="chapter" data-level="3.7.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-para-problemas-de-mas-de-2-clases"><i class="fa fa-check"></i><b>3.7.2</b> Regresión logística para problemas de más de 2 clases</a></li>
+<li class="chapter" data-level="3.7.3" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-multinomial"><i class="fa fa-check"></i><b>3.7.3</b> Regresión logística multinomial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html"><i class="fa fa-check"></i><b>4</b> Regresión regularizada</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#sesgo-y-varianza-en-modelos-lineales"><i class="fa fa-check"></i><b>4.0.1</b> Sesgo y varianza en modelos lineales</a></li>
+<li class="chapter" data-level="4.0.2" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#reduciendo-varianza-de-los-coeficientes"><i class="fa fa-check"></i><b>4.0.2</b> Reduciendo varianza de los coeficientes</a></li>
+<li class="chapter" data-level="4.1" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#regularizacion-ridge"><i class="fa fa-check"></i><b>4.1</b> Regularización ridge</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#seleccion-de-coeficiente-de-regularizacion"><i class="fa fa-check"></i><b>4.1.1</b> Selección de coeficiente de regularización</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#entrenamiento-validacion-y-prueba"><i class="fa fa-check"></i><b>4.2</b> Entrenamiento, Validación y Prueba</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#validacion-cruzada"><i class="fa fa-check"></i><b>4.2.1</b> Validación cruzada</a></li>
+<li class="chapter" data-level="" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#ejercicio-4"><i class="fa fa-check"></i>Ejercicio</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#regularizacion-lasso"><i class="fa fa-check"></i><b>4.3</b> Regularización lasso</a></li>
+<li class="chapter" data-level="4.4" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#tarea"><i class="fa fa-check"></i><b>4.4</b> Tarea</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html"><i class="fa fa-check"></i><b>5</b> Descenso estocástico</a><ul>
+<li class="chapter" data-level="5.1" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#algoritmo-de-descenso-estocastico"><i class="fa fa-check"></i><b>5.1</b> Algoritmo de descenso estocástico</a></li>
+<li class="chapter" data-level="5.2" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#por-que-usar-descenso-estocastico-por-minilotes"><i class="fa fa-check"></i><b>5.2</b> ¿Por qué usar descenso estocástico por minilotes?</a></li>
+<li class="chapter" data-level="5.3" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#escogiendo-la-tasa-de-aprendizaje"><i class="fa fa-check"></i><b>5.3</b> Escogiendo la tasa de aprendizaje</a></li>
+<li class="chapter" data-level="5.4" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#mejoras-al-algoritmo-de-descenso-estocastico."><i class="fa fa-check"></i><b>5.4</b> Mejoras al algoritmo de descenso estocástico.</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#decaimiento-de-tasa-de-aprendizaje"><i class="fa fa-check"></i><b>5.4.1</b> Decaimiento de tasa de aprendizaje</a></li>
+<li class="chapter" data-level="5.4.2" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#momento"><i class="fa fa-check"></i><b>5.4.2</b> Momento</a></li>
+<li class="chapter" data-level="5.4.3" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#otras-variaciones"><i class="fa fa-check"></i><b>5.4.3</b> Otras variaciones</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html"><i class="fa fa-check"></i><b>6</b> Diagnóstico y mejora de modelos</a><ul>
+<li class="chapter" data-level="6.1" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#aspectos-generales"><i class="fa fa-check"></i><b>6.1</b> Aspectos generales</a></li>
+<li class="chapter" data-level="6.2" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#que-hacer-cuando-el-desempeno-no-es-satisfactorio"><i class="fa fa-check"></i><b>6.2</b> ¿Qué hacer cuando el desempeño no es satisfactorio?</a></li>
+<li class="chapter" data-level="6.3" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#pipeline-de-procesamiento"><i class="fa fa-check"></i><b>6.3</b> Pipeline de procesamiento</a></li>
+<li class="chapter" data-level="6.4" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#diagnosticos-sesgo-y-varianza"><i class="fa fa-check"></i><b>6.4</b> Diagnósticos: sesgo y varianza</a></li>
+<li class="chapter" data-level="6.5" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#refinando-el-pipeline"><i class="fa fa-check"></i><b>6.5</b> Refinando el pipeline</a></li>
+<li class="chapter" data-level="6.6" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#consiguiendo-mas-datos"><i class="fa fa-check"></i><b>6.6</b> Consiguiendo más datos</a></li>
+<li class="chapter" data-level="6.7" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#usar-datos-adicionales"><i class="fa fa-check"></i><b>6.7</b> Usar datos adicionales</a></li>
+<li class="chapter" data-level="6.8" data-path="diagnostico-y-mejora-de-modelos.html"><a href="diagnostico-y-mejora-de-modelos.html#examen-de-modelo-y-analisis-de-errores"><i class="fa fa-check"></i><b>6.8</b> Examen de modelo y Análisis de errores</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html"><i class="fa fa-check"></i><b>7</b> Métodos basados en árboles</a><ul>
+<li class="chapter" data-level="7.1" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#arboles-para-regresion-y-clasificacion."><i class="fa fa-check"></i><b>7.1</b> Árboles para regresión y clasificación.</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#arboles-para-clasificacion"><i class="fa fa-check"></i><b>7.1.1</b> Árboles para clasificación</a></li>
+<li class="chapter" data-level="7.1.2" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#tipos-de-particion"><i class="fa fa-check"></i><b>7.1.2</b> Tipos de partición</a></li>
+<li class="chapter" data-level="7.1.3" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#medidas-de-impureza"><i class="fa fa-check"></i><b>7.1.3</b> Medidas de impureza</a></li>
+<li class="chapter" data-level="7.1.4" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#reglas-de-particion-y-tamano-del-arobl"><i class="fa fa-check"></i><b>7.1.4</b> Reglas de partición y tamaño del árobl</a></li>
+<li class="chapter" data-level="7.1.5" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#costo---complejidad-breiman"><i class="fa fa-check"></i><b>7.1.5</b> Costo - Complejidad (Breiman)</a></li>
+<li class="chapter" data-level="7.1.6" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#opcional-predicciones-con-cart"><i class="fa fa-check"></i><b>7.1.6</b> (Opcional) Predicciones con CART</a></li>
+<li class="chapter" data-level="7.1.7" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#arboles-para-regresion"><i class="fa fa-check"></i><b>7.1.7</b> Árboles para regresión</a></li>
+<li class="chapter" data-level="7.1.8" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#variabilidad-en-el-proceso-de-construccion"><i class="fa fa-check"></i><b>7.1.8</b> Variabilidad en el proceso de construcción</a></li>
+<li class="chapter" data-level="7.1.9" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#relaciones-lineales"><i class="fa fa-check"></i><b>7.1.9</b> Relaciones lineales</a></li>
+<li class="chapter" data-level="7.1.10" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ventajas-y-desventajas-de-arboles"><i class="fa fa-check"></i><b>7.1.10</b> Ventajas y desventajas de árboles</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#bagging-de-arboles"><i class="fa fa-check"></i><b>7.2</b> Bagging de árboles</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ejemplo-28"><i class="fa fa-check"></i><b>7.2.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="7.2.2" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#mejorando-bagging"><i class="fa fa-check"></i><b>7.2.2</b> Mejorando bagging</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#bosques-aleatorios"><i class="fa fa-check"></i><b>7.3</b> Bosques aleatorios</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#sabiduria-de-las-masas"><i class="fa fa-check"></i><b>7.3.1</b> Sabiduría de las masas</a></li>
+<li class="chapter" data-level="7.3.2" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ejemplo-29"><i class="fa fa-check"></i><b>7.3.2</b> Ejemplo</a></li>
+<li class="chapter" data-level="7.3.3" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#mas-detalles-de-bosques-aleatorios."><i class="fa fa-check"></i><b>7.3.3</b> Más detalles de bosques aleatorios.</a></li>
+<li class="chapter" data-level="7.3.4" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#importancia-de-variables"><i class="fa fa-check"></i><b>7.3.4</b> Importancia de variables</a></li>
+<li class="chapter" data-level="7.3.5" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ajustando-arboles-aleatorios."><i class="fa fa-check"></i><b>7.3.5</b> Ajustando árboles aleatorios.</a></li>
+<li class="chapter" data-level="7.3.6" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#ventajas-y-desventajas-de-arboles-aleatorios"><i class="fa fa-check"></i><b>7.3.6</b> Ventajas y desventajas de árboles aleatorios</a></li>
+<li class="chapter" data-level="7.3.7" data-path="metodos-basados-en-arboles.html"><a href="metodos-basados-en-arboles.html#tarea-para-23-de-octubre"><i class="fa fa-check"></i><b>7.3.7</b> Tarea (para 23 de octubre)</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Minicurso de verano de Aprendizaje Máquina</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="descenso-estocastico" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Descenso estocástico</h1>
+<p>El algoritmo más popular para ajustar redes grandes es descenso estocástico, que
+es una modificación de nuestro algoritmo de descenso en gradiente. Antes de presentar
+las razones para usarlo, veremos cómo funciona para problemas con regresión
+lineal o logística.</p>
+
+<div class="comentario">
+<p>En <strong>descenso estocástico</strong>, el cálculo del gradiente se hace sobre una submuestra
+relativamente chica de la muestra de entrenamiento. En este contexto, a esta submuestra
+se le llama un <strong>minilote</strong>. En cada iteración, nos movemos en
+la dirección de descenso de ese minilote.</p>
+La muestra de entrenamiento se divide entonces (al azar)
+en minilotes, y recorremos todos los minilotes haciendo una actualización de nuestros
+parámetros en cada minilote. Un recorrido sobre todos los minilotes se llama
+una <strong>época</strong> (las iteraciones se entienden sobre los minilotes).
+</div>
+
+<p>Antes de escribir el algoritmo mostramos una implementación para regresión logística.
+Usamos las mismas funciones para calcular devianza y gradiente.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(tidyr)
+<span class="kw">library</span>(ggplot2)
+h &lt;-<span class="st"> </span><span class="cf">function</span>(x){<span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(<span class="op">-</span>x))}
+<span class="co"># la devianza es la misma</span>
+devianza_calc &lt;-<span class="st"> </span><span class="cf">function</span>(x, y){
+  dev_fun &lt;-<span class="st"> </span><span class="cf">function</span>(beta){
+    p_beta &lt;-<span class="st"> </span><span class="kw">h</span>(<span class="kw">as.matrix</span>(<span class="kw">cbind</span>(<span class="dv">1</span>, x)) <span class="op">%*%</span><span class="st"> </span>beta) 
+   <span class="dv">-2</span><span class="op">*</span><span class="kw">mean</span>(y<span class="op">*</span><span class="kw">log</span>(p_beta) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>y)<span class="op">*</span><span class="kw">log</span>(<span class="dv">1</span><span class="op">-</span>p_beta))
+  }
+  dev_fun
+}
+<span class="co"># el cálculo del gradiente es el mismo, pero x_ent y y_ent serán diferentes</span>
+grad_calc &lt;-<span class="st"> </span><span class="cf">function</span>(x_ent, y_ent){
+  salida_grad &lt;-<span class="st"> </span><span class="cf">function</span>(beta){
+    p_beta &lt;-<span class="st"> </span><span class="kw">h</span>(<span class="kw">as.matrix</span>(<span class="kw">cbind</span>(<span class="dv">1</span>, x_ent)) <span class="op">%*%</span><span class="st"> </span>beta) 
+    e &lt;-<span class="st"> </span>y_ent <span class="op">-</span><span class="st"> </span>p_beta
+    grad_out &lt;-<span class="st"> </span><span class="dv">-2</span><span class="op">*</span><span class="kw">as.numeric</span>(<span class="kw">t</span>(<span class="kw">cbind</span>(<span class="dv">1</span>,x_ent)) <span class="op">%*%</span><span class="st"> </span>e)<span class="op">/</span><span class="kw">nrow</span>(x_ent)
+    <span class="kw">names</span>(grad_out) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Intercept&#39;</span>, <span class="kw">colnames</span>(x_ent))
+    grad_out
+  }
+  salida_grad
+}</code></pre>
+<p>Y comparamos los dos algoritmos:</p>
+<pre class="sourceCode r"><code class="sourceCode r">descenso &lt;-<span class="st"> </span><span class="cf">function</span>(n, z_<span class="dv">0</span>, eta, h_deriv){
+  z &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,n, <span class="kw">length</span>(z_<span class="dv">0</span>))
+  z[<span class="dv">1</span>, ] &lt;-<span class="st"> </span>z_<span class="dv">0</span>
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(n<span class="dv">-1</span>)){
+    z[i<span class="op">+</span><span class="dv">1</span>, ] &lt;-<span class="st"> </span>z[i, ] <span class="op">-</span><span class="st"> </span>eta <span class="op">*</span><span class="st"> </span><span class="kw">h_deriv</span>(z[i, ])
+  }
+  z
+}
+<span class="co"># esta implementación es solo para este ejemplo:</span>
+descenso_estocástico &lt;-<span class="st"> </span><span class="cf">function</span>(n_epocas, z_<span class="dv">0</span>, eta, minilotes){
+  <span class="co">#minilotes es una lista</span>
+  m &lt;-<span class="st"> </span><span class="kw">length</span>(minilotes)
+  z &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, m<span class="op">*</span>n_epocas, <span class="kw">length</span>(z_<span class="dv">0</span>))
+  z[<span class="dv">1</span>, ] &lt;-<span class="st"> </span>z_<span class="dv">0</span>
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(m<span class="op">*</span>n_epocas<span class="dv">-1</span>)){
+    k &lt;-<span class="st"> </span>i <span class="op">%%</span><span class="st"> </span>m <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    <span class="cf">if</span>(i <span class="op">%%</span><span class="st"> </span>m <span class="op">==</span><span class="st"> </span><span class="dv">0</span>){
+      <span class="co">#comenzar nueva época y reordenar minilotes al azar</span>
+      minilotes &lt;-<span class="st"> </span>minilotes[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>m, m)]
+    }
+    h_deriv &lt;-<span class="st"> </span><span class="kw">grad_calc</span>(minilotes[[k]]<span class="op">$</span>x, minilotes[[k]]<span class="op">$</span>y)
+    z[i<span class="op">+</span><span class="dv">1</span>, ] &lt;-<span class="st"> </span>z[i, ] <span class="op">-</span><span class="st"> </span>eta <span class="op">*</span><span class="st"> </span><span class="kw">h_deriv</span>(z[i, ])
+  }
+  z
+}</code></pre>
+<p>Usaremos el ejemplo simulado de regresión para hacer algunos experimentos:</p>
+<pre class="sourceCode r"><code class="sourceCode r">p_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+  <span class="kw">ifelse</span>(x <span class="op">&lt;</span><span class="st"> </span><span class="dv">30</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.007</span> <span class="op">*</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span><span class="dv">15</span>))
+}
+
+<span class="kw">set.seed</span>(<span class="dv">143</span>)
+sim_datos &lt;-<span class="st"> </span><span class="cf">function</span>(n){
+  x &lt;-<span class="st"> </span><span class="kw">pmin</span>(<span class="kw">rexp</span>(n, <span class="dv">1</span><span class="op">/</span><span class="dv">30</span>), <span class="dv">100</span>)
+  probs &lt;-<span class="st"> </span><span class="kw">p_1</span>(x)
+  g &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="kw">length</span>(x), <span class="dv">1</span>, probs)
+  <span class="co"># con dos variables de ruido:</span>
+  dat &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">x_1 =</span> (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x), 
+                    <span class="dt">x_2 =</span> <span class="kw">rnorm</span>(<span class="kw">length</span>(x),<span class="dv">0</span>,<span class="dv">1</span>),
+                    <span class="dt">x_3 =</span> <span class="kw">rnorm</span>(<span class="kw">length</span>(x),<span class="dv">0</span>,<span class="dv">1</span>),
+                    <span class="dt">p_1 =</span> probs, g )
+  dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x_<span class="dv">1</span>, x_<span class="dv">2</span>, x_<span class="dv">3</span>, g) 
+}
+dat_ent &lt;-<span class="st"> </span><span class="kw">sim_datos</span>(<span class="dv">100</span>)
+dat_valid &lt;-<span class="st"> </span><span class="kw">sim_datos</span>(<span class="dv">1000</span>)
+<span class="kw">glm</span>(g <span class="op">~</span><span class="st"> </span>x_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x_<span class="dv">2</span><span class="op">+</span><span class="st"> </span>x_<span class="dv">3</span> , <span class="dt">data =</span> dat_ent, <span class="dt">family =</span> <span class="st">&#39;binomial&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>coef</code></pre>
+<pre><code>## (Intercept)         x_1         x_2         x_3 
+##   1.8082362  -0.7439627   0.2172971   0.3711973</code></pre>
+<p>Hacemos descenso en gradiente:</p>
+<pre class="sourceCode r"><code class="sourceCode r">iteraciones_descenso &lt;-<span class="st"> </span><span class="kw">descenso</span>(<span class="dv">300</span>, <span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>), <span class="fl">0.8</span>,
+         <span class="dt">h_deriv =</span> <span class="kw">grad_calc</span>(<span class="dt">x_ent =</span> <span class="kw">as.matrix</span>(dat_ent[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y_ent=</span>dat_ent<span class="op">$</span>g)) <span class="op">%&gt;%</span>
+<span class="st">  </span>data.frame <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">beta_1 =</span> X2, <span class="dt">beta_2 =</span> X3)
+<span class="kw">ggplot</span>(iteraciones_descenso, <span class="kw">aes</span>(<span class="dt">x=</span>beta_<span class="dv">1</span>, <span class="dt">y=</span>beta_<span class="dv">2</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Y ahora hacemos descenso estocástico. Vamos a hacer minilotes de tamaño 5:</p>
+<pre class="sourceCode r"><code class="sourceCode r">dat_ent<span class="op">$</span>minilote &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">each=</span><span class="dv">5</span>)
+split_ml &lt;-<span class="st"> </span><span class="kw">split</span>(dat_ent <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="kw">nrow</span>(dat_ent)), dat_ent<span class="op">$</span>minilote) 
+minilotes &lt;-<span class="st"> </span><span class="kw">lapply</span>(split_ml, <span class="cf">function</span>(dat_ml){
+  <span class="kw">list</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_ml[, <span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop=</span><span class="ot">FALSE</span>]),
+       <span class="dt">y =</span> dat_ml<span class="op">$</span>g)
+})
+<span class="kw">length</span>(minilotes)</code></pre>
+<pre><code>## [1] 10</code></pre>
+<p>Ahora iteramos. Nótese cómo descenso en gradiente tiene un patrón aleatorio
+de avance hacia el mínimo, y una vez que llega a una región oscila
+alrededor de este mínimo.</p>
+<pre class="sourceCode r"><code class="sourceCode r">iter_estocastico &lt;-<span class="st"> </span>descenso_estocá<span class="kw">stico</span>(<span class="dv">30</span>, <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>), <span class="fl">0.1</span>, minilotes) <span class="op">%&gt;%</span>
+<span class="st">  </span>data.frame <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">beta_0 =</span> X1, <span class="dt">beta_1 =</span> X2, <span class="dt">beta_2 =</span> X3)
+<span class="kw">ggplot</span>(iteraciones_descenso, <span class="kw">aes</span>(<span class="dt">x=</span>beta_<span class="dv">1</span>, <span class="dt">y=</span>beta_<span class="dv">2</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_path</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_path</span>(<span class="dt">data =</span> iter_estocastico, <span class="dt">colour =</span><span class="st">&#39;red&#39;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> iter_estocastico, <span class="dt">colour =</span><span class="st">&#39;red&#39;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>)</code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Podemos ver cómo se ve la devianza de entrenamiento:</p>
+<pre class="sourceCode r"><code class="sourceCode r">dev_ent &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_ent[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y=</span>dat_ent<span class="op">$</span>g)
+dev_valid &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_valid[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]),
+                             <span class="dt">y=</span>dat_valid<span class="op">$</span>g)
+dat_dev &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">iteracion =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(iteraciones_descenso)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">descenso =</span> <span class="kw">apply</span>(iteraciones_descenso, <span class="dv">1</span>, dev_ent),
+        <span class="dt">descenso_estocastico =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_ent)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(algoritmo, dev_ent, <span class="op">-</span>iteracion) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">tipo =</span><span class="st">&#39;entrenamiento&#39;</span>)
+
+dat_dev_valid &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">iteracion =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(iteraciones_descenso)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">descenso =</span> <span class="kw">apply</span>(iteraciones_descenso, <span class="dv">1</span>, dev_valid),
+         <span class="dt">descenso_estocastico =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_valid)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(algoritmo, dev_ent, <span class="op">-</span>iteracion) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">tipo =</span><span class="st">&#39;validación&#39;)</span>
+
+<span class="st">dat_dev &lt;- bind_rows(dat_dev, dat_dev_valid)</span>
+<span class="st">ggplot(filter(dat_dev, tipo==&#39;</span>entrenamiento<span class="st">&#39;), </span>
+<span class="st">       aes(x=iteracion, y=dev_ent, colour=algoritmo)) + geom_line() +</span>
+<span class="st">  geom_point() + facet_wrap(~tipo)</span></code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>y vemos que descenso estocástico también converge a una buena solución.</p>
+<div id="algoritmo-de-descenso-estocastico" class="section level2">
+<h2><span class="header-section-number">5.1</span> Algoritmo de descenso estocástico</h2>
+
+<div class="comentario">
+<p><strong>Descenso estocástico</strong>.
+Separamos al azar los datos de entrenamiento en <span class="math inline">\(n\)</span> minilotes de tamaño <span class="math inline">\(m\)</span>.</p>
+<ul>
+<li>Para épocas <span class="math inline">\(e =1,2,\ldots, n_e\)</span>
+<ul>
+<li>Calcular el gradiente sobre el minilote y hacer actualización, sucesivamente
+para cada uno de los minilotes <span class="math inline">\(k=1,2,\ldots, n/m\)</span>:
+<span class="math display">\[\beta_{i+1} = \beta_{i} - \eta\sum_{j=1}^m \nabla D^{(k)}_j (\beta_i)\]</span>
+donde <span class="math inline">\(D^{(k)}_j (\beta_i)\)</span> es la devianza para el <span class="math inline">\(j\)</span>-ésimo caso del minilote
+<span class="math inline">\(k\)</span>.</li>
+</ul></li>
+<li>Repetir para la siguiente época (opcional: reordenar antes al azar los
+minibatches, para evitar ciclos).
+</div></li>
+</ul>
+</div>
+<div id="por-que-usar-descenso-estocastico-por-minilotes" class="section level2">
+<h2><span class="header-section-number">5.2</span> ¿Por qué usar descenso estocástico por minilotes?</h2>
+<p>Las propiedades importantes de descenso estocástico son:</p>
+<ol style="list-style-type: decimal">
+<li><p>Muchas veces no es necesario usar todos los datos para encontrar una buena dirección de descenso. Podemos ver la dirección de descenso en gradiente como un valor esperado sobre la muestra de entrenamiento (pues la pérdida es un promedio sobre el conjunto
+de entrenamiento).
+Una <strong>submuestra (minilote) puede ser suficiente para estimar ese valor esperado</strong>, con
+costo menor de cómputo. Adicionalmente, quizá no es tan buena idea
+intentar estimar el gradiente con la mejor precisión pues es solamente una
+dirección de descenso <em>local</em> (así que quizá no da la mejor decisión de a
+dónde moverse en cada punto). Es mejor hacer iteraciones más rápidas con direcciones
+estimadas.</p></li>
+<li><p>Desde este punto de vista, calcular el gradiente completo para descenso en gradiente
+es computacionalmente ineficiente. Si el conjunto de entrenamiento es masivo,
+descenso en gradiente no es factible.</p></li>
+<li><p>¿Cuál es el mejor tamaño de minilote? Por un lado, minilotes más grandes nos
+dan mejores eficiencias en paralelización (multiplicación de matrices), especialmente
+en GPUs. Por otro lado, con minilotes más grandes puede ser que hagamos trabajo
+de más, por las razones expuestas en los incisos anteriores, y tengamos menos
+iteraciones en el mismo tiempo. El mejor punto está entre minilotes demasiado
+chicos (no aprovechamos paralelismo) o demasiado grande (hacemos demasiado trabajo
+por iteración).Tamaño t</p></li>
+</ol>
+<p>4.La propiedad más importante de descenso estocástico en minilotes es entonces que
+su convergencia no depende del tamaño del conjunto de entrenamiento, es decir,
+el
+<strong>tiempo de iteración para descenso estocástico
+no crece con el número de casos totales</strong>. Podemos tener obtener
+buenos ajustes
+incluso con tamaños muy grandes de conjuntos de entrenamiento (por ejemplo, antes
+de procesar todos los datos de entrenamiento). Descenso estocástico <em>escala</em> bien
+en este sentido: el factor limitante es el tamaño de minilote y el número de iteraciones.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Es importante permutar al azar los datos antes de hacer los minibatches,
+pues órdenes naturales en los datos pueden afectar la convergencia. Se ha observado
+también que permutar los minibatches en cada iteración típicamente acelera
+la convergencia (si se pueden tener los datos en memoria).</li>
+</ol>
+<div id="ejemplo-21" class="section level4 unnumbered">
+<h4>Ejemplo</h4>
+<p>En el ejemplo anterior nota que las direcciones de descenso de descenso estocástico
+son muy razonables (punto 1). Nota también que obtenemos
+una buena aproximación a la solución
+con menos cómputo (punto 2 - mismo número de iteraciones, pero cada iteración
+con un minilote).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">filter</span>(dat_dev, iteracion <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>), 
+       <span class="kw">aes</span>(<span class="dt">x=</span>iteracion, <span class="dt">y=</span>dev_ent, <span class="dt">colour=</span>algoritmo)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.5</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>tipo, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
+<div id="escogiendo-la-tasa-de-aprendizaje" class="section level2">
+<h2><span class="header-section-number">5.3</span> Escogiendo la tasa de aprendizaje</h2>
+<p>Para escoger la tasa, monitoreamos las curvas de error de entrenamiento y de
+validación. Si la tasa es muy grande, habrá oscilaciones grandes y muchas veces incrementos
+grandes en la función objectivo (error de entrenamiento).
+Algunas oscilaciones suaves no tienen problema -es la naturaleza estocástica
+del algoritmo. Si la tasa
+es muy baja, el aprendizaje es lento y podemos quedarnos en un valor demasiado alto.</p>
+<p>Conviene monitorear las primeras iteraciones y escoger una tasa más alta que
+la mejor que tengamos
+acutalmente, pero no tan alta que cause inestabilidad. Una gráfica como la siguiente
+es útil. En este ejemplo, incluso podríamos detenernos antes para evitar el
+sobreajuste de la última parte de las iteraciones:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">filter</span>(dat_dev, algoritmo<span class="op">==</span><span class="st">&#39;descenso_estocastico&#39;</span>), 
+       <span class="kw">aes</span>(<span class="dt">x=</span>iteracion, <span class="dt">y=</span>dev_ent, <span class="dt">colour=</span>tipo)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Por ejemplo: tasa demasiado alta:</p>
+<pre class="sourceCode r"><code class="sourceCode r">iter_estocastico &lt;-<span class="st"> </span>descenso_estocá<span class="kw">stico</span>(<span class="dv">20</span>, <span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>), <span class="fl">0.95</span>, minilotes) <span class="op">%&gt;%</span>
+<span class="st">  </span>data.frame <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">beta_0 =</span> X1, <span class="dt">beta_1 =</span> X2)
+dev_ent &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_ent[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y=</span>dat_ent<span class="op">$</span>g)
+dev_valid &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_valid[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y=</span>dat_valid<span class="op">$</span>g)
+dat_dev &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">iteracion =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(iter_estocastico)) <span class="op">%&gt;%</span>
+<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">entrena =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_ent), 
+  <span class="dt">validacion =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_valid)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(tipo, devianza, entrena<span class="op">:</span>validacion)
+<span class="kw">ggplot</span>(dat_dev, 
+       <span class="kw">aes</span>(<span class="dt">x=</span>iteracion, <span class="dt">y=</span>devianza, <span class="dt">colour=</span>tipo)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Tasa demasiado chica ( o hacer más iteraciones):</p>
+<pre class="sourceCode r"><code class="sourceCode r">iter_estocastico &lt;-<span class="st"> </span>descenso_estocá<span class="kw">stico</span>(<span class="dv">20</span>, <span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>), <span class="fl">0.01</span>, minilotes) <span class="op">%&gt;%</span>
+<span class="st">  </span>data.frame <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">beta_0 =</span> X1, <span class="dt">beta_1 =</span> X2)
+dev_ent &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_ent[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y=</span>dat_ent<span class="op">$</span>g)
+dev_valid &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_valid[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y=</span>dat_valid<span class="op">$</span>g)
+dat_dev &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">iteracion =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(iter_estocastico)) <span class="op">%&gt;%</span>
+<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">entrena =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_ent), 
+  <span class="dt">validacion =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_valid)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(tipo, devianza, entrena<span class="op">:</span>validacion)
+<span class="kw">ggplot</span>(dat_dev, 
+       <span class="kw">aes</span>(<span class="dt">x=</span>iteracion, <span class="dt">y=</span>devianza, <span class="dt">colour=</span>tipo)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() </code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<ul>
+<li>Para redes neuronales, es importante explorar distintas tasas de aprendizaje,
+aún cuando no parezca haber oscilaciones grandes o convergencia muy lenta. En algunos
+casos, si la tasa es demasiado grande, puede ser que el algoritmo llegue a lugares
+con gradientes cercanos a cero (por ejemplo, por activaciones
+demasiado grandes) y tenga dificultad para moverse.</li>
+</ul>
+</div>
+<div id="mejoras-al-algoritmo-de-descenso-estocastico." class="section level2">
+<h2><span class="header-section-number">5.4</span> Mejoras al algoritmo de descenso estocástico.</h2>
+<div id="decaimiento-de-tasa-de-aprendizaje" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Decaimiento de tasa de aprendizaje</h3>
+<p>Hay muchos algoritmos derivados de descenso estocástico. La primera mejora consiste en reducir gradualmente la tasa de aprendizaje
+para aprender rápido al principio, pero filtrar el ruido de la
+estimación de minilotes más adelante en las iteraciones y permitir que el algoritmo
+se asiente en un mínimo.</p>
+<pre class="sourceCode r"><code class="sourceCode r">descenso_estocástico &lt;-<span class="st"> </span><span class="cf">function</span>(n_epocas, z_<span class="dv">0</span>, eta, minilotes, <span class="dt">decaimiento =</span> <span class="fl">0.0</span>){
+  <span class="co">#minilotes es una lista</span>
+  m &lt;-<span class="st"> </span><span class="kw">length</span>(minilotes)
+  z &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, m<span class="op">*</span>n_epocas, <span class="kw">length</span>(z_<span class="dv">0</span>))
+  z[<span class="dv">1</span>, ] &lt;-<span class="st"> </span>z_<span class="dv">0</span>
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(m<span class="op">*</span>n_epocas<span class="dv">-1</span>)){
+    k &lt;-<span class="st"> </span>i <span class="op">%%</span><span class="st"> </span>m <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    <span class="cf">if</span>(i <span class="op">%%</span><span class="st"> </span>m <span class="op">==</span><span class="st"> </span><span class="dv">0</span>){
+      <span class="co">#comenzar nueva época y reordenar minilotes al azar</span>
+      minilotes &lt;-<span class="st"> </span>minilotes[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>m, m)]
+    }
+    h_deriv &lt;-<span class="st"> </span><span class="kw">grad_calc</span>(minilotes[[k]]<span class="op">$</span>x, minilotes[[k]]<span class="op">$</span>y)
+    z[i<span class="op">+</span><span class="dv">1</span>, ] &lt;-<span class="st"> </span>z[i, ] <span class="op">-</span><span class="st"> </span>eta <span class="op">*</span><span class="st"> </span><span class="kw">h_deriv</span>(z[i, ])
+    eta &lt;-<span class="st"> </span>eta<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>decaimiento<span class="op">*</span>i))
+  }
+  z
+}</code></pre>
+<p>Y ahora vemos qué pasa con decaimiento:</p>
+<pre class="sourceCode r"><code class="sourceCode r">iter_estocastico &lt;-<span class="st"> </span>descenso_estocá<span class="kw">stico</span>(<span class="dv">20</span>, <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="fl">0.3</span>, 
+                                         minilotes, <span class="dt">decaimiento =</span> <span class="fl">0.0002</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>data.frame <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">beta_0 =</span> X1, <span class="dt">beta_1 =</span> X2, <span class="dt">beta_2 =</span> X3, <span class="dt">beta_3 =</span> X4)
+dev_ent &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_ent[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y=</span>dat_ent<span class="op">$</span>g)
+dev_valid &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_valid[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y=</span>dat_valid<span class="op">$</span>g)
+dat_dev &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">iteracion =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(iter_estocastico)) <span class="op">%&gt;%</span>
+<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">entrena =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_ent), 
+  <span class="dt">validacion =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_valid)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(tipo, devianza, entrena<span class="op">:</span>validacion)
+<span class="kw">ggplot</span>(<span class="kw">filter</span>(dat_dev, iteracion<span class="op">&gt;</span><span class="dv">1</span>), 
+       <span class="kw">aes</span>(<span class="dt">x=</span>iteracion, <span class="dt">y=</span>devianza, <span class="dt">colour=</span>tipo)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iteraciones_descenso, <span class="kw">aes</span>(<span class="dt">x=</span>beta_<span class="dv">1</span>, <span class="dt">y=</span>beta_<span class="dv">2</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_path</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_path</span>(<span class="dt">data =</span> iter_estocastico, <span class="dt">colour =</span><span class="st">&#39;red&#39;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> iter_estocastico, <span class="dt">colour =</span><span class="st">&#39;red&#39;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>)</code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+
+<div class="comentario">
+<p>La <strong>tasa de aprendizaje</strong> es uno de los parámetros en redes neuronales más importantes
+de afinar. Generalmente se empieza con
+una tasa de aprendizaje con un valor bajo (0.01, o. 0.1),
+pero es necesario experimentar.</p>
+<ul>
+<li>Un valor muy alto puede provocar oscilaciones muy fuertes en la pérdida</li>
+<li>Un valor alto también puede provocar que el algoritmo se detenga en
+lugar con función pérdida alta (sobreajusta rápidamente).</li>
+<li>Un valor demasiado bajo produce convergencia lenta.
+</div></li>
+</ul>
+</div>
+<div id="momento" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Momento</h3>
+<p>También es posible utilizar una idea adicional que acelera
+la convergencia. La idea es que muchas veces la aleatoriedad
+del algoritmo puede producir iteraciones en direcciones que
+no son tan buenas (pues la estimación del gradiente es mala). Esto
+es parte del algoritmo. Sin embargo, si en varias iteraciones
+hemos observado movimientos en direcciones consistentes,
+quizá deberíamos movernos en esas direcciones consistentes,
+y reducir el peso de la dirección del minilote (que nos puede
+llevar en una dirección mala). El resultado es un suavizamiento
+de las curvas de aprendizaje.</p>
+<p>Esto es similar al movimiento de una canica en una superficie:
+la dirección de su movimiento está dada en parte por
+la dirección de descenso (el gradiente) y en parte la velocidad actual
+de la canica. La canica se mueve en un promedio de estas dos direcciones</p>
+
+<div class="comentario">
+<p><strong>Descenso estocástico con momento</strong>
+Separamos al azar los datos de entrenamiento en <span class="math inline">\(n\)</span> minilotes de tamaño <span class="math inline">\(m\)</span>.</p>
+<ul>
+<li>Para épocas <span class="math inline">\(e =1,2,\ldots, n_e\)</span>
+<ul>
+<li>Calcular el gradiente sobre el minilote y hacer actualización, sucesivamente
+para cada uno de los minilotes <span class="math inline">\(k=1,2,\ldots, n/m\)</span>:
+<span class="math display">\[\beta_{i+1} = \beta_{i} + v,\]</span>
+<span class="math display">\[v= \alpha v - \eta\sum_{j=1}^m \nabla D^{(k)}_j\]</span>
+donde <span class="math inline">\(D^{(k)}_j (\beta_i)\)</span> es la devianza para el <span class="math inline">\(j\)</span>-ésimo caso del minilote
+<span class="math inline">\(k\)</span>. A <span class="math inline">\(v\)</span> se llama la <em>velocidad</em></li>
+</ul></li>
+<li>Repetir para la siguiente época
+</div></li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">descenso_estocástico &lt;-<span class="st"> </span><span class="cf">function</span>(n_epocas, z_<span class="dv">0</span>, eta, minilotes, 
+                                 <span class="dt">momento =</span> <span class="fl">0.0</span>, <span class="dt">decaimiento =</span> <span class="fl">0.0</span>){
+  <span class="co">#minilotes es una lista</span>
+  m &lt;-<span class="st"> </span><span class="kw">length</span>(minilotes)
+  z &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, m<span class="op">*</span>n_epocas, <span class="kw">length</span>(z_<span class="dv">0</span>))
+  z[<span class="dv">1</span>, ] &lt;-<span class="st"> </span>z_<span class="dv">0</span>
+  v &lt;-<span class="st"> </span><span class="dv">0</span>
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(m<span class="op">*</span>n_epocas<span class="dv">-1</span>)){
+    k &lt;-<span class="st"> </span>i <span class="op">%%</span><span class="st"> </span>m <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    <span class="cf">if</span>(i <span class="op">%%</span><span class="st"> </span>m <span class="op">==</span><span class="st"> </span><span class="dv">0</span>){
+      <span class="co">#comenzar nueva época y reordenar minilotes al azar</span>
+      minilotes &lt;-<span class="st"> </span>minilotes[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>m, m)]
+      v &lt;-<span class="st"> </span><span class="dv">0</span>
+    }
+    h_deriv &lt;-<span class="st"> </span><span class="kw">grad_calc</span>(minilotes[[k]]<span class="op">$</span>x, minilotes[[k]]<span class="op">$</span>y)
+    z[i<span class="op">+</span><span class="dv">1</span>, ] &lt;-<span class="st"> </span>z[i, ] <span class="op">+</span><span class="st"> </span>v
+    v &lt;-<span class="st"> </span>momento<span class="op">*</span>v <span class="op">-</span><span class="st"> </span>eta <span class="op">*</span><span class="st"> </span><span class="kw">h_deriv</span>(z[i, ])
+    eta &lt;-<span class="st"> </span>eta<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>decaimiento<span class="op">*</span>i))
+  }
+  z
+}</code></pre>
+<p>Y ahora vemos que usando momento el algoritmo es más parecido a descenso en gradiente
+usual (pues tenemos cierta memoria de direcciones anteriores de descenso):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">231</span>)
+iter_estocastico &lt;-<span class="st"> </span>descenso_estocá<span class="kw">stico</span>(<span class="dv">20</span>, <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="fl">0.2</span>, minilotes, <span class="dt">momento =</span> <span class="fl">0.7</span>, <span class="dt">decaimiento =</span> <span class="fl">0.001</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>data.frame <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">beta_0 =</span> X1, <span class="dt">beta_1 =</span> X2, <span class="dt">beta_2=</span>X3, <span class="dt">beta_3=</span>X4)
+dev_ent &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_ent[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y=</span>dat_ent<span class="op">$</span>g)
+dev_valid &lt;-<span class="st"> </span><span class="kw">devianza_calc</span>(<span class="dt">x =</span> <span class="kw">as.matrix</span>(dat_valid[,<span class="kw">c</span>(<span class="st">&#39;x_1&#39;</span>,<span class="st">&#39;x_2&#39;</span>,<span class="st">&#39;x_3&#39;</span>), <span class="dt">drop =</span><span class="ot">FALSE</span>]), 
+                             <span class="dt">y=</span>dat_valid<span class="op">$</span>g)
+dat_dev &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">iteracion =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(iter_estocastico)) <span class="op">%&gt;%</span>
+<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">entrena =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_ent), 
+  <span class="dt">validacion =</span> <span class="kw">apply</span>(iter_estocastico, <span class="dv">1</span>, dev_valid)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(tipo, devianza, entrena<span class="op">:</span>validacion)
+<span class="kw">ggplot</span>(<span class="kw">filter</span>(dat_dev, iteracion <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>), 
+       <span class="kw">aes</span>(<span class="dt">x=</span>iteracion, <span class="dt">y=</span>devianza, <span class="dt">colour=</span>tipo)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iteraciones_descenso, <span class="kw">aes</span>(<span class="dt">x=</span>beta_<span class="dv">1</span>, <span class="dt">y=</span>beta_<span class="dv">2</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_path</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_path</span>(<span class="dt">data =</span> iter_estocastico, <span class="dt">colour =</span><span class="st">&#39;red&#39;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> iter_estocastico, <span class="dt">colour =</span><span class="st">&#39;red&#39;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>)</code></pre>
+<p><img src="05-optimizacion_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Nótese cómo llegamos más rápido a una buena solución (comparado
+con el ejemplo sin momento). Adicionalmente, error de entrenamiento
+y validación lucen más suaves, producto de promediar
+velocidades a lo largo de iteraciones.</p>
+<p>Valores típicos para momento son 0,0.5,0.9 o 0.99.</p>
+</div>
+<div id="otras-variaciones" class="section level3">
+<h3><span class="header-section-number">5.4.3</span> Otras variaciones</h3>
+<p>Otras variaciones incluyen usar una tasa adaptativa de aprendizaje
+por cada parámetro (algoritmos adagrad, rmsprop, adam y adamax), o
+actualizaciones un poco diferentes (nesterov).</p>
+<p>Los más comunes
+son descenso estocástico, descenso estocástico con momento,
+rmsprop y adam (Capítulo 8 del Deep Learning Book, <span class="citation">(<span class="citeproc-not-found" data-reference-id="Goodfellow-et-al-2016"><strong>???</strong></span>)</span>).</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regresion-regularizada.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="diagnostico-y-mejora-de-modelos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/felipegonzalez/aprendizaje-maquina-verano-2018/edit/master/05-optimizacion.Rmd",
+"text": "Edit"
+},
+"download": ["am-curso-verano.pdf", "am-curso-verano.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
