@@ -1,16 +1,21 @@
 # Descenso estocástico
 
-El algoritmo más popular para ajustar redes grandes es descenso estocástico, que
-es una modificación de nuestro algoritmo de descenso en gradiente. Antes de presentar
+En esta sección discutiremos estrategias para ajustar modelos como los
+que vimos en secciones anteriores. Estos métodos también se utilizarán
+en el tutorial de redes neuronales más adelante.
+
+El algoritmo más popular para ajustar modelos grandes es descenso estocástico,
+que
+es una modificación de nuestro algoritmo de descenso en gradiente de las secicones anteriores. Antes de presentar
 las razones para usarlo, veremos cómo funciona para problemas con regresión
 lineal o logística.
 
 
 ```{block2, type='comentario'}
-En **descenso estocástico**, el cálculo del gradiente se hace sobre una submuestra
+En **descenso estocástico (por minilotes)**, el cálculo del gradiente se hace sobre una submuestra
 relativamente chica de la muestra de entrenamiento. En este contexto, a esta submuestra
 se le llama un **minilote**. En cada iteración, nos movemos en 
-la dirección de descenso de ese minilote. 
+la dirección de descenso para ese minilote. 
 
 La muestra de entrenamiento se divide entonces (al azar)
 en minilotes, y recorremos todos los minilotes haciendo una actualización de nuestros
@@ -22,11 +27,10 @@ Antes de escribir el algoritmo mostramos una implementación para regresión log
 Usamos las mismas funciones para calcular devianza y gradiente.
 
 ```{r, message=FALSE, warning = FALSE}
-library(dplyr)
-library(tidyr)
-library(ggplot2)
+library(tidyverse)
+theme_set(theme_bw())
+library(plotly)
 h <- function(x){1/(1+exp(-x))}
-# la devianza es la misma
 devianza_calc <- function(x, y){
   dev_fun <- function(beta){
     p_beta <- h(as.matrix(cbind(1, x)) %*% beta) 
@@ -34,7 +38,7 @@ devianza_calc <- function(x, y){
   }
   dev_fun
 }
-# el cálculo del gradiente es el mismo, pero x_ent y y_ent serán diferentes
+
 grad_calc <- function(x_ent, y_ent){
   salida_grad <- function(beta){
     p_beta <- h(as.matrix(cbind(1, x_ent)) %*% beta) 
@@ -47,7 +51,7 @@ grad_calc <- function(x_ent, y_ent){
 }
 ```
 
-Y comparamos los dos algoritmos:
+Y comparamos la implementación de los dos algoritmos:
 
 ```{r}
 descenso <- function(n, z_0, eta, h_deriv){
@@ -106,11 +110,13 @@ glm(g ~ x_1 + x_2+ x_3 , data = dat_ent, family = 'binomial') %>% coef
 Hacemos descenso en gradiente:
 
 ```{r}
-iteraciones_descenso <- descenso(300, rep(0,4), 0.8,
+iter_descenso <- descenso(80, rep(0,4), 0.9,
          h_deriv = grad_calc(x_ent = as.matrix(dat_ent[,c('x_1','x_2','x_3'), drop =FALSE]), 
                              y_ent=dat_ent$g)) %>%
-  data.frame %>% rename(beta_1 = X2, beta_2 = X3)
-ggplot(iteraciones_descenso, aes(x=beta_1, y=beta_2)) + geom_point()
+  data.frame %>% rename(beta_0 = X1, beta_1 = X2, beta_2 = X3, beta_3 = X4)
+iter_descenso$tipo <- "descenso"
+source("scripts/graficar_traza.R")
+graficar_traza(iter_descenso)
 ```
 
 Y ahora hacemos descenso estocástico. Vamos a hacer minilotes de tamaño 5:
@@ -130,35 +136,34 @@ de avance hacia el mínimo, y una vez que llega a una región oscila
 alrededor de este mínimo.
 
 ```{r}
-iter_estocastico <- descenso_estocástico(30, rep(0, 4), 0.1, minilotes) %>%
-  data.frame %>% rename(beta_0 = X1, beta_1 = X2, beta_2 = X3)
-ggplot(iteraciones_descenso, aes(x=beta_1, y=beta_2)) + geom_path() +
-  geom_point() +
-  geom_path(data = iter_estocastico, colour ='red', alpha=0.5) +
-  geom_point(data = iter_estocastico, colour ='red', alpha=0.5)
+iter_estocastico <- descenso_estocástico(15, rep(0, 4), 0.1, minilotes) %>%
+  data.frame %>% rename(beta_0 = X1, beta_1 = X2, beta_2 = X3, beta_3 = X4) %>%
+    mutate(tipo ="descenso estocástico")
+#veremos más adelante por qué repetimos cada renglón varias veces
+iter <- bind_rows(iter_descenso, iter_estocastico)
+graficar_traza(iter)
 ```
+
+Nótese que cada iteración de descenso en gradiente evalúa el gradiente
+en 100 casos (los de entrenamiento), mientras que cada iteración 
+de descenso estocástico por minilotes solamente evalúa el gradiente
+en 5 casos (de modo que es un 5\% del trabajo). Ajustando por la cantidad
+de trabajo:
+
+```{r}
+iter_descenso_sub <- iter_descenso[1:10, ]
+iter_descenso_rep <- iter_descenso_sub[rep(1:nrow(iter_descenso_sub), each = 20),]
+iter_2 <- bind_rows(iter_descenso_rep, iter_estocastico)
+graficar_traza(iter_2)
+```
+
 
 Podemos ver cómo se ve la devianza de entrenamiento:
 
 ```{r}
-dev_ent <- devianza_calc(x = as.matrix(dat_ent[,c('x_1','x_2','x_3'), drop =FALSE]), 
-                             y=dat_ent$g)
-dev_valid <- devianza_calc(x = as.matrix(dat_valid[,c('x_1','x_2','x_3'), drop =FALSE]),
-                             y=dat_valid$g)
-dat_dev <- data_frame(iteracion = 1:nrow(iteraciones_descenso)) %>%
-  mutate(descenso = apply(iteraciones_descenso, 1, dev_ent),
-        descenso_estocastico = apply(iter_estocastico, 1, dev_ent)) %>%
-  gather(algoritmo, dev_ent, -iteracion) %>% mutate(tipo ='entrenamiento')
-
-dat_dev_valid <- data_frame(iteracion = 1:nrow(iteraciones_descenso)) %>%
-  mutate(descenso = apply(iteraciones_descenso, 1, dev_valid),
-         descenso_estocastico = apply(iter_estocastico, 1, dev_valid)) %>%
-  gather(algoritmo, dev_ent, -iteracion) %>% mutate(tipo ='validación')
-
-dat_dev <- bind_rows(dat_dev, dat_dev_valid)
-ggplot(filter(dat_dev, tipo=='entrenamiento'), 
-       aes(x=iteracion, y=dev_ent, colour=algoritmo)) + geom_line() +
-  geom_point() + facet_wrap(~tipo)
+dev_ent <- devianza_calc(x = as.matrix(dat_ent[,c('x_1','x_2','x_3'), drop =FALSE]), y=dat_ent$g)
+dev_valid <- devianza_calc(x = as.matrix(dat_valid[,c('x_1','x_2','x_3'), drop =FALSE]), y=dat_valid$g)
+dev_datos <- graficar_devianza(iter, dat_ent, dat_valid)
 ```
 
 y vemos que descenso estocástico también converge a una buena solución.
@@ -166,7 +171,7 @@ y vemos que descenso estocástico también converge a una buena solución.
 ## Algoritmo de descenso estocástico
 
 ```{block2, type ='comentario'}
-**Descenso estocástico**.
+**Descenso estocástico por minilotes**.
 Separamos al azar los datos de entrenamiento en $n$ minilotes de tamaño $m$.
 
 - Para épocas $e =1,2,\ldots, n_e$
@@ -177,6 +182,9 @@ donde $D^{(k)}_j (\beta_i)$ es la devianza para el $j$-ésimo caso del minilote
 $k$.
 - Repetir para la siguiente época (opcional: reordenar antes al azar los
 minibatches, para evitar ciclos).
+  
+Cuando el minilote es de tamaño 1, este algoritmo se llama simplemente
+**descenso estocástico**.
 ```
 
 ## ¿Por qué usar descenso estocástico por minilotes?
@@ -202,11 +210,10 @@ en GPUs. Por otro lado, con minilotes más grandes puede ser que hagamos trabajo
 de más, por las razones expuestas en los incisos anteriores, y tengamos menos
 iteraciones en el mismo tiempo. El mejor punto está entre minilotes demasiado
 chicos (no aprovechamos paralelismo) o demasiado grande (hacemos demasiado trabajo
-por iteración).Tamaño t
+por iteración).
 
 
-4.La propiedad más importante de descenso estocástico en minilotes es entonces que 
-su convergencia no depende del tamaño del conjunto de entrenamiento, es decir,
+4.La propiedad más importante de descenso estocástico en minilotes es entonces que su convergencia no depende del tamaño del conjunto de entrenamiento, es decir,
 el 
 **tiempo de iteración para descenso estocástico
 no crece con el número de casos totales**. Podemos tener obtener
@@ -215,7 +222,7 @@ incluso con tamaños muy grandes de conjuntos de entrenamiento (por ejemplo, ant
 de procesar todos los datos de entrenamiento). Descenso estocástico *escala* bien
 en este sentido: el factor limitante es el tamaño de minilote y el número de iteraciones.
 
-5. Es importante permutar al azar los datos antes de hacer los minibatches,
+5. Es importante permutar al azar los datos antes de hacer los minilotes,
 pues órdenes naturales en los datos pueden afectar la convergencia. Se ha observado
 también que permutar los minibatches en cada iteración típicamente acelera
 la convergencia (si se pueden tener los datos en memoria).
@@ -229,10 +236,10 @@ con un minilote).
 
 
 ```{r}
-ggplot(filter(dat_dev, iteracion >= 1), 
-       aes(x=iteracion, y=dev_ent, colour=algoritmo)) + geom_line() +
+ggplot(filter(dev_datos, iteracion >= 2), 
+       aes(x=iteracion, y=devianza, colour=tipo)) + geom_line() +
   geom_point(size=0.5)+
-  facet_wrap(~tipo, ncol=1)
+  facet_wrap(~muestra, ncol=1)
 ```
 
 
@@ -253,43 +260,32 @@ es útil. En este ejemplo, incluso podríamos detenernos antes para evitar el
 sobreajuste de la última parte de las iteraciones:
 
 ```{r}
-ggplot(filter(dat_dev, algoritmo=='descenso_estocastico'), 
-       aes(x=iteracion, y=dev_ent, colour=tipo)) + geom_line() + geom_point()
+ggplot(filter(dev_datos, tipo=='descenso estocástico'), 
+       aes(x=iteracion, y=devianza, colour=muestra)) + geom_line() + geom_point()
 ```
 
 
 Por ejemplo: tasa demasiado alta:
 ```{r}
 iter_estocastico <- descenso_estocástico(20, rep(0,4), 0.95, minilotes) %>%
-  data.frame %>% rename(beta_0 = X1, beta_1 = X2)
-dev_ent <- devianza_calc(x = as.matrix(dat_ent[,c('x_1','x_2','x_3'), drop =FALSE]), 
-                             y=dat_ent$g)
-dev_valid <- devianza_calc(x = as.matrix(dat_valid[,c('x_1','x_2','x_3'), drop =FALSE]), 
-                             y=dat_valid$g)
-dat_dev <- data_frame(iteracion = 1:nrow(iter_estocastico)) %>%
-   mutate(entrena = apply(iter_estocastico, 1, dev_ent), 
-  validacion = apply(iter_estocastico, 1, dev_valid)) %>%
-  gather(tipo, devianza, entrena:validacion)
-ggplot(dat_dev, 
-       aes(x=iteracion, y=devianza, colour=tipo)) + geom_line() + geom_point()
+  data.frame %>% rename(beta_0 = X1, beta_1 = X2, beta_2=X3, beta_3=X4) %>%
+    mutate(tipo = "descenso estocástico")
+
+iter <- bind_rows(iter_descenso, iter_estocastico)
+dev_datos <- graficar_devianza(iter, dat_ent, dat_valid)
 ```
 
 
 Tasa demasiado chica ( o hacer más iteraciones):
 ```{r}
 iter_estocastico <- descenso_estocástico(20, rep(0,4), 0.01, minilotes) %>%
-  data.frame %>% rename(beta_0 = X1, beta_1 = X2)
-dev_ent <- devianza_calc(x = as.matrix(dat_ent[,c('x_1','x_2','x_3'), drop =FALSE]), 
-                             y=dat_ent$g)
-dev_valid <- devianza_calc(x = as.matrix(dat_valid[,c('x_1','x_2','x_3'), drop =FALSE]), 
-                             y=dat_valid$g)
-dat_dev <- data_frame(iteracion = 1:nrow(iter_estocastico)) %>%
-   mutate(entrena = apply(iter_estocastico, 1, dev_ent), 
-  validacion = apply(iter_estocastico, 1, dev_valid)) %>%
-  gather(tipo, devianza, entrena:validacion)
-ggplot(dat_dev, 
-       aes(x=iteracion, y=devianza, colour=tipo)) + geom_line() 
-```
+  data.frame %>% rename(beta_0 = X1, beta_1 = X2, beta_2=X3, beta_3=X4) %>%
+    mutate(tipo = "descenso estocástico")
+
+iter <- bind_rows(iter_descenso, iter_estocastico)
+dev_datos <- graficar_devianza(iter, dat_ent, dat_valid)
+``` 
+
 
 - Para redes neuronales, es importante explorar distintas tasas de aprendizaje,
 aún cuando no parezca haber oscilaciones grandes o convergencia muy lenta. En algunos
@@ -331,25 +327,20 @@ Y ahora vemos qué pasa con decaimiento:
 
 ```{r}
 iter_estocastico <- descenso_estocástico(20, c(0,0, 0, 0), 0.3, 
-                                         minilotes, decaimiento = 0.0002) %>%
-  data.frame %>% rename(beta_0 = X1, beta_1 = X2, beta_2 = X3, beta_3 = X4)
-dev_ent <- devianza_calc(x = as.matrix(dat_ent[,c('x_1','x_2','x_3'), drop =FALSE]), 
-                             y=dat_ent$g)
-dev_valid <- devianza_calc(x = as.matrix(dat_valid[,c('x_1','x_2','x_3'), drop =FALSE]), 
-                             y=dat_valid$g)
-dat_dev <- data_frame(iteracion = 1:nrow(iter_estocastico)) %>%
-   mutate(entrena = apply(iter_estocastico, 1, dev_ent), 
-  validacion = apply(iter_estocastico, 1, dev_valid)) %>%
-  gather(tipo, devianza, entrena:validacion)
-ggplot(filter(dat_dev, iteracion>1), 
-       aes(x=iteracion, y=devianza, colour=tipo)) + geom_line() + geom_point()
-```
+                                         minilotes, decaimiento = 0.0005) %>%
+  data.frame %>% rename(beta_0 = X1, beta_1 = X2, beta_2 = X3, beta_3 = X4) %>% 
+  mutate(tipo = "descenso estocástico")
+iter <- bind_rows(iter_descenso, iter_estocastico)
+dev_datos <- graficar_devianza(iter, dat_ent, dat_valid)
+``` 
+
+
+
 ```{r}
-ggplot(iteraciones_descenso, aes(x=beta_1, y=beta_2)) + geom_path() +
-  geom_point() +
-  geom_path(data = iter_estocastico, colour ='red', alpha=0.5) +
-  geom_point(data = iter_estocastico, colour ='red', alpha=0.5)
+graficar_traza(iter)
 ```
+
+
 
 
 ```{block2, type='comentario'}
@@ -425,25 +416,16 @@ usual (pues tenemos cierta memoria de direcciones anteriores de descenso):
 
 ```{r}
 set.seed(231)
-iter_estocastico <- descenso_estocástico(20, c(0,0, 0, 0), 0.2, minilotes, momento = 0.7, decaimiento = 0.001) %>%
-  data.frame %>% rename(beta_0 = X1, beta_1 = X2, beta_2=X3, beta_3=X4)
-dev_ent <- devianza_calc(x = as.matrix(dat_ent[,c('x_1','x_2','x_3'), drop =FALSE]), 
-                             y=dat_ent$g)
-dev_valid <- devianza_calc(x = as.matrix(dat_valid[,c('x_1','x_2','x_3'), drop =FALSE]), 
-                             y=dat_valid$g)
-dat_dev <- data_frame(iteracion = 1:nrow(iter_estocastico)) %>%
-   mutate(entrena = apply(iter_estocastico, 1, dev_ent), 
-  validacion = apply(iter_estocastico, 1, dev_valid)) %>%
-  gather(tipo, devianza, entrena:validacion)
-ggplot(filter(dat_dev, iteracion > 1), 
-       aes(x=iteracion, y=devianza, colour=tipo)) + geom_line() + geom_point()
-```
+iter_estocastico <- descenso_estocástico(15, c(0,0, 0, 0), 0.2, minilotes, momento = 0.7, decaimiento = 0.001) %>%
+  data.frame %>% rename(beta_0 = X1, beta_1 = X2, beta_2 = X3, beta_3 = X4) %>% 
+    mutate(tipo = "descenso estocástico +  momento")
+
+iter_momento <- bind_rows(iter_descenso, iter_estocastico)
+dev_datos <- graficar_devianza(iter_momento, dat_ent, dat_valid)
+``` 
 
 ```{r}
-ggplot(iteraciones_descenso, aes(x=beta_1, y=beta_2)) + geom_path() +
-  geom_point() +
-  geom_path(data = iter_estocastico, colour ='red', alpha=0.5) +
-  geom_point(data = iter_estocastico, colour ='red', alpha=0.5)
+graficar_traza(iter_momento)
 ```
 
 Nótese cómo llegamos más rápido a una buena solución (comparado
