@@ -11,6 +11,8 @@ y varianza simularemos varios posibles muestras de entrenamiento:
 
 ```r
 library(tidyverse)
+theme_set(theme_bw())
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 ```
 
 
@@ -128,14 +130,12 @@ h <- function(x){ 1 / (1 + exp(-x))}
 set.seed(2805)
 beta <- rnorm(100,0,0.1)
 names(beta) <- paste0('V', 1:length(beta))
-head(beta)
+head(beta, 5)
 ```
 
 ```
-##           V1           V2           V3           V4           V5 
-## -0.119875530  0.034627590 -0.081818069  0.014920959  0.040160152 
-##           V6 
-##  0.002043735
+##          V1          V2          V3          V4          V5 
+## -0.11987553  0.03462759 -0.08181807  0.01492096  0.04016015
 ```
 
 Con esta función simulamos datos de entrenamiento (400) y datos
@@ -156,10 +156,11 @@ sim_datos <- function(n, m, beta){
   dat
 }
 set.seed(9921)
-datos <- sim_datos(n = 400, m = 2000, beta = beta)
+datos <- sim_datos(n = 500, m = 2000, beta = beta)
 ```
 
-Y ahora ajustamos el modelo de regresión logística:
+Y ahora ajustamos el modelo de regresión logística (no usamos
+ordenada al origen para simplificar):
 
 
 ```r
@@ -180,15 +181,17 @@ qplot(beta, mod_1$coefficients) +
 
 <img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
-Y notamos que las estimaciones no son muy buenas.
+Y notamos que las estimaciones no son muy buenas, y tienen dispersión
+alta.
 Podemos hacer otra simulación para confirmar que el problema
 es que las estimaciones son muy variables.
 
-Con otra muestra de entrenamiento, vemos que las estimaciones tienen
-varianza alta.
+Simulamos otra muestra de entrenamiento, y vemos 
+cómo se comparan los coeficientes de las dos muestras:
+
 
 ```r
-datos_2 <- sim_datos(n = 400, m = 10, beta = beta)
+datos_2 <- sim_datos(n = 500, m = 10, beta = beta)
 mod_2 <- glm(y ~ -1 + ., datos_2 %>% filter(entrena) %>% select(-entrena), 
              family = 'binomial')
 qplot(mod_1$coefficients, mod_2$coefficients) + xlab('Coeficientes mod 1') + 
@@ -202,8 +205,8 @@ qplot(mod_1$coefficients, mod_2$coefficients) + xlab('Coeficientes mod 1') +
 Si repetimos varias veces:
 
 ```r
-dat_sim <- lapply(1:50, function(i){
-  salida <- sim_datos(n=400, m=10, beta)
+dat_sim <- lapply(1:20, function(i){
+  salida <- sim_datos(n=500, m=10, beta)
   mod <-  glm(y ~ -1 + ., salida %>% filter(entrena) %>% select(-entrena), 
              family = 'binomial')
   data_frame(rep = i, vars = names(coef(mod)), coefs = coef(mod))
@@ -215,12 +218,12 @@ head(dat_sim)
 ## # A tibble: 6 x 3
 ##     rep vars    coefs
 ##   <int> <chr>   <dbl>
-## 1     1 V1    -0.209 
-## 2     1 V2    -0.0538
-## 3     1 V3     0.149 
-## 4     1 V4     0.768 
-## 5     1 V5     0.123 
-## 6     1 V6    -0.257
+## 1     1 V1    -0.0527
+## 2     1 V2     0.427 
+## 3     1 V3    -0.0772
+## 4     1 V4    -0.249 
+## 5     1 V5     0.355 
+## 6     1 V6     0.514
 ```
 
 Vemos que hay mucha variabilidad en la estimación de los coeficientes
@@ -242,7 +245,7 @@ obtendremos típicamente resultados no muy buenos. **Estos
 coeficientes ruidosos afectan nuestras predicciones de manera negativa**.
 
 Vemos ahora lo que pasa con nuestra $\hat{p}_1(x)$ estimadas, comparándolas
-con $p_1(x)$, para la primera simulación:
+con $p_1(x)$ (las probabilidades reales), para la primera simulación:
 
 
 ```r
@@ -250,11 +253,11 @@ dat_e <- datos %>% filter(entrena)
 dat_p <- datos %>% filter(!entrena)
 x_e <- dat_e %>% select(-entrena, -y) %>% as.matrix
 x_p <- dat_p %>% select(-entrena, -y) %>% as.matrix
-p_entrena <- data_frame(prob_hat_1 = h(mod_1$fitted.values), 
+p_entrena <- data_frame(prob_hat_1 = mod_1$fitted.values, 
                         prob_1 = as.numeric(h(x_e %*% beta)),
                         clase = dat_e$y)
-p_prueba <- data_frame(prob_hat_1 = as.numeric(h(x_p %*% (mod_1$coefficients))), 
-                       prob_1 = as.numeric(h(x_p %*% beta)),
+p_prueba <- data_frame(prob_hat_1 = h(x_p %*% (mod_1$coefficients))[,1], 
+                       prob_1 = h(x_p %*% beta)[,1],
                        clase = dat_p$y)
 ```
 Para los datos de entrenamiento:
@@ -282,7 +285,8 @@ que cometemos errores grandes. El problema no es que nuestro modelo no sea aprop
 de los coeficientes que notamos arriba.
 
 
-La matriz de confusión y la sensibilidad y especificidad:
+La matriz de confusión de prueba está dada por (normalizando por columnas):
+
 
 ```r
 tab <- table(p_prueba$prob_hat_1 > 0.5, p_prueba$clase)
@@ -292,9 +296,25 @@ prop.table(tab, margin=2)
 ```
 ##        
 ##                 0         1
-##   FALSE 0.6055777 0.3755020
-##   TRUE  0.3944223 0.6244980
+##   FALSE 0.6587302 0.3467742
+##   TRUE  0.3412698 0.6532258
 ```
+
+Así que para los ejemplos de tipo 1 tenemos un error de alrededor
+de 34\%, y para los de tipo 0 un error cerca de 34\%. La tasa de
+clasificación incorrecta en la muestra de prueba es:
+
+
+```r
+mean((p_prueba$prob_hat_1 > 0.5) != (p_prueba$clase == 1))
+```
+
+```
+## [1] 0.344
+```
+
+Veremos ahora que podemos mejorar este modelo controlando la varianza
+que coeficientes que acabamos de observar.
 
 ### Reduciendo varianza de los coeficientes
 
@@ -320,7 +340,7 @@ En este caso obtenemos (veremos más del paquete *glmnet*):
 library(glmnet)
 mod_restringido <- glmnet(x = x_e, y = dat_e$y, 
   alpha = 0,
-  family='binomial', intercept = F, 
+  family='binomial', intercept = FALSE, 
   lambda = 0.1)
 beta_penalizado <- coef(mod_restringido)[-1] # quitar intercept
 ```
@@ -333,7 +353,7 @@ sum(beta_penalizado^2)
 ```
 
 ```
-## [1] 0.4837593
+## [1] 0.3185858
 ```
 
 ```r
@@ -341,7 +361,7 @@ sum(coef(mod_1)^2)
 ```
 
 ```
-## [1] 18.2092
+## [1] 13.62839
 ```
 
 Los nuevos coeficientes estimados:
@@ -350,15 +370,11 @@ Los nuevos coeficientes estimados:
 qplot(beta, beta_penalizado) + 
   xlab('Coeficientes') + 
   ylab('Coeficientes estimados') +
-  geom_abline(xintercept=0, slope =1) +
+  geom_abline(intercept=0, slope =1) +
   xlim(c(-0.5,0.5))+ ylim(c(-0.5,0.5))
 ```
 
-```
-## Warning: Ignoring unknown parameters: xintercept
-```
-
-<img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 
 
@@ -372,7 +388,7 @@ Para los datos de entrenamiento:
 ggplot(p_entrena, aes(x=prob_1, y=prob_hat_pen, colour=factor(clase))) + geom_point()
 ```
 
-<img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 Y con la muestra de prueba:
 
@@ -380,8 +396,10 @@ Y con la muestra de prueba:
 ggplot(p_prueba, aes(x=prob_1, y=prob_hat_pen, colour=factor(clase))) + geom_point()
 ```
 
-<img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 
+
+La matriz de confusión es ahora:
 
 
 ```r
@@ -392,46 +410,37 @@ prop.table(tab, margin=2)
 ```
 ##        
 ##                 0         1
-##   FALSE 0.6603586 0.2851406
-##   TRUE  0.3396414 0.7148594
+##   FALSE 0.6994048 0.3094758
+##   TRUE  0.3005952 0.6905242
 ```
 
-Curvas ROC de prueba:
-
-
-```r
-library(ROCR)
-pred <- prediction(predictions = p_prueba$prob_hat_1, labels = p_prueba$clase)
-perf <- performance(pred, measure = "sens", x.measure = "fpr") 
-plot(perf)
-pred_r <- prediction(predictions = p_prueba$prob_hat_pen, labels = p_prueba$clase)
-perf_r <- performance(pred_r, measure = "sens", x.measure = "fpr") 
-plot(perf_r, add =T, col ='red')
-abline(a=0, b=1, col ='gray')
-```
-
-<img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+Y vemos que logramos reducir considerablemente el error de clasificación
+de prueba.
 
 
 Sin embargo, vemos que en la muestra de entrenamiento se desempeña mejor
-el modelo sin penalización, como es de esperarse (el mínimo irrestricto es
-más bajo que el mínimo del problema con restricción).
-
+el modelo sin penalización, como es de esperarse (¿Por qué?). Si ingenuamente
+escogemos nuestro modelo según el error de entrenamiento, empeoraríamos nuestro
+desempeño para muestras futuras:
 
 
 ```r
-library(ROCR)
-pred <- prediction(predictions = p_entrena$prob_hat_1, labels = p_entrena$clase)
-perf <- performance(pred, measure = "sens", x.measure = "fpr") 
-plot(perf)
-pred_r <- prediction(predictions = p_entrena$prob_hat_pen, labels = p_entrena$clase)
-perf_r <- performance(pred_r, measure = "sens", x.measure = "fpr") 
-plot(perf_r, add =T, col ='red')
-abline(a=0, b=1, col ='gray')
+error_entrena <- mean((p_entrena$prob_hat_1 > 0.5) != (p_entrena$clase==1))
+error_entrena_penalizado <- mean((p_entrena$prob_hat_pen > 0.5) != (p_entrena$clase==1))
+error_entrena
 ```
 
-<img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+```
+## [1] 0.21
+```
 
+```r
+error_entrena_penalizado
+```
+
+```
+## [1] 0.246
+```
 
 
 ## Regularización ridge
@@ -440,8 +449,7 @@ Arriba vimos un ejemplo de regresión penalizada tipo **ridge**. Recordemos
 que para regresión lineal, buscábamos minimizar la cantidad
 $$D(\beta)=\frac{1}{n}\sum_{i=1}^n (y_i -\beta_0 - \sum_{j=1}^p \beta_j x_{ij})^2$$
 y en regresión logística,
-$$D(\beta)=-\frac{2}{n}\sum_{i=1}^n y_i \log(h(\beta_0 + \sum_{j=1}^p \beta_j x_{ij})) + (1-y_i) \log(1 - h(\beta_0 + \sum_{j=1}^p \beta_j x_{ij}))    ,$$
-donde los denotamos de la misma forma para unificar notación.
+$$D(\beta)=-\frac{2}{n}\sum_{i=1}^n y_i \log p_{\beta}(x^{(i)}) + (1-y_i) \log(1 - p_{\beta}(x^{(i)})).$$
 
 \BeginKnitrBlock{comentario}<div class="comentario">En regresión **ridge** (lineal/logística), para $\lambda>0$ fija minimizamos
 $$D_{\lambda}^{ridge} (\beta)=D(\beta)  + \lambda\sum_{i=1}^p \beta_j^2$$,
@@ -480,7 +488,7 @@ Resolver este problema por descenso en gradiente no tienen dificultad, pues:
 para $j=1,\ldots, p$, y 
 $$\frac{\partial D_{\lambda}^{ridge} (\beta)}{\partial\beta_0} = \frac{\partial D(\beta)}{\beta_0}.$$</div>\EndKnitrBlock{comentario}
 
-De forma que sólo hay que hacer una modificación  mínima al algoritmo de descenso en gradiente
+De forma que sólo hay que hacer una modificación mínima al algoritmo de descenso en gradiente
 para el caso no regularizado.
 
 ### Selección de coeficiente de regularización
@@ -497,6 +505,7 @@ grande implica que pesa menos la minimización de la suma de cuadrados /devianza
 en el problema de la minimización. En otras palabras, los coeficientes tienen
 una penalización más fuerte, de modo que el mínimo que se alcanza es mayor
 en términos de devianza.
+
 - Intentamos escoger $\lambda$ de forma que se minimice el error de predicción,
 o el error de prueba (que estima el error de predicción).
 
@@ -507,7 +516,10 @@ o el error de prueba (que estima el error de predicción).
 Regresamos a nuestro problema original simulado de clasificación. La función *glmnet*
 se encarga de estandarizar variables y escoger un rango adecuado de
 penalizaciones $\lambda$. La función *glmnet* ajusta varios modelos (parámetro
-*nlambda*) para un rango amplio de penalizaciones $\lambda$:
+*nlambda*) para un rango amplio de penalizaciones $\lambda$.
+
+En lo que sigue, agregamos el *intercept* (ordenada al origen), como normalmente
+hacemos:
 
 
 
@@ -515,7 +527,8 @@ penalizaciones $\lambda$. La función *glmnet* ajusta varios modelos (parámetro
 library(glmnet)
 mod_ridge <- glmnet(x = x_e, y = dat_e$y, 
   alpha = 0, #ridge
-  family='binomial', intercept = F, nlambda=50) #normalmente ponemos intercept = T
+  family='binomial', 
+  nlambda=50) 
 dim(coef(mod_ridge))
 ```
 
@@ -556,13 +569,13 @@ head(preds_ridge)
 ```
 
 ```
-##   id modelo prob y
-## 1  1     s0  0.5 1
-## 2  2     s0  0.5 1
-## 3  3     s0  0.5 1
-## 4  4     s0  0.5 1
-## 5  5     s0  0.5 1
-## 6  6     s0  0.5 0
+##   id modelo  prob y
+## 1  1     s0 0.484 0
+## 2  2     s0 0.484 0
+## 3  3     s0 0.484 0
+## 4  4     s0 0.484 1
+## 5  5     s0 0.484 0
+## 6  6     s0 0.484 0
 ```
 
 ```r
@@ -571,12 +584,12 @@ tail(preds_ridge)
 
 ```
 ##          id modelo       prob y
-## 99995  1995    s49 0.50969336 1
-## 99996  1996    s49 0.46159912 1
-## 99997  1997    s49 0.40584246 1
-## 99998  1998    s49 0.01436745 0
-## 99999  1999    s49 0.45568264 1
-## 100000 2000    s49 0.73158603 1
+## 99995  1995    s49 0.60302538 1
+## 99996  1996    s49 0.85778751 1
+## 99997  1997    s49 0.22064914 0
+## 99998  1998    s49 0.70152154 1
+## 99999  1999    s49 0.62870419 0
+## 100000 2000    s49 0.07961955 0
 ```
 
 ```r
@@ -618,22 +631,22 @@ df_lambdas
 ## # A tibble: 50 x 2
 ##    modelo lambda
 ##    <chr>   <dbl>
-##  1 s0      226. 
-##  2 s1      187. 
-##  3 s2      155. 
-##  4 s3      129. 
-##  5 s4      107. 
-##  6 s5       88.3
-##  7 s6       73.1
-##  8 s7       60.6
-##  9 s8       50.2
-## 10 s9       41.6
+##  1 s0      247. 
+##  2 s1      205. 
+##  3 s2      170. 
+##  4 s3      141. 
+##  5 s4      116. 
+##  6 s5       96.5
+##  7 s6       80.0
+##  8 s7       66.3
+##  9 s8       54.9
+## 10 s9       45.5
 ## # ... with 40 more rows
 ```
 
 ```r
-coefs_selec <- coef(mod_ridge)[-1, 's38']
-pred_prueba_final <- h(x_p %*% coefs_selec)
+coefs_selec <- coef(mod_ridge)[ , 's40']
+pred_prueba_final <- h(cbind(1, x_p) %*% coefs_selec)
 tab_confusion <- table(pred_prueba_final > 0.5, dat_p$y)
 tab_confusion
 ```
@@ -641,8 +654,8 @@ tab_confusion
 ```
 ##        
 ##           0   1
-##   FALSE 656 289
-##   TRUE  348 707
+##   FALSE 746 344
+##   TRUE  262 648
 ```
 
 ```r
@@ -652,8 +665,8 @@ prop.table(tab_confusion, margin=2)
 ```
 ##        
 ##                 0         1
-##   FALSE 0.6533865 0.2901606
-##   TRUE  0.3466135 0.7098394
+##   FALSE 0.7400794 0.3467742
+##   TRUE  0.2599206 0.6532258
 ```
 
 
@@ -714,16 +727,35 @@ cor(xbf_e)
 ```
 
 ```r
-ridge_bodyfat <- glmnet(x = scale(xbf_e), y = bfat_e$grasacorp, alpha=0, 
-                        lambda = exp(seq(-5, 5, 0.25)))
+ridge_bodyfat <- glmnet(x = xbf_e, y = bfat_e$grasacorp, alpha=0, 
+                        lambda = exp(seq(-2, 7, 0.25)))
 plot(ridge_bodyfat, xvar = 'lambda', label=TRUE)
 ```
 
 <img src="04-metodos-lineales-regularizacion_files/figure-html/unnamed-chunk-34-1.png" width="672" />
 
+```r
+coef(ridge_bodyfat)[, 37]
+```
+
+```
+## (Intercept)    estatura        peso     abdomen       muslo      biceps 
+## -38.3881059  -0.1814424  -0.1318539   0.9867113  -0.1983769   0.4374818
+```
+
+```r
+coef(ridge_bodyfat)[, 15]
+```
+
+```
+## (Intercept)    estatura        peso     abdomen       muslo      biceps 
+## -2.84440852 -0.04789201  0.02175931  0.10472079  0.09757134  0.18222422
+```
+
 Donde notamos que las variables con correlaciones altas se "encogen" juntas
 hacia valores similares conforme aumentamos la constante de penalización $\lambda$.
-Nótese que para regularización muy baja peso y abdomen por ejemplo, tienen
+
+- Nótese que para regularización muy baja, peso y abdomen por ejemplo, tienen
 signos opuestos y valores altos: esto es posible pues tienen correlación alta,
 de modo que la función de predicción está pobremente determinada: hay un espacio
 grande de pares de parámetros que dan predicciones similares, y esto resulta
@@ -841,7 +873,7 @@ cv_mod_ridge$lambda.min
 ```
 
 ```
-## [1] 0.2155714
+## [1] 0.2837257
 ```
 
 ```r
@@ -849,7 +881,7 @@ cv_mod_ridge$lambda.1se
 ```
 
 ```
-## [1] 7.666755
+## [1] 6.928732
 ```
 
 Nótese que la estimación del error de predicción por validación

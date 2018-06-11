@@ -25,7 +25,7 @@
 <meta name="author" content="Felipe González">
 
 
-<meta name="date" content="2018-06-10">
+<meta name="date" content="2018-06-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,6 +47,13 @@
 
 
 
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -513,8 +520,20 @@ beta_hat</code></pre>
 <p><img src="02-metodos-lineales_files/figure-html/unnamed-chunk-10-1.png" width="384" /></p>
 <div class="comentario">
 <p>
-<strong>Raíz del error cuadrático medio</strong> - El error cuadrático medio, como medida de error, es difícil de interpretar. Por eso muchas veces preferimos reportar la <strong>raíz del error cuadrático medio</strong>, que tiene las mismas unidades que la variables que queremos predecir. - A la raíz del error cuadrático medio le llamamos también <strong>error estándar</strong> <span class="math inline"><span class="math inline">\(ee\)</span></span> de predicción. Bajo ciertas hipótesis, puede demostrarse que 95% de las veces, el valor verdadero está a no más de 2 errores estándar de la predicción.
+<strong>Raíz del error cuadrático medio</strong>
 </p>
+<ul>
+<li>
+<p>
+El error cuadrático medio, como medida de error, es difícil de interpretar. Por eso muchas veces preferimos reportar la <strong>raíz del error cuadrático medio</strong>, que tiene las mismas unidades que la variables que queremos predecir.
+</p>
+</li>
+<li>
+<p>
+A la raíz del error cuadrático medio le llamamos también <strong>error estándar</strong> <span class="math inline"><span class="math inline">\(ee\)</span></span> de predicción. Bajo ciertas hipótesis, puede demostrarse que 95% de las veces, el valor verdadero está a no más de 2 errores estándar de la predicción.
+</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

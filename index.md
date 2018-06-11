@@ -1,7 +1,7 @@
 --- 
 title: "Minicurso de verano de Aprendizaje Máquina"
 author: "Felipe González"
-date: "2018-06-10"
+date: "2018-06-11"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]

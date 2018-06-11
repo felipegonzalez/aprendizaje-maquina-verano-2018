@@ -1180,10 +1180,11 @@ en la práctica esto muchas veces no es tan fácil o deseable. Podemos, sin emba
 reportar el tipo de errores que ocurren
 
 \BeginKnitrBlock{comentario}<div class="comentario">**Matriz de confusión**.
+
 Sea $\hat{G}$ un clasificador binario. La matriz de confusión $C$ de $\hat{G}$ está 
 dada por
 
-$C_{i,j} = $\text{Número de casos de la clase verdadera j que son clasificados como clase i
+$C_{i,j} = \text{Número de casos de la clase verdadera j que son clasificados como clase i
  por el clasificador}$</div>\EndKnitrBlock{comentario}
 
 #### Ejemplo {-} 
@@ -1265,7 +1266,6 @@ La matriz de confusion es entonces
 
 
 ```r
-library(dplyr)
 tabla <- data_frame('-' = c('positivo.pred','negativo.pred','total'),
                     'positivo'=c('pv','fn','pos'),
                     'negativo'=c('fp','nv','neg'),
@@ -1375,16 +1375,6 @@ Como vimos antes, tenemos que estimar, para cada $x$ y $g\in\{1,\ldots, K\}$,
 las probabilidades condicionales de clase:
 $$p_g(x) = P(G = g|X = x).$$
 
-Consideremos primero cómo funciona el modelo de regresión logística (2 clases)
-
-Tenemos que
-$$p_1(x) = h(\beta_0 + \beta_1x_1 + \ldots + \beta_p x_p) =
-\exp(\beta_0 + \beta_1x_1 + \ldots + \beta_p x_p)/Z
-$$
-y
-$$p_2 (x) = 1/Z$$
-donde $Z = 1 + \exp(\beta_0 + \beta_1x_1 + \ldots + \beta_p x_p)$.
-
 Podemos generalizar para más de 2 clases usando una idea similar:
 
 $$p_1(x) =  \exp(\beta_{0,1} + \beta_{1,1}x_1 + \ldots + \beta_{p,1} x_p)/Z$$
@@ -1393,20 +1383,21 @@ $$p_2(x) =  \exp(\beta_{0,2} + \beta_{1,2}x_2 + \ldots + \beta_{p.2} x_p)/Z$$
 hasta
 $$p_{K-1}(x) =  \exp(\beta_{0,{K-1}} + \beta_{1,{K-1}}x_2 + \ldots + \beta_{p,{K-1}} x_p)/Z$$
 y 
-$$p_K(x) = 1/Z$$
+$$p_K(x) = \exp(\beta_{0,{K}} + \beta_{1,{K}}x_2 + \ldots + \beta_{p,{K}} x_p)/Z$$
 
 En este caso, para que las probabilidades sumen 1, necesitamos que
-$$Z = 1 + \sum_{j=1}^{K-1}\exp(\beta_0^j + \beta_1^jx_2 + \ldots + \beta_p^j x_p)$$
+$$Z =  \sum_{j=1}^{K}\exp(\beta_0^j + \beta_1^jx_2 + \ldots + \beta_p^j x_p)$$
 
 Para ajustar coeficientes, usamos el mismo criterio de devianza de entrenamiento.
 Buscamos minimizar:
 $$D(\beta)=−2 \sum_{i=1}^N p_{g^{(i)}}(x^{(i)}),$$
 Donde $\beta$ contiene todos los coeficientes organizados en un vector
 de tamaño $(p+1)(K+1)$:
-$$\beta = ( \beta_0^1, \beta_1^1, \ldots , \beta_p^1,  \beta_0^2, \beta_1^2, \ldots , \beta_p^2, \ldots \beta_0^{K-1}, \beta_1^{K-1}, \ldots , \beta_p^{K-1} )$$
+$$\beta = ( \beta_0^1, \beta_1^1, \ldots , \beta_p^1,  \beta_0^2, \beta_1^2, \ldots , \beta_p^2, \ldots \beta_0^{K}, \beta_1^{K}, \ldots , \beta_p^{K} )$$
 
 Y ahora podemos usar algún método númerico para minimizar la devianza (por ejemplo,
 descenso en gradiente).  Cuando
 es muy importante tener  probabilidades bien calibradas, el enfoque multinomial
 es más apropiado, pero muchas veces, especialmente si sólo nos interesa clasificar, los
 dos métodos dan resultados similares.
+

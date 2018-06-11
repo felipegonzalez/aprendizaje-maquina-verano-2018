@@ -265,7 +265,11 @@ ggplot(prostata_entrena, aes(x = lcavol, y = lpsa)) + geom_point() +
 
 
 <div class="comentario">
-<p><strong>Raíz del error cuadrático medio</strong> - El error cuadrático medio, como medida de error, es difícil de interpretar. Por eso muchas veces preferimos reportar la <strong>raíz del error cuadrático medio</strong>, que tiene las mismas unidades que la variables que queremos predecir. - A la raíz del error cuadrático medio le llamamos también <strong>error estándar</strong> <span class="math inline">\(ee\)</span> de predicción. Bajo ciertas hipótesis, puede demostrarse que 95% de las veces, el valor verdadero está a no más de 2 errores estándar de la predicción.</p>
+<p><strong>Raíz del error cuadrático medio</strong></p>
+<ul>
+<li><p>El error cuadrático medio, como medida de error, es difícil de interpretar. Por eso muchas veces preferimos reportar la <strong>raíz del error cuadrático medio</strong>, que tiene las mismas unidades que la variables que queremos predecir.</p></li>
+<li><p>A la raíz del error cuadrático medio le llamamos también <strong>error estándar</strong> <span class="math inline">\(ee\)</span> de predicción. Bajo ciertas hipótesis, puede demostrarse que 95% de las veces, el valor verdadero está a no más de 2 errores estándar de la predicción.</p></li>
+</ul>
 </div>
 
 ## Descenso en gradiente
