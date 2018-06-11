@@ -189,9 +189,11 @@ ggplot(prostata_entrena, aes(x = lcavol, y = lpsa)) + geom_point() +
 
 ```{block, type = 'comentario'}
 **Raíz del error cuadrático medio**
+
 - El error cuadrático medio, como medida de error, es difícil de interpretar.
 Por eso muchas veces preferimos reportar la **raíz del error cuadrático medio**,
 que tiene las mismas unidades que la variables que queremos predecir.
+
 - A la raíz del error cuadrático medio le llamamos también **error estándar** $ee$ de
 predicción. Bajo ciertas hipótesis, puede demostrarse que 95\% de las veces, el valor verdadero está a no más de 2 errores estándar de la predicción.
 ```
