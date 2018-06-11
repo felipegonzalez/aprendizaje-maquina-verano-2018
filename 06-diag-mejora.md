@@ -146,10 +146,10 @@ nrow(df)
 [1] 2000
 
 ```r
-df$texto[1]
+str_sub(df$texto[1], 1, 200)
 ```
 
-[1] "Review  films adapted from comic books have had plenty of success , whether they're about superheroes ( batman , superman , spawn ) , or geared toward kids ( casper ) or the arthouse crowd ( ghost world ) , but there's never really been a comic book like from hell before .  for starters , it was created by alan moore ( and eddie campbell ) , who brought the medium to a whole new level in the mid '80s with a 12-part series called the watchmen .  to say moore and campbell thoroughly researched the subject of jack the ripper would be like saying michael jackson is starting to look a little odd .  the book ( or \" graphic novel , \" if you will ) is over 500 pages long and includes nearly 30 more that consist of nothing but footnotes .  in other words , don't dismiss this film because of its source .  if you can get past the whole comic book thing , you might find another stumbling block in from hell's directors , albert and allen hughes .  getting the hughes brothers to direct this seems almost as ludicrous as casting carrot top in , well , anything , but riddle me this : who better to direct a film that's set in the ghetto and features really violent street crime than the mad geniuses behind menace ii society ?  the ghetto in question is , of course , whitechapel in 1888 london's east end .  it's a filthy , sooty place where the whores ( called \" unfortunates \" ) are starting to get a little nervous about this mysterious psychopath who has been carving through their profession with surgical precision .  when the first stiff turns up , copper peter godley ( robbie coltrane , the world is not enough ) calls in inspector frederick abberline ( johnny depp , blow ) to crack the case .  abberline , a widower , has prophetic dreams he unsuccessfully tries to quell with copious amounts of absinthe and opium .  upon arriving in whitechapel , he befriends an unfortunate named mary kelly ( heather graham , say it isn't so ) and proceeds to investigate the horribly gruesome crimes that even the police surgeon can't stomach .  i don't think anyone needs to be briefed on jack the ripper , so i won't go into the particulars here , other than to say moore and campbell have a unique and interesting theory about both the identity of the killer and the reasons he chooses to slay .  in the comic , they don't bother cloaking the identity of the ripper , but screenwriters terry hayes ( vertical limit ) and rafael yglesias ( les mis ? rables ) do a good job of keeping him hidden from viewers until the very end .  it's funny to watch the locals blindly point the finger of blame at jews and indians because , after all , an englishman could never be capable of committing such ghastly acts .  and from hell's ending had me whistling the stonecutters song from the simpsons for days ( \" who holds back the electric car/who made steve guttenberg a star ? \" ) .  don't worry - it'll all make sense when you see it .  now onto from hell's appearance : it's certainly dark and bleak enough , and it's surprising to see how much more it looks like a tim burton film than planet of the apes did ( at times , it seems like sleepy hollow 2 ) .  the print i saw wasn't completely finished ( both color and music had not been finalized , so no comments about marilyn manson ) , but cinematographer peter deming ( don't say a word ) ably captures the dreariness of victorian-era london and helped make the flashy killing scenes remind me of the crazy flashbacks in twin peaks , even though the violence in the film pales in comparison to that in the black-and-white comic .  oscar winner martin childs' ( shakespeare in love ) production design turns the original prague surroundings into one creepy place .  even the acting in from hell is solid , with the dreamy depp turning in a typically strong performance and deftly handling a british accent .  ians holm ( joe gould's secret ) and richardson ( 102 dalmatians ) log in great supporting roles , but the big surprise here is graham .  i cringed the first time she opened her mouth , imagining her attempt at an irish accent , but it actually wasn't half bad .  the film , however , is all good .  2 : 00 - r for strong violence/gore , sexuality , language and drug content "
+[1] "Review  films adapted from comic books have had plenty of success , whether they're about superheroes ( batman , superman , spawn ) , or geared toward kids ( casper ) or the arthouse crowd ( ghost wor"
   
 Ahora separamos una muestra de prueba (y una de entrenamiento más chica
 para simular después el proceso de recoger más datos):
@@ -253,8 +253,7 @@ Y notamos que
 ayudar.
 
 ¿Qué hacer? Nuestro clasificador ni siquiera puede clasificar bien la muestra de entrenamiento,
-lo que implica que nuestro modelo tiene sesgo alto. Controlar la varianza
-no nos va a ayudar a resolver nuestro problema en este punto. Podemos intentar un modelo
+lo que implica que nuestro modelo tiene sesgo demasiado alto. Controlar la varianza no nos va a ayudar a resolver nuestro problema en este punto. Podemos intentar un modelo
 más flexible.
 
 \BeginKnitrBlock{comentario}<div class="comentario">Error de entrenamiento demasiado alto indica que necesitamos probar con modelos
@@ -284,23 +283,6 @@ mod_x <- correr_modelo(df_ent_grande, df_pr, vocabulario, lambda = 1e-1)
 ```
 
 ```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
-
-```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-```
-
-```
 ## [1] "Error entrenamiento: 0.31"
 ## [1] "Error prueba: 0.35"
 ## [1] "Devianza entrena:1.187"
@@ -324,23 +306,6 @@ mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda =1e-10)
 ```
 
 ```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
-
-```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-```
-
-```
 ## [1] "Error entrenamiento: 0.29"
 ## [1] "Error prueba: 0.37"
 ## [1] "Devianza entrena:1.099"
@@ -354,23 +319,6 @@ Y notamos que reducimos un poco el sesgo. Por el momento, seguiremos intentando 
 ```r
 vocabulario <- calc_vocabulario(df_ent, 3000)
 mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=1e-10)
-```
-
-```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
-
-```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
 ```
 
 ```
@@ -391,62 +339,29 @@ Podemos regularizar más:
 
 
 ```r
-mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=1e-6)
-```
-
-```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
-
-```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
+mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=1e-5)
 ```
 
 ```
 ## [1] "Error entrenamiento: 0"
-## [1] "Error prueba: 0.3"
+## [1] "Error prueba: 0.2"
 ## [1] "Devianza entrena:0"
-## [1] "Devianza prueba:3.203"
+## [1] "Devianza prueba:1.387"
 ```
 
 
 ```r
-mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=0.05)
-```
-
-```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
-
-```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
+mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=0.01)
 ```
 
 ```
 ## [1] "Error entrenamiento: 0"
 ## [1] "Error prueba: 0.18"
-## [1] "Devianza entrena:0.072"
-## [1] "Devianza prueba:0.764"
+## [1] "Devianza entrena:0.021"
+## [1] "Devianza prueba:0.797"
 ```
 
+Y logramos reducir considerablemente el error y devianza de prueba.
 
 ## Refinando el pipeline
 
@@ -590,7 +505,8 @@ tail(vocabulario %>% arrange(desc(frec)),20)
 ```
 
 Este vocabulario parece que puede ser más útil. Vamos a tener que ajustar
-la regularización de nuevo (y también el número de entradas). Nota:
+la regularización de nuevo (y también el número de entradas). Usaremos
+ahora validación cruzada para seleccionar modelos. Nota:
 este proceso también lo podemos hacer con cv.glmnet de manera más rápida.
 
 
@@ -598,30 +514,6 @@ este proceso también lo podemos hacer con cv.glmnet de manera más rápida.
 ```r
 mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, 
                           lambda = exp(seq(-10,5,0.1)))
-```
-
-```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
-
-```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-```
-
-```
-## Warning: executing %dopar% sequentially: no parallel backend registered
-```
-
-```r
 saveRDS(mod_x, file = './cache_obj/mod_sentiment_1.rds')
 describir_modelo_cv(mod_x)
 ```
@@ -640,30 +532,19 @@ No estamos mejorando. Podemos intentar con un número diferente de entradas:
 
 ```r
 vocabulario <- calc_vocabulario(df_ent, 4000, remove_stop = TRUE)
-if(!usar_cache){
-  mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-10,5,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_2.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_2.rds')
-  describir_modelo_cv(mod_x)
-}
+mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-10,5,0.1)))
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_2.rds')
+describir_modelo_cv(mod_x)
 ```
 
-```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
+<img src="06-diag-mejora_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 ```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
+## [1] "Lambda min: 0.49658530379141"
+## [1] "Error entrenamiento: 0"
+## [1] "Error prueba: 0.18"
+## [1] "Devianza entrena:0.295"
+## [1] "Devianza prueba:0.883"
 ```
 
 Y parece que nuestra estrategia no está funcionando muy bien.
@@ -672,31 +553,19 @@ Regresamos a nuestro modelo con ridge
 
 ```r
 vocabulario <- calc_vocabulario(df_ent, 3000, remove_stop = FALSE)
-
-if(!usar_cache){
 mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_3.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_3.rds')
-  describir_modelo_cv(mod_x)
-}
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_3.rds')
+describir_modelo_cv(mod_x)
 ```
 
-```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
+<img src="06-diag-mejora_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 ```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
+## [1] "Lambda min: 0.110803158362334"
+## [1] "Error entrenamiento: 0"
+## [1] "Error prueba: 0.18"
+## [1] "Devianza entrena:0.128"
+## [1] "Devianza prueba:0.775"
 ```
 
 Podemos intentar aumentar el número de palabras y aumentar también la
@@ -705,30 +574,19 @@ regularización
 
 ```r
 vocabulario <- calc_vocabulario(df_ent, 4000, remove_stop = FALSE)
-if(!usar_cache){
-  mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_4.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_4.rds')
-  describir_modelo_cv(mod_x)
-}
+mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_4.rds')
+describir_modelo_cv(mod_x)
 ```
 
-```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
+<img src="06-diag-mejora_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 
 ```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
+## [1] "Lambda min: 0.22313016014843"
+## [1] "Error entrenamiento: 0"
+## [1] "Error prueba: 0.16"
+## [1] "Devianza entrena:0.173"
+## [1] "Devianza prueba:0.776"
 ```
 
 ## Consiguiendo más datos
@@ -745,13 +603,7 @@ podríamos etiquetar más reviews: esto es relativamente barato y rápido
 
 ```r
 vocabulario <- calc_vocabulario(df_ent_grande, 3000, remove_stop = FALSE)
-if(!usar_cache){
-  mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_5.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_5.rds')
-  describir_modelo_cv(mod_x)
-}
+mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
 ```
 
 ```
@@ -769,19 +621,28 @@ if(!usar_cache){
 ## - `row_col`, `column_col`
 ## This is an error, but only a warning is raised for compatibility reasons.
 ## The operation will return the input unchanged.
+```
+
+```r
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_5.rds')
+describir_modelo_cv(mod_x)
+```
+
+<img src="06-diag-mejora_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+
+```
+## [1] "Lambda min: 0.0907179532894125"
+## [1] "Error entrenamiento: 0"
+## [1] "Error prueba: 0.12"
+## [1] "Devianza entrena:0.18"
+## [1] "Devianza prueba:0.653"
 ```
 
 Y ya casi logramos nuestro objetivo. Podemos intentar con más palabras
 
 ```r
 vocabulario <- calc_vocabulario(df_ent_grande, 4000, remove_stop = FALSE)
-if(!usar_cache){
-  mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_6.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_6.rds')
-  describir_modelo_cv(mod_x)
-}
+mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
 ```
 
 ```
@@ -799,6 +660,22 @@ if(!usar_cache){
 ## - `row_col`, `column_col`
 ## This is an error, but only a warning is raised for compatibility reasons.
 ## The operation will return the input unchanged.
+```
+
+```r
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_6.rds')
+mod_x <- readRDS('./cache_obj/mod_sentiment_6.rds')
+describir_modelo_cv(mod_x)
+```
+
+<img src="06-diag-mejora_files/figure-html/unnamed-chunk-27-1.png" width="672" />
+
+```
+## [1] "Lambda min: 0.0742735782143339"
+## [1] "Error entrenamiento: 0"
+## [1] "Error prueba: 0.12"
+## [1] "Devianza entrena:0.127"
+## [1] "Devianza prueba:0.621"
 ```
 
 
@@ -965,12 +842,6 @@ intentar refinar más y ver qué pasa.
 
 ## Examen de modelo y Análisis de errores
 
-
-
-
-
-
-
 Ahora podemos ver qué errores estamos cometiendo, y cómo está funcionando el modelo. Busquemos los peores. Corremos el mejor
 modelo hasta ahora:
 
@@ -1078,8 +949,6 @@ arrange(coef_df, desc(coef)) %>% print(n=20)
 ```
 
 
-
-
 Y busquemos las diferencias más grandes del la probabilidad ajustada con la
 clase observada
 
@@ -1087,8 +956,7 @@ clase observada
 ```r
 y <- mod_x$prueba$y
 x <- mod_x$prueba$x
-probs <- predict(mod_x$mod, newx = x, type ='response', s='lambda.min')
-
+probs <- predict(mod_x$mod, newx = x, type = 'response', s ='lambda.min')
 df_1 <- data_frame(id = rownames(x), y=y, prob = probs[,1]) %>%
   mutate(error = y - prob) %>% arrange(desc(abs(error)))
 df_1
@@ -1113,197 +981,638 @@ df_1
 
 
 ```r
-filter(df, id == 1461) %>% pull(texto)
+filter(df_pr, id == 1461) %>% pull(texto) %>% str_sub(1, 500)
 ```
 
-[1] "Review  deep rising is one of \" those \" movies .  the kind of movie which serves no purpose except to entertain us .  it does not ask us to think about important questions like life on other planets or the possibility that there is no god . . . screw that , it says boldly , let's see some computer generated monsters rip into , decapitate and generally cause irreparable booboos to a bunch of little known actors .  heh !  them wacky monsters , gotta love 'em .  of course , since we can rent about a thousand b movies with the same kind of story , hollywood must give that little extra \" oumph \" to get people in theaters .  that is where deep rising fails , which is a good thing .  confused ?  let me explain :  despite all them flashy effects and big explosions , deep rising is still , at heart , a good 'ol b movie .  luckily , it's a very good b movie .  the worst cliches in movie history are a b movie's bread and butter .  therefore , things that would destroy a serious movie actually help us have a good time while watching a movie of lower calibre .  of course we know there's a big slimy creature behind that door , that one person will wander off to be picked off by said monster and we always know which persons or person will make it out alive .  we just don't know when or how horrible it will be .  i went to see deep rising with my expections low and my tolerance for bad dialogue high .  imagine my surprise when i discover that deep rising is actually , well , pretty darn funny at times .  a funny b movie ?  well , that's new .  these flicks are not supposed to make us laugh .   ( except for a few unintended laughs once a while . )  and before you know it , treat williams , wes studi and famke jansen appear on the big screen .  hey ! i know them guys ( and gal ) from a couple of other movies .  cool .  familiar faces .  so far so good .  our man treat is the hero , he'll live .  wes is a staple of b movies , he is the token victim .  we know he'll buy the farm but he will take a few creeps with him on the way out .  famke is the babe , 'nuff said .  there is also a guy with glasses ( the guy with glasses always dies ) a black person ( b movie buffs know that the black guy always dies , never fails ) and a very funny , nerdy guy .   ( ah !  comic relief .  how can we possibly explain having to kill him . . . let  him live . )  after the first fifteen minutes i felt right at home .  i know who to root for and who i need to boo too and a gum to chew .   ( please kill me . )  suffice it to say that for the next hour and a half i jumped out of my seat a few times , went \" ewwww \" about a dozen times and nearly had an orgasm over all the explosions and firepower our heroes were packing .  i'm a man , we nottice these things .  all in all , i'd recommend deep rising if you are looking for a good time and care to leave your brain at the door . . . but  bring your sense of humor and excitement in with you .  the acting is decent , the effects top rate .  how to best describe it ?  put together the jet ski scene from hard rain , the bug attacks from starship troopers , a couple of james bond like stunts and all those scenes from friday the thirteenth and freddy where you keep screaming \" don't go there , he's behind you \" and you end up with deep rising .  for creepy crawly goodness , tight t-shirts , major firepower and the need to go to the bathroom every fifteen minutes from seing all that water . "
+[1] "Review  deep rising is one of \" those \" movies .  the kind of movie which serves no purpose except to entertain us .  it does not ask us to think about important questions like life on other planets or the possibility that there is no god . . . screw that , it says boldly , let's see some computer generated monsters rip into , decapitate and generally cause irreparable booboos to a bunch of little known actors .  heh !  them wacky monsters , gotta love 'em .  of course , since we can rent about "
 
 ```r
-filter(df, id == 1508) %>% pull(texto)
+filter(df_pr, id == 1508) %>% pull(texto) %>% str_sub(1, 1000)
 ```
 
-[1] "Review  capsule : side-splitting comedy that follows its own merciless logic almost through to the end . . .  but not without providing a good deal of genuine laughs .  most comedies these days have one flaw .  they're not funny .  they think they're funny , but they are devoid of anything really penetrating or dastardly .  occasionally a good funny movie sneaks past the deadening hollywood preconceptions of humor and we get a real gem : ruthless people , for instance , which established a microcosm of a setup and played it out to the bitter end .  liar liar is built the same way and is just about as funny .  this is one of the few movies i've seen where i was laughing consistently almost all the way through : instead of a couple of set-pieces that inspired a laugh ( think of the dismal fatal instinct ) , the whole movie works like clockwork .  jim carrey playes a high-powered lawyer , to whom lying is as natural as breathing .  there is one thing he takes seriously , though : his son , and we can sense the affection that they have for each other right away .  but his wife is divorced and seeing another man , and now it looks like they may move away together .  the son goes with them , of course .  the movie sets up this early material with good timing and a remarkable balance of jim carrey's over-the-top persona with reality .  then the plot springs into action : after being snubbed ( not deliberately ) by his father at his birthday , the kid makes a wish as he blows out the birthday candles : that for just one day , dad can't lie .  he gets the wish .  what happens next is sidesplitting .  everything turns into a confrontation : when cornered by a bum for some change , he shouts , \" no !  i'm not giving you any money because i know you'll spend it on booze !  all i want to do is to get to the office without having to step over the debris of our decaying society ! \"  he can't even get into an elevator without earning a black eye .  and what's worse , he's now gotten himself into an expensive divorce settlement that requires him to twist the truth like abstract wire sculpture .  carrey , who i used to find unfunny , has gotten better at his schtick , even if it's a limited one .  he uses it to great effect in this movie .  there is a scene where he tries to test his ability to lie and nearly demolishes his office in the process ( there's a grin breaking out across my face right now , just remembering the scene ) .  he can't even write the lie ; his fingers twitch , his body buckles like someone in the throes of cyanide poisoning , and when he tries to talk it's like he's speaking in tongues .  equally funny is a scene where he beats himself to a pulp ( don't ask why ) , tries to drink water to keep from having outbursts in the courtroom ( it fails , with semi-predictable results ) , and winds up biting the bullet when he gets called into the boardroom to have everyone ask what they think of them .  this scene alone may force people to stop the tape for minutes on end .  the movie sustains its laughs and also its flashes of insight until almost the end .  a shame , too , because the movie insists on having a big , ridiculous climax that involves carrey's character flagging down a plane using a set of motorized stairs , then breaking his leg , etc . a simple reconciliation would do the trick .  why is this stupid pent-up climax always obligatory ?  it's not even part of the movie's real agenda .  thankfully , liar liar survives it , and so does carrey .  maybe they were being merciful , on reflection .  if i'd laughed any more , i might have needed an iron lung . "
+[1] "Review  capsule : side-splitting comedy that follows its own merciless logic almost through to the end . . .  but not without providing a good deal of genuine laughs .  most comedies these days have one flaw .  they're not funny .  they think they're funny , but they are devoid of anything really penetrating or dastardly .  occasionally a good funny movie sneaks past the deadening hollywood preconceptions of humor and we get a real gem : ruthless people , for instance , which established a microcosm of a setup and played it out to the bitter end .  liar liar is built the same way and is just about as funny .  this is one of the few movies i've seen where i was laughing consistently almost all the way through : instead of a couple of set-pieces that inspired a laugh ( think of the dismal fatal instinct ) , the whole movie works like clockwork .  jim carrey playes a high-powered lawyer , to whom lying is as natural as breathing .  there is one thing he takes seriously , though : his son "
 
+Estas últimas son reseñas positivas que clasificamos incorrectamente
+como negativas. Vemos que en ambas el tono es irónico: por ejemplo,
+la primera argumenta que la película es mala, pero disfrutable. Esta
+fue etiquetada como una reseña positiva. 
 
-```r
-filter(df, id == 222) %>% pull(texto) #negativa
-```
+Este fenómeno se puede ver como un problema difícil de **sesgo**:
+nuestro modelo simple difícilmente podrá captar esta estructura compleja
+de ironía.
 
-[1] "Review  it's probably inevitable that the popular virtual reality genre ( \" the matrix , \" \" existenz \" ) would collide with the even more popular serial-killer genre ( \" kiss the girls , \" \" se7en \" ) .  the result should have been more interesting than \" the cell . \"  as the movie opens , therapist catharine deane ( jennifer lopez ) treats a catatonic boy ( colton james ) by entering his mind through some sort of virtual reality technique that's never fully explained .  after months of therapy sessions in a surreal desert , catharine has no success to report .  meanwhile , killer carl stargher ( vincent d'onofrio ) has claimed another victim .  his particular hobby is to kidnap young women , keep them in a glass cell overnight , and drown them .  he takes the corpse and soaks it in bleach , then suspends himself over the body and jerks off while watching a video tape of the drowning .  although carl's been doing this for awhile , he's recently become sloppy , and fbi agent peter novak ( vince vaughn ) is closing in fast .  not fast enough , though , to keep carl from sticking another woman ( tara subkoff ) in the cell or to catch him before he suffers a schizophrenic attack that leaves him in a coma .  from the videos in carl's house , peter can see that the drowning cell is automated and will fill with water forty hours after the abduction .  to save the kidnapped girl , peter has to find the cell before the end of the day , and comatose carl's not talking .  so off they go to catharine in the hope that she can go inside carl's mind and find out where the cell is in time .  the focus of \" the cell \" in on the ornate interior of carl's mind , but the universe director tarsem singh creates seems more an exercise in computer-generated spectacle than an exploration of the psychotic personality .  for the most part , it's style without substance .  in his own mind , carl is a decadent emperor in flowing robes , ming the merciless , as well as a frightened boy ( jake thomas ) abused by his father .  all in all , the mind of a psycho killer turns out to be a strangely dull place , and i kept wishing i could fast-forward to the next development .  singh is best known for directing music videos , particularly rem's \" losing my religion , \" and \" the cell \" seems very much like a really long , really slow mtv video with the sound deleted .  singer lopez seems to think she's in a video as well ; she devotes more time to posing in elaborate costumes than she does to acting .  the premise had great promise .  the computer-generated world within carl's mind could have been a bizarre , surreal universe governed by insanity and symbolism rather than logic .  the first room catharine enters in carl's head shows this promise .  she finds a horse standing in center of the room ; suddenly , sheets of sharp-edged glass fall into the horse , dividing it into segments .  the panes of glass separate , pulling apart the pieces of the still-living horse .  this scene is twisted , disturbing , and thought-provoking , because the psychological importance of the horse and its fate is left to the viewer to ponder .  another element that should have been developed is the effect on catharine of merging with the mind of a psychopath .  their minds begin to bleed together at one point in the movie , and this should have provided an opportunity to discover the dark corners of catharine's own psyche .  like sidney lumet's \" the offence \" or michael mann's \" manhunter , \" \" the cell \" could have explored how the madness of the killer brings out a repressed darkness in the investigator .  however , catharine's character is hardly developed at all , and lopez has no depth to offer the role .  bottom line : don't get trapped in this one . "
-
-```r
-filter(df, id == 25) %>% pull(texto) #negativa
-```
-
-[1] "Review  forgive the fevered criticism but the fervor of the crucible infects .  set in 1692 at salem , massachusetts , the crucible opens with a group of teenage girls passionately singing and dancing around a boiling cauldron in the middle of a forest under the glow of a full moon .  they beckon the names of men as the targets of their love spells .  then one of the girls lets her hair down and sheds her clothes .  not to be outdone in her quest to regain the attention of john proctor ( daniel day lewis ) , abigail ( winona ryder ) suddenly seizes a chicken , beats it against the ground and smears her face and lips with the fresh blood .  taking even adolescent hormone surges into account , surely this chicken-bashing bit is a bit excessive , especially for prim puritan sensibilities ?  surely to the puritan eye this is as close to a coven of witches as it gets ?  the crucible errs from the beginning and arthur miller's name should be summoned for blame here for the addition of the above scene to his screen adaptation of his play .  this is far from a harmless event , a bad start to an already shaky morality tale .  the play describes the film's opening scene during tense exchanges that makes one wonder about the veracity of both accusation and reply , and this adds to the play's charged atmosphere .  in the film , the opening scene becomes an unintentional pandora's box .  not only is credulity stretched but abigail's obsession is unfortunately spotlighted .  it positions the crucible more as a cautionary fable about obsessive and malevolent women than against witch hunts ; it will bring back the memory of a rabbit boiling away in a pot .  not surprisingly , the nighttime forest frenzy does not go unnoticed and when two girls fail to wake the following morning , witches are invoked by those eager to blame .  when the girls are questioned , their confession of guilt is accompanied with an announcement of their return to god and they are thereafter converted to immaculate witnesses , led lustfully by abigail .  with alarming synchronicity our hormonally-advantaged girls zealously gesture and point accusing fingers at innocents , constant reminders that abigail's passion sets all this into inexorable motion .  abigail seizes on this opportunity to rid herself of her rival for john proctor's love , his wife elizabeth ( joan allen ) , by including her among those accused of witchcraft .  appropriately narrow-waisted and equipped with a distractingly white smile ( watch his teeth deteriorate much too quickly to a murky yellow ) , day lewis plays the dashing moral hero with an over-earnestness that longs to be watched .  director nicholas hytner is guilty of encouraging day lewis' foaming-mouth fervour with shots where we stare up at proctor as if he was mounted on a pedestal for our admiration .  otherwise , hytner's direction is unremarkable .  ryder's performance as abigail is as consistent as her mood swings .  her fits of frenzy are energetic enough but the quieter moments are less successful .  abigail supposedly revels in her newfound power , but ryder fails at being convincingly haughty although there is much haughtiness to spare here .  paul scofield is fine as the overzealous judge danforth , but the incessant moral posturings of all the characters along with the recurrent histrionics of the young girls pricks at the nerves .  probably because she is the only refuge of restraint amidst all the huffing and puffing , allen's elizabeth comes out as the most sympathetic character .  a scene near the end featuring a private conversation between the imprisoned elizabeth and john is undeniably powerful because for once we are given a reprieve from the moral bantering and the human consequences are revealed .  unfortunately , when john's audience again increases to more than one his urge to pontificate returns and the human urgency of his situation is lost .  it is clear that miller meant well but i do wish he did it with more delicacy and fewer diversions .  his screenplay is an imperfect creature with the distractions coming out as loud as the message .  the result is a clumsy muddle - i felt like the chicken from the opening scene , head ceaselessly banged with piousness too heavy-handed to be wholly believable .  when the gallows beckoned , it was sweet release indeed .  far from bewitching , the crucible tests the patience . "
-
-```r
-filter(df, id == 728) %>% pull(texto) #negativa
-```
-
-[1] "Review  girl 6 is , in a word , a mess .  i was never able to determine what spike lee was trying to accomplish with this film .  there was no sense of where the film was going , or any kind of coherent narrative .  if there was a point to the film , i missed it .  girl 6 , by the way , is the way theresa randle's character is addressed in the phone sex workplace ; all the girls are known by their numbers .  the plot , such as it is : theresa randle is a struggling n . y . actress , and eventually takes a job as a phone-sex operator .  she begins to lose contact with reality , as her job consumes her .  also , she must deal with the advances of her ex-husband ( isiah washington ) .  he is an ex- con thief , and she tries to keep him away , while at the same time , it's clear that she still harbors feelings for him .  her neighbor , jimmy ( spike lee ) functions as the observer ; mediating between the ex- husband and girl 6 .  he also functions as a point of stability , as he watches her become seduced by the lurid world of phone sex .  the soundtrack , consisting of songs by prince , was jarring .  it kept taking my attention from the film - not altogether a bad thing , i'll grant you , as what was transpiring onscreen wasn't that riveting .  for parts of the middle of the film , the music stayed blissfully in the background .  in the opening sequence and one scene later in the film , however , the music was particularly loud and distracting .  of course , i've never really cared for prince's ( or tafkap if you like ) music .  prince fans might love the soundtrack , but it will probably be distracting , even to die-hard fans .  of the performances , the only one that stood out was spike lee's buddy character , jimmy .  he was excellent as the always-broke neighbor of girl 6 .  he should have stuck to acting in this film .  there are several sequences that gave me the impression that he'd like to be oliver stone when he grows up .  there are scenes shot with different types of film , which are purposely grainy , and reminiscent of some of the scenes in oliver stone's natural born killers .  in that film , they worked to propel the narrative .  in this film , they just made me more confused .  there are some amusing moments , and a few insights into the lives of the women who use their voices to make the phone-sex industry the multi-billion dollar industry that it has become .  other than that , though , nothing much happens .  there are a few intense moments , as when one caller becomes frightening , but even that is rather lackluster .  i'm not the biggest fan of spike lee , though i'd agree that he has done some very good work in the past .  in girl 6 , though , he seems to be floundering .  he had an interesting idea , a fairly good setup , and seemed to wander aimlessly from there .  girl 6 earns a grade of d . "
-
-Algunos de los errores son difíciles (por ejemplo, una reseña que dice que
-la película es tan mala que es buena). Otros quizá podemos hacer algo con nuestro
-método: en algunas partes vemos algunas problemas con nuestro método, por ejemplo, 
-"no energy" - nuestro método no toma en cuenta el orden de las palabras. Podemos
-intentar capturar algo de esto usando bigramas (pares de palabras) en lugar
-de simplemente usar palabras.
+El problema es diferente para las reseñas negativas. 
+Veamos algunas de las reseñas negativas peor clasificadas:
 
 
 ```r
-vocabulario <- calc_vocabulario(df_ent_grande, 3800, remove_stop = FALSE)
-mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
+filter(df_pr, id == 222) %>% pull(texto) %>% str_sub(1, 1000) #negativa
+```
+
+[1] "Review  it's probably inevitable that the popular virtual reality genre ( \" the matrix , \" \" existenz \" ) would collide with the even more popular serial-killer genre ( \" kiss the girls , \" \" se7en \" ) .  the result should have been more interesting than \" the cell . \"  as the movie opens , therapist catharine deane ( jennifer lopez ) treats a catatonic boy ( colton james ) by entering his mind through some sort of virtual reality technique that's never fully explained .  after months of therapy sessions in a surreal desert , catharine has no success to report .  meanwhile , killer carl stargher ( vincent d'onofrio ) has claimed another victim .  his particular hobby is to kidnap young women , keep them in a glass cell overnight , and drown them .  he takes the corpse and soaks it in bleach , then suspends himself over the body and jerks off while watching a video tape of the drowning .  although carl's been doing this for awhile , he's recently become sloppy , and fbi agent peter nova"
+
+```r
+filter(df_pr, id == 728) %>% pull(texto) %>% str_sub(1, 1000) #negativa
+```
+
+[1] "Review  girl 6 is , in a word , a mess .  i was never able to determine what spike lee was trying to accomplish with this film .  there was no sense of where the film was going , or any kind of coherent narrative .  if there was a point to the film , i missed it .  girl 6 , by the way , is the way theresa randle's character is addressed in the phone sex workplace ; all the girls are known by their numbers .  the plot , such as it is : theresa randle is a struggling n . y . actress , and eventually takes a job as a phone-sex operator .  she begins to lose contact with reality , as her job consumes her .  also , she must deal with the advances of her ex-husband ( isiah washington ) .  he is an ex- con thief , and she tries to keep him away , while at the same time , it's clear that she still harbors feelings for him .  her neighbor , jimmy ( spike lee ) functions as the observer ; mediating between the ex- husband and girl 6 .  he also functions as a point of stability , as he watches he"
+
+No está totalmente claro por qué nos equivocamos en estas dos reseñas.
+Podemos hacer un examen más cuidadoso de la construcción del predictor,
+obteniendo los coeficientes $\beta$ y el vector $x$ con los que se construyen
+el predictor:
+
+
+```r
+beta <- coef(mod_x$mod) %>% as.numeric
+nombres <- rownames(x)
+head(sort(x[nombres == "222", ], decreasing = TRUE), 100)
 ```
 
 ```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
-
-```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
+##       the        in        of        to         a       and        is 
+##        52        21        17        17        16        14        10 
+##      cell      mind      have      that      this        as      been 
+##         9         7         5         5         5         4         4 
+##       has       his     horse    killer      more       she      than 
+##         4         4         4         4         4         4         4 
+##      with       all        an   another        by     could      fast 
+##         4         3         3         3         3         3         3 
+##       for     glass       out     peter     seems    should     video 
+##         3         3         3         3         3         3         3 
+##     after        at    before       boy       can  computer developed 
+##         2         2         2         2         2         2         2 
+##      find      from generated     genre        go        he       him 
+##         2         2         2         2         2         2         2 
+##         i      into        it      it's      keep      like     movie 
+##         2         2         2         2         2         2         2 
+##        no       not       off        on       one        or       own 
+##         2         2         2         2         2         2         2 
+##   popular   promise   reality    really      room   surreal      them 
+##         2         2         2         2         2         2         2 
+##      time  universe   virtual      well    acting     agent  although 
+##         2         2         2         2         1         1         1 
+##     apart    attack        be   because    become     begin      best 
+##         1         1         1         1         1         1         1 
+##   bizarre      body    bottom    brings       but     catch    center 
+##         1         1         1         1         1         1         1 
+## character   closing  costumes   creates      dark  darkness       day 
+##         1         1         1         1         1         1         1 
+##     depth    desert 
+##         1         1
 ```
 
 ```r
+predictor <- beta * c(1, x[nombres=="222",])  # beta*x
+sum(predictor)
+```
+
+```
+## [1] 1.437326
+```
+
+```r
+sort(predictor[predictor != 0]) %>% knitr::kable()
+```
+
+                          x
+--------------  -----------
+                 -0.5202993
+sloppy           -0.3172574
+promise          -0.2760900
+video            -0.1501897
+dull             -0.1331210
+catch            -0.1169287
+should           -0.1159415
+suffers          -0.1128175
+trapped          -0.1111792
+could            -0.1011409
+pulling          -0.1003304
+bottom           -0.0939438
+fast             -0.0911754
+been             -0.0908088
+save             -0.0876571
+explained        -0.0808605
+have             -0.0796675
+mtv              -0.0714969
+talking          -0.0639503
+kidnapped        -0.0600789
+water            -0.0600346
+vince            -0.0571824
+begin            -0.0547786
+jennifer         -0.0528719
+virtual          -0.0519579
+twisted          -0.0508402
+center           -0.0505813
+provided         -0.0492090
+psycho           -0.0489186
+off              -0.0482361
+recently         -0.0482342
+result           -0.0476513
+women            -0.0472648
+point            -0.0472133
+within           -0.0458799
+forward          -0.0456438
+exercise         -0.0452252
+no               -0.0410514
+technique        -0.0405685
+director         -0.0358213
+focus            -0.0351205
+acting           -0.0345010
+interesting      -0.0334681
+style            -0.0332168
+thomas           -0.0322831
+kept             -0.0316398
+hardly           -0.0309470
+another          -0.0307244
+attack           -0.0302758
+explored         -0.0292849
+then             -0.0292602
+or               -0.0290317
+victim           -0.0276020
+fill             -0.0267911
+hope             -0.0266701
+even             -0.0250174
+enough           -0.0249711
+woman            -0.0244227
+fall             -0.0234435
+apart            -0.0233941
+out              -0.0230786
+this             -0.0196350
+to               -0.0184586
+premise          -0.0180929
+she's            -0.0179955
+killer           -0.0173511
+left             -0.0173469
+development      -0.0172162
+how              -0.0165661
+into             -0.0162641
+at               -0.0153004
+discover         -0.0150697
+them             -0.0133533
+would            -0.0129188
+james            -0.0124600
+on               -0.0124260
+where            -0.0121713
+sort             -0.0121419
+much             -0.0114857
+costumes         -0.0111567
+turns            -0.0110439
+so               -0.0108164
+movie            -0.0108057
+end              -0.0107060
+review           -0.0105867
+be               -0.0104210
+don't            -0.0102111
+had              -0.0100659
+like             -0.0100186
+because          -0.0099953
+seems            -0.0096492
+girls            -0.0096262
+tape             -0.0089222
+through          -0.0089024
+character        -0.0087373
+all              -0.0081031
+room             -0.0078808
+long             -0.0074416
+get              -0.0068225
+some             -0.0054598
+thought          -0.0052326
+fbi              -0.0052078
+bizarre          -0.0050159
+opportunity      -0.0048392
+house            -0.0047232
+forty            -0.0037017
+after            -0.0036686
+minds            -0.0035547
+doing            -0.0035518
+my               -0.0030584
+hours            -0.0030343
+scene            -0.0029061
+girl             -0.0026162
+i                -0.0024423
+psychotic        -0.0014919
+next             -0.0013199
+singer           -0.0012470
+that             -0.0007843
+watching         -0.0000763
+but               0.0001236
+standing          0.0002228
+himself           0.0003255
+pieces            0.0003999
+popular           0.0007742
+its               0.0017265
+she               0.0022264
+can               0.0025564
+think             0.0025935
+they              0.0027960
+over              0.0029586
+part              0.0036062
+personality       0.0037015
+he's              0.0039892
+one               0.0040252
+existenz          0.0040481
+never             0.0042116
+it                0.0042247
+substance         0.0042565
+that's            0.0045095
+kiss              0.0054557
+an                0.0056231
+known             0.0057068
+really            0.0057512
+element           0.0058064
+not               0.0059663
+place             0.0060158
+horse             0.0070165
+go                0.0072319
+without           0.0073540
+time              0.0078486
+however           0.0078614
+for               0.0081780
+their             0.0088714
+first             0.0093176
+closing           0.0100908
+serial            0.0104635
+of                0.0108933
+rather            0.0113546
+opens             0.0114884
+him               0.0115767
+michael           0.0115885
+he                0.0116202
+living            0.0126425
+fate              0.0126835
+meanwhile         0.0129676
+though            0.0129746
+his               0.0136937
+slow              0.0141722
+peter             0.0144512
+vincent           0.0148222
+young             0.0150035
+day               0.0150646
+does              0.0152965
+it's              0.0154444
+by                0.0156547
+depth             0.0156696
+importance        0.0159429
+while             0.0163877
+will              0.0164211
+world             0.0165024
+has               0.0168118
+particular        0.0174925
+more              0.0176460
+a                 0.0189342
+effect            0.0193250
+agent             0.0199253
+creates           0.0209483
+leaves            0.0215036
+see               0.0217573
+with              0.0231662
+role              0.0232334
+from              0.0234281
+body              0.0234823
+than              0.0237709
+probably          0.0239042
+developed         0.0240430
+elaborate         0.0243947
+suddenly          0.0247735
+logic             0.0249532
+most              0.0265502
+line              0.0271946
+music             0.0273477
+as                0.0278241
+still             0.0292254
+months            0.0294009
+shows             0.0296746
+psychological     0.0313499
+head              0.0321303
+boy               0.0340266
+darkness          0.0342972
+become            0.0346070
+very              0.0348716
+father            0.0352316
+although          0.0354252
+sound             0.0358830
+finds             0.0375483
+matrix            0.0377628
+particularly      0.0390302
+brings            0.0400255
+success           0.0403674
+before            0.0412008
+directing         0.0413102
+viewer            0.0421106
+sidney            0.0425819
+best              0.0432040
+the               0.0439582
+is                0.0443391
+takes             0.0448486
+dark              0.0449853
+inside            0.0476245
+separate          0.0479765
+in                0.0487678
+find              0.0500643
+great             0.0523020
+together          0.0581238
+computer          0.0586483
+genre             0.0593194
+own               0.0625957
+reality           0.0627538
+disturbing        0.0636809
+keep              0.0642032
+and               0.0648463
+offer             0.0736850
+strangely         0.0743557
+inevitable        0.0759366
+fully             0.0789776
+jake              0.0797114
+frightened        0.0824091
+provoking         0.0846733
+well              0.0880060
+desert            0.0899893
+treats            0.0985579
+losing            0.0990976
+religion          0.1298072
+generated         0.1304031
+universe          0.1438618
+madness           0.1580777
+sharp             0.1604157
+enters            0.2131698
+surreal           0.2394179
+mind              0.2858087
+glass             0.4687988
+cell              0.7086423
+
+
+```r
+beta <- coef(mod_x$mod) %>% as.numeric
+nombres <- rownames(x)
+predictor <- beta * c(1, x[nombres=="728",])  # beta*x
+sum(predictor)
+```
+
+```
+## [1] 1.177288
+```
+
+```r
+sort(predictor[predictor != 0]) %>% knitr::kable()
+```
+
+                         x
+-------------  -----------
+                -0.5202993
+mess            -0.2022808
+impression      -0.1506333
+grade           -0.1503932
+struggling      -0.1301878
+there           -0.1228140
+loud            -0.1042231
+point           -0.0944266
+onscreen        -0.0910190
+nothing         -0.0838901
+tries           -0.0810926
+stuck           -0.0777950
+seemed          -0.0768979
+numbers         -0.0716475
+bad             -0.0704995
+confused        -0.0645791
+con             -0.0619718
+missed          -0.0598450
+sex             -0.0582862
+wasn't          -0.0534325
+even            -0.0500348
+phone           -0.0499893
+plot            -0.0488645
+women           -0.0472648
+lose            -0.0471523
+stone           -0.0467291
+middle          -0.0416681
+lee             -0.0414526
+trying          -0.0402636
+should          -0.0386472
+was             -0.0380697
+any             -0.0374969
+sequences       -0.0373245
+only            -0.0365272
+buddy           -0.0357364
+he'd            -0.0345297
+acting          -0.0345010
+interesting     -0.0334681
+i'd             -0.0325935
+kept            -0.0316398
+be              -0.0312630
+if              -0.0309857
+fan             -0.0303648
+becomes         -0.0292044
+or              -0.0290317
+idea            -0.0261244
+die             -0.0243408
+such            -0.0222690
+i'm             -0.0215163
+actress         -0.0205609
+no              -0.0205257
+hard            -0.0196748
+character       -0.0174746
+some            -0.0163793
+away            -0.0162291
+have            -0.0159335
+girl            -0.0156973
+happens         -0.0150229
+make            -0.0141744
+to              -0.0130296
+background      -0.0129527
+where           -0.0121713
+this            -0.0117810
+setup           -0.0115887
+much            -0.0114857
+d               -0.0113921
+made            -0.0112626
+gave            -0.0109618
+going           -0.0106231
+might           -0.0105983
+review          -0.0105867
+scenes          -0.0100794
+had             -0.0100659
+like            -0.0100186
+later           -0.0097639
+girls           -0.0096262
+up              -0.0090409
+course          -0.0089834
+just            -0.0083408
+her             -0.0082487
+into            -0.0081321
+out             -0.0076929
+at              -0.0076502
+jimmy           -0.0071043
+when            -0.0057891
+work            -0.0054795
+seems           -0.0032164
+my              -0.0030584
+thing           -0.0029429
+scene           -0.0029061
+all             -0.0027010
+i               -0.0024423
+that            -0.0015686
+altogether      -0.0006508
+opening          0.0001563
+but              0.0002473
+amusing          0.0003099
+songs            0.0007721
+fans             0.0014369
+which            0.0015447
+she              0.0022264
+begins           0.0022827
+really           0.0028756
+past             0.0029292
+an               0.0037487
+time             0.0039243
+more             0.0044115
+are              0.0047948
+ex               0.0049676
+they             0.0055921
+me               0.0057067
+known            0.0057068
+than             0.0059427
+not              0.0059663
+one              0.0060378
+who              0.0067409
+other            0.0076092
+it's             0.0077222
+however          0.0078614
+types            0.0080658
+for              0.0081780
+same             0.0082892
+has              0.0084059
+determine        0.0084183
+never            0.0084232
+sense            0.0084978
+thief            0.0094086
+it               0.0105618
+of               0.0108933
+rather           0.0113546
+him              0.0115767
+grows            0.0122519
+sequence         0.0122732
+dollar           0.0123269
+love             0.0130239
+a                0.0142007
+kind             0.0150748
+use              0.0150783
+lives            0.0152753
+you              0.0153545
+must             0.0160841
+what             0.0161985
+while            0.0163877
+will             0.0164211
+world            0.0165024
+their            0.0177427
+feelings         0.0178434
+word             0.0180196
+washington       0.0198875
+grant            0.0199556
+by               0.0208729
+parts            0.0210454
+prince           0.0216244
+taking           0.0221986
+with             0.0231662
+from             0.0234281
+probably         0.0239042
+way              0.0242771
+i've             0.0245634
+worked           0.0249386
+in               0.0255450
+few              0.0262726
+done             0.0263053
+the              0.0287419
+n                0.0287966
+still            0.0292254
+biggest          0.0296875
+is               0.0310374
+reality          0.0313769
+keep             0.0321016
+good             0.0340647
+film             0.0344213
+always           0.0348183
+very             0.0348716
+and              0.0370550
+moments          0.0371737
+between          0.0372559
+though           0.0389237
+particularly     0.0390302
+agree            0.0441769
+takes            0.0448486
+able             0.0480575
+i'll             0.0480974
+eventually       0.0484890
+born             0.0494355
+shot             0.0500720
+different        0.0507236
+several          0.0510954
+he               0.0522909
+killers          0.0530381
+clear            0.0549046
+attention        0.0549228
+contact          0.0574982
+as               0.0626043
+multi            0.0640192
+deal             0.0648396
+also             0.0659141
+become           0.0692140
+fairly           0.0745365
+narrative        0.0791347
+performances     0.0816109
+music            0.0820430
+neighbor         0.0848025
+watches          0.0876229
+broke            0.0936433
+natural          0.0969546
+reminiscent      0.1004395
+voices           0.1151647
+excellent        0.1228298
+intense          0.1262374
+frightening      0.1264323
+oliver           0.1275805
+job              0.1327543
+husband          0.1379187
+distracting      0.1526334
+soundtrack       0.1612572
+industry         0.2074668
+6                0.4226458
+
+Y notamos que en primer caso, palabras "cell" es consideradas
+como positivas y en el segundo caso, se considera la ocurrencia de "6" 
+como positiva. Sin embargo, observamos que en ambos casos la
+palabra problemática es usada de manera distinta en estas reseñas
+que en el resto (la primera es la película The Cell, y la segunda es
+Girl 6). La frecuencia alta de estas palabras en estas dos reseñas
+contribuye incorrectamente a denotar estas reseñas como positivas.
+
+Estas películas *extrapolan* demasiado lejos de los datos de entrenamiento. 
+Típicamente, la extrapolación fuerte produce problemas tanto de
+**sesgo** (modelo poco apropiado para los valores que observamos) 
+como **varianza**, pues estamos haciendo predicciones donde hay 
+pocos datos. 
+
+En este caso, podemos intentar reducir el sesgo tomando el logaritmo
+de los conteos de palabras en lugar de los conteos crudos. Esto reduce
+la influencia de conteos altos de palabras en relación a conteos altos
+(también podemos intentar usar indicadoras 0-1 en lugar de conteos). 
+Después de algunos experimentos, podemos mejorar un poco:
+
+
+```r
+vocabulario <- calc_vocabulario(df_ent_grande, 8500, remove_stop = FALSE)
+mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, alpha = 0.01, lambda = exp(seq(-5, 2, 0.1)), log_transform = TRUE)
 describir_modelo_cv(mod_x)
-```
-
-<img src="06-diag-mejora_files/figure-html/unnamed-chunk-37-1.png" width="672" />
-
-```
-## [1] "Lambda min: 0.0820849986238988"
-## [1] "Error entrenamiento: 0"
-## [1] "Error prueba: 0.11"
-## [1] "Devianza entrena:0.143"
-## [1] "Devianza prueba:0.626"
-```
-
-```r
-vocabulario_bigramas <- calc_vocabulario(df_ent_grande, 500, bigram = TRUE)
-vocabulario_bigramas %>% arrange(desc(frec))
-```
-
-```
-## # A tibble: 509 x 2
-##    palabra    frec
-##    <chr>     <int>
-##  1 of the     6984
-##  2 in the     4609
-##  3 the film   3167
-##  4 is a       2325
-##  5 to be      2218
-##  6 to the     2187
-##  7 and the    2019
-##  8 on the     1780
-##  9 in a       1756
-## 10 the movie  1580
-## # ... with 499 more rows
-```
-
-```r
-vocabulario_bigramas %>% arrange((frec))
-```
-
-```
-## # A tibble: 509 x 2
-##    palabra          frec
-##    <chr>           <int>
-##  1 and one           117
-##  2 are so            117
-##  3 decides to        117
-##  4 for some          117
-##  5 might have        117
-##  6 piece of          117
-##  7 sci fi            117
-##  8 science fiction   117
-##  9 that his          117
-## 10 the case          117
-## # ... with 499 more rows
-```
-
-
-```r
-library(stringr)
-mod_bigramas <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario_bigramas, 
-                                alpha=1,
-                          lambda = exp(seq(-7,2,0.1)), bigram = TRUE)
-```
-
-```
-## Joining, by = "palabra"
-## Joining, by = "palabra"
-```
-
-```
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-```
-
-```r
-describir_modelo_cv(mod_bigramas)
-```
-
-<img src="06-diag-mejora_files/figure-html/unnamed-chunk-38-1.png" width="672" />
-
-```
-## [1] "Lambda min: 0.0111089965382423"
-## [1] "Error entrenamiento: 0.19"
-## [1] "Error prueba: 0.28"
-## [1] "Devianza entrena:0.892"
-## [1] "Devianza prueba:1.078"
-```
-
-Este resultado no es tan malo. Podemos intentar construir un modelo juntando unigramas
-y bigramas:
-
-
-```r
-y <- mod_x$entrena$y
-x_1 <- mod_x$entrena$x
-x_2 <- mod_bigramas$entrena$x
-mod_ub <- cv.glmnet(x = cbind(x_1, x_2), 
-                       y = y, alpha = 0.0, family ='binomial',
-                       lambda = exp(seq(-5,1,0.1)))
-
-plot(mod_ub)
 ```
 
 <img src="06-diag-mejora_files/figure-html/unnamed-chunk-39-1.png" width="672" />
 
-```r
-x_1p <- mod_x$prueba$x
-x_2p <- mod_bigramas$prueba$x
-preds_ent <- predict(mod_ub, newx = cbind(x_1,x_2), type='class', lambda ='lambda.min')
-mean(preds_ent != mod_x$entrena$y)
 ```
-
-```
-## [1] 0.0006349206
-```
-
-```r
-preds_1 <- predict(mod_ub, newx = cbind(x_1p,x_2p), type='class', lambda ='lambda.min')
-mean(preds_1 != mod_x$prueba$y)
-```
-
-```
-## [1] 0.1129412
+## [1] "Lambda min: 0.03688316740124"
+## [1] "Error entrenamiento: 0"
+## [1] "Error prueba: 0.11"
+## [1] "Devianza entrena:0.058"
+## [1] "Devianza prueba:0.572"
 ```
 
 

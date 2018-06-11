@@ -394,8 +394,8 @@ Construimos un data frame:</p>
 df &lt;-<span class="st"> </span><span class="kw">prep_df</span>(<span class="st">&#39;./datos/sentiment/&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(texto)
 <span class="kw">nrow</span>(df)</code></pre>
 <p>[1] 2000</p>
-<pre class="sourceCode r"><code class="sourceCode r">df<span class="op">$</span>texto[<span class="dv">1</span>]</code></pre>
-<p>[1] “Review films adapted from comic books have had plenty of success , whether they’re about superheroes ( batman , superman , spawn ) , or geared toward kids ( casper ) or the arthouse crowd ( ghost world ) , but there’s never really been a comic book like from hell before . for starters , it was created by alan moore ( and eddie campbell ) , who brought the medium to a whole new level in the mid ‘80s with a 12-part series called the watchmen . to say moore and campbell thoroughly researched the subject of jack the ripper would be like saying michael jackson is starting to look a little odd . the book ( or &quot; graphic novel , &quot; if you will ) is over 500 pages long and includes nearly 30 more that consist of nothing but footnotes . in other words , don’t dismiss this film because of its source . if you can get past the whole comic book thing , you might find another stumbling block in from hell’s directors , albert and allen hughes . getting the hughes brothers to direct this seems almost as ludicrous as casting carrot top in , well , anything , but riddle me this : who better to direct a film that’s set in the ghetto and features really violent street crime than the mad geniuses behind menace ii society ? the ghetto in question is , of course , whitechapel in 1888 london’s east end . it’s a filthy , sooty place where the whores ( called &quot; unfortunates &quot; ) are starting to get a little nervous about this mysterious psychopath who has been carving through their profession with surgical precision . when the first stiff turns up , copper peter godley ( robbie coltrane , the world is not enough ) calls in inspector frederick abberline ( johnny depp , blow ) to crack the case . abberline , a widower , has prophetic dreams he unsuccessfully tries to quell with copious amounts of absinthe and opium . upon arriving in whitechapel , he befriends an unfortunate named mary kelly ( heather graham , say it isn’t so ) and proceeds to investigate the horribly gruesome crimes that even the police surgeon can’t stomach . i don’t think anyone needs to be briefed on jack the ripper , so i won’t go into the particulars here , other than to say moore and campbell have a unique and interesting theory about both the identity of the killer and the reasons he chooses to slay . in the comic , they don’t bother cloaking the identity of the ripper , but screenwriters terry hayes ( vertical limit ) and rafael yglesias ( les mis ? rables ) do a good job of keeping him hidden from viewers until the very end . it’s funny to watch the locals blindly point the finger of blame at jews and indians because , after all , an englishman could never be capable of committing such ghastly acts . and from hell’s ending had me whistling the stonecutters song from the simpsons for days ( &quot; who holds back the electric car/who made steve guttenberg a star ? &quot; ) . don’t worry - it’ll all make sense when you see it . now onto from hell’s appearance : it’s certainly dark and bleak enough , and it’s surprising to see how much more it looks like a tim burton film than planet of the apes did ( at times , it seems like sleepy hollow 2 ) . the print i saw wasn’t completely finished ( both color and music had not been finalized , so no comments about marilyn manson ) , but cinematographer peter deming ( don’t say a word ) ably captures the dreariness of victorian-era london and helped make the flashy killing scenes remind me of the crazy flashbacks in twin peaks , even though the violence in the film pales in comparison to that in the black-and-white comic . oscar winner martin childs’ ( shakespeare in love ) production design turns the original prague surroundings into one creepy place . even the acting in from hell is solid , with the dreamy depp turning in a typically strong performance and deftly handling a british accent . ians holm ( joe gould’s secret ) and richardson ( 102 dalmatians ) log in great supporting roles , but the big surprise here is graham . i cringed the first time she opened her mouth , imagining her attempt at an irish accent , but it actually wasn’t half bad . the film , however , is all good . 2 : 00 - r for strong violence/gore , sexuality , language and drug content”</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_sub</span>(df<span class="op">$</span>texto[<span class="dv">1</span>], <span class="dv">1</span>, <span class="dv">200</span>)</code></pre>
+<p>[1] “Review films adapted from comic books have had plenty of success , whether they’re about superheroes ( batman , superman , spawn ) , or geared toward kids ( casper ) or the arthouse crowd ( ghost wor”</p>
 <p>Ahora separamos una muestra de prueba (y una de entrenamiento más chica
 para simular después el proceso de recoger más datos):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">94512</span>)
@@ -467,8 +467,7 @@ mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo</span>(df_ent
 ayudar.</li>
 </ul>
 <p>¿Qué hacer? Nuestro clasificador ni siquiera puede clasificar bien la muestra de entrenamiento,
-lo que implica que nuestro modelo tiene sesgo alto. Controlar la varianza
-no nos va a ayudar a resolver nuestro problema en este punto. Podemos intentar un modelo
+lo que implica que nuestro modelo tiene sesgo demasiado alto. Controlar la varianza no nos va a ayudar a resolver nuestro problema en este punto. Podemos intentar un modelo
 más flexible.</p>
 
 <div class="comentario">
@@ -493,17 +492,6 @@ el error de entrenamiento es muy alto):</p>
 <p>Por ejemplo, si juntáramos más datos de entrenamiento (con el costo que esto
 implica), obtendríamos:</p>
 <pre class="sourceCode r"><code class="sourceCode r">mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo</span>(df_ent_grande, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="fl">1e-1</span>)</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
 <pre><code>## [1] &quot;Error entrenamiento: 0.31&quot;
 ## [1] &quot;Error prueba: 0.35&quot;
 ## [1] &quot;Devianza entrena:1.187&quot;
@@ -517,17 +505,6 @@ porque típicamente el error para cada caso individual de la muestra original su
 cuando tenemos más datos.</p>
 <p>En lugar de eso, podemos comenzar quitando regularización, por ejemplo</p>
 <pre class="sourceCode r"><code class="sourceCode r">mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda =</span><span class="fl">1e-10</span>)</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
 <pre><code>## [1] &quot;Error entrenamiento: 0.29&quot;
 ## [1] &quot;Error prueba: 0.37&quot;
 ## [1] &quot;Devianza entrena:1.099&quot;
@@ -535,17 +512,6 @@ cuando tenemos más datos.</p>
 <p>Y notamos que reducimos un poco el sesgo. Por el momento, seguiremos intentando reducir sesgo. Podemos ahora incluir más variables</p>
 <pre class="sourceCode r"><code class="sourceCode r">vocabulario &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent, <span class="dv">3000</span>)
 mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda=</span><span class="fl">1e-10</span>)</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
 <pre><code>## [1] &quot;Error entrenamiento: 0&quot;
 ## [1] &quot;Error prueba: 0.38&quot;
 ## [1] &quot;Devianza entrena:0&quot;
@@ -559,38 +525,17 @@ sobreajuste (el problema es varianza).
 </div>
 
 <p>Podemos regularizar más:</p>
-<pre class="sourceCode r"><code class="sourceCode r">mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda=</span><span class="fl">1e-6</span>)</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda=</span><span class="fl">1e-5</span>)</code></pre>
 <pre><code>## [1] &quot;Error entrenamiento: 0&quot;
-## [1] &quot;Error prueba: 0.3&quot;
+## [1] &quot;Error prueba: 0.2&quot;
 ## [1] &quot;Devianza entrena:0&quot;
-## [1] &quot;Devianza prueba:3.203&quot;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda=</span><span class="fl">0.05</span>)</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
+## [1] &quot;Devianza prueba:1.387&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda=</span><span class="fl">0.01</span>)</code></pre>
 <pre><code>## [1] &quot;Error entrenamiento: 0&quot;
 ## [1] &quot;Error prueba: 0.18&quot;
-## [1] &quot;Devianza entrena:0.072&quot;
-## [1] &quot;Devianza prueba:0.764&quot;</code></pre>
+## [1] &quot;Devianza entrena:0.021&quot;
+## [1] &quot;Devianza prueba:0.797&quot;</code></pre>
+<p>Y logramos reducir considerablemente el error y devianza de prueba.</p>
 </div>
 <div id="refinando-el-pipeline" class="section level2">
 <h2><span class="header-section-number">6.5</span> Refinando el pipeline</h2>
@@ -702,23 +647,12 @@ varianza - y quizá el sesgo no aumente mucho.</li>
 ## 19 warning          18
 ## 20 werewolf         18</code></pre>
 <p>Este vocabulario parece que puede ser más útil. Vamos a tener que ajustar
-la regularización de nuevo (y también el número de entradas). Nota:
+la regularización de nuevo (y también el número de entradas). Usaremos
+ahora validación cruzada para seleccionar modelos. Nota:
 este proceso también lo podemos hacer con cv.glmnet de manera más rápida.</p>
 <pre class="sourceCode r"><code class="sourceCode r">mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent, df_pr, vocabulario, 
-                          <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">5</span>,<span class="fl">0.1</span>)))</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
-<pre><code>## Warning: executing %dopar% sequentially: no parallel backend registered</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_1.rds&#39;</span>)
+                          <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">5</span>,<span class="fl">0.1</span>)))
+<span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_1.rds&#39;</span>)
 <span class="kw">describir_modelo_cv</span>(mod_x)</code></pre>
 <p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <pre><code>## [1] &quot;Lambda min: 0.201896517994655&quot;
@@ -728,67 +662,39 @@ este proceso también lo podemos hacer con cv.glmnet de manera más rápida.</p>
 ## [1] &quot;Devianza prueba:0.879&quot;</code></pre>
 <p>No estamos mejorando. Podemos intentar con un número diferente de entradas:</p>
 <pre class="sourceCode r"><code class="sourceCode r">vocabulario &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent, <span class="dv">4000</span>, <span class="dt">remove_stop =</span> <span class="ot">TRUE</span>)
-<span class="cf">if</span>(<span class="op">!</span>usar_cache){
-  mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">5</span>,<span class="fl">0.1</span>)))
-  <span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_2.rds&#39;</span>)
-} <span class="cf">else</span> {
-  mod_x &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;./cache_obj/mod_sentiment_2.rds&#39;</span>)
-  <span class="kw">describir_modelo_cv</span>(mod_x)
-}</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
+mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">5</span>,<span class="fl">0.1</span>)))
+<span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_2.rds&#39;</span>)
+<span class="kw">describir_modelo_cv</span>(mod_x)</code></pre>
+<p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre><code>## [1] &quot;Lambda min: 0.49658530379141&quot;
+## [1] &quot;Error entrenamiento: 0&quot;
+## [1] &quot;Error prueba: 0.18&quot;
+## [1] &quot;Devianza entrena:0.295&quot;
+## [1] &quot;Devianza prueba:0.883&quot;</code></pre>
 <p>Y parece que nuestra estrategia no está funcionando muy bien.
 Regresamos a nuestro modelo con ridge</p>
 <pre class="sourceCode r"><code class="sourceCode r">vocabulario &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent, <span class="dv">3000</span>, <span class="dt">remove_stop =</span> <span class="ot">FALSE</span>)
-
-<span class="cf">if</span>(<span class="op">!</span>usar_cache){
 mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)))
-  <span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_3.rds&#39;</span>)
-} <span class="cf">else</span> {
-  mod_x &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;./cache_obj/mod_sentiment_3.rds&#39;</span>)
-  <span class="kw">describir_modelo_cv</span>(mod_x)
-}</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
+<span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_3.rds&#39;</span>)
+<span class="kw">describir_modelo_cv</span>(mod_x)</code></pre>
+<p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<pre><code>## [1] &quot;Lambda min: 0.110803158362334&quot;
+## [1] &quot;Error entrenamiento: 0&quot;
+## [1] &quot;Error prueba: 0.18&quot;
+## [1] &quot;Devianza entrena:0.128&quot;
+## [1] &quot;Devianza prueba:0.775&quot;</code></pre>
 <p>Podemos intentar aumentar el número de palabras y aumentar también la
 regularización</p>
 <pre class="sourceCode r"><code class="sourceCode r">vocabulario &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent, <span class="dv">4000</span>, <span class="dt">remove_stop =</span> <span class="ot">FALSE</span>)
-<span class="cf">if</span>(<span class="op">!</span>usar_cache){
-  mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)))
-  <span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_4.rds&#39;</span>)
-} <span class="cf">else</span> {
-  mod_x &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;./cache_obj/mod_sentiment_4.rds&#39;</span>)
-  <span class="kw">describir_modelo_cv</span>(mod_x)
-}</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
+mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)))
+<span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_4.rds&#39;</span>)
+<span class="kw">describir_modelo_cv</span>(mod_x)</code></pre>
+<p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<pre><code>## [1] &quot;Lambda min: 0.22313016014843&quot;
+## [1] &quot;Error entrenamiento: 0&quot;
+## [1] &quot;Error prueba: 0.16&quot;
+## [1] &quot;Devianza entrena:0.173&quot;
+## [1] &quot;Devianza prueba:0.776&quot;</code></pre>
 </div>
 <div id="consiguiendo-mas-datos" class="section level2">
 <h2><span class="header-section-number">6.6</span> Consiguiendo más datos</h2>
@@ -803,13 +709,7 @@ que hacemos eso en este caso, conseguimos el doble casos de entrenamiento.
 En este ejemplo,
 podríamos etiquetar más reviews: esto es relativamente barato y rápido</p>
 <pre class="sourceCode r"><code class="sourceCode r">vocabulario &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent_grande, <span class="dv">3000</span>, <span class="dt">remove_stop =</span> <span class="ot">FALSE</span>)
-<span class="cf">if</span>(<span class="op">!</span>usar_cache){
-  mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent_grande, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)))
-  <span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_5.rds&#39;</span>)
-} <span class="cf">else</span> {
-  mod_x &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;./cache_obj/mod_sentiment_5.rds&#39;</span>)
-  <span class="kw">describir_modelo_cv</span>(mod_x)
-}</code></pre>
+mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent_grande, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)))</code></pre>
 <pre><code>## Joining, by = &quot;palabra&quot;
 ## Joining, by = &quot;palabra&quot;</code></pre>
 <pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
@@ -821,15 +721,17 @@ podríamos etiquetar más reviews: esto es relativamente barato y rápido</p>
 ## - `row_col`, `column_col`
 ## This is an error, but only a warning is raised for compatibility reasons.
 ## The operation will return the input unchanged.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_5.rds&#39;</span>)
+<span class="kw">describir_modelo_cv</span>(mod_x)</code></pre>
+<p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<pre><code>## [1] &quot;Lambda min: 0.0907179532894125&quot;
+## [1] &quot;Error entrenamiento: 0&quot;
+## [1] &quot;Error prueba: 0.12&quot;
+## [1] &quot;Devianza entrena:0.18&quot;
+## [1] &quot;Devianza prueba:0.653&quot;</code></pre>
 <p>Y ya casi logramos nuestro objetivo. Podemos intentar con más palabras</p>
 <pre class="sourceCode r"><code class="sourceCode r">vocabulario &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent_grande, <span class="dv">4000</span>, <span class="dt">remove_stop =</span> <span class="ot">FALSE</span>)
-<span class="cf">if</span>(<span class="op">!</span>usar_cache){
-  mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent_grande, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)))
-  <span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_6.rds&#39;</span>)
-} <span class="cf">else</span> {
-  mod_x &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;./cache_obj/mod_sentiment_6.rds&#39;</span>)
-  <span class="kw">describir_modelo_cv</span>(mod_x)
-}</code></pre>
+mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent_grande, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)))</code></pre>
 <pre><code>## Joining, by = &quot;palabra&quot;
 ## Joining, by = &quot;palabra&quot;</code></pre>
 <pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
@@ -841,6 +743,15 @@ podríamos etiquetar más reviews: esto es relativamente barato y rápido</p>
 ## - `row_col`, `column_col`
 ## This is an error, but only a warning is raised for compatibility reasons.
 ## The operation will return the input unchanged.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">saveRDS</span>(mod_x, <span class="dt">file =</span> <span class="st">&#39;./cache_obj/mod_sentiment_6.rds&#39;</span>)
+mod_x &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;./cache_obj/mod_sentiment_6.rds&#39;</span>)
+<span class="kw">describir_modelo_cv</span>(mod_x)</code></pre>
+<p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre><code>## [1] &quot;Lambda min: 0.0742735782143339&quot;
+## [1] &quot;Error entrenamiento: 0&quot;
+## [1] &quot;Error prueba: 0.12&quot;
+## [1] &quot;Devianza entrena:0.127&quot;
+## [1] &quot;Devianza prueba:0.621&quot;</code></pre>
 <p>Y esto funcionó bien. Subir más la regularización no ayuda mucho (pruébalo).
 Parece que el sesgo lo podemos hacer
 chico (reducir el error de entrenamiento considerablemente), pero
@@ -1019,8 +930,7 @@ coef_df &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span c
 clase observada</p>
 <pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span>mod_x<span class="op">$</span>prueba<span class="op">$</span>y
 x &lt;-<span class="st"> </span>mod_x<span class="op">$</span>prueba<span class="op">$</span>x
-probs &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_x<span class="op">$</span>mod, <span class="dt">newx =</span> x, <span class="dt">type =</span><span class="st">&#39;response&#39;</span>, <span class="dt">s=</span><span class="st">&#39;lambda.min&#39;</span>)
-
+probs &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_x<span class="op">$</span>mod, <span class="dt">newx =</span> x, <span class="dt">type =</span> <span class="st">&#39;response&#39;</span>, <span class="dt">s =</span><span class="st">&#39;lambda.min&#39;</span>)
 df_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">id =</span> <span class="kw">rownames</span>(x), <span class="dt">y=</span>y, <span class="dt">prob =</span> probs[,<span class="dv">1</span>]) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">error =</span> y <span class="op">-</span><span class="st"> </span>prob) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(<span class="kw">abs</span>(error)))
 df_<span class="dv">1</span></code></pre>
@@ -1038,114 +948,2040 @@ df_<span class="dv">1</span></code></pre>
 ##  9 1050      1 0.146   0.854
 ## 10 415       0 0.850  -0.850
 ## # ... with 415 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(df, id <span class="op">==</span><span class="st"> </span><span class="dv">1461</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(texto)</code></pre>
-<p>[1] “Review deep rising is one of &quot; those &quot; movies . the kind of movie which serves no purpose except to entertain us . it does not ask us to think about important questions like life on other planets or the possibility that there is no god . . . screw that , it says boldly , let’s see some computer generated monsters rip into , decapitate and generally cause irreparable booboos to a bunch of little known actors . heh ! them wacky monsters , gotta love ’em . of course , since we can rent about a thousand b movies with the same kind of story , hollywood must give that little extra &quot; oumph &quot; to get people in theaters . that is where deep rising fails , which is a good thing . confused ? let me explain : despite all them flashy effects and big explosions , deep rising is still , at heart , a good ’ol b movie . luckily , it’s a very good b movie . the worst cliches in movie history are a b movie’s bread and butter . therefore , things that would destroy a serious movie actually help us have a good time while watching a movie of lower calibre . of course we know there’s a big slimy creature behind that door , that one person will wander off to be picked off by said monster and we always know which persons or person will make it out alive . we just don’t know when or how horrible it will be . i went to see deep rising with my expections low and my tolerance for bad dialogue high . imagine my surprise when i discover that deep rising is actually , well , pretty darn funny at times . a funny b movie ? well , that’s new . these flicks are not supposed to make us laugh . ( except for a few unintended laughs once a while . ) and before you know it , treat williams , wes studi and famke jansen appear on the big screen . hey ! i know them guys ( and gal ) from a couple of other movies . cool . familiar faces . so far so good . our man treat is the hero , he’ll live . wes is a staple of b movies , he is the token victim . we know he’ll buy the farm but he will take a few creeps with him on the way out . famke is the babe , ’nuff said . there is also a guy with glasses ( the guy with glasses always dies ) a black person ( b movie buffs know that the black guy always dies , never fails ) and a very funny , nerdy guy . ( ah ! comic relief . how can we possibly explain having to kill him . . . let him live . ) after the first fifteen minutes i felt right at home . i know who to root for and who i need to boo too and a gum to chew . ( please kill me . ) suffice it to say that for the next hour and a half i jumped out of my seat a few times , went &quot; ewwww &quot; about a dozen times and nearly had an orgasm over all the explosions and firepower our heroes were packing . i’m a man , we nottice these things . all in all , i’d recommend deep rising if you are looking for a good time and care to leave your brain at the door . . . but bring your sense of humor and excitement in with you . the acting is decent , the effects top rate . how to best describe it ? put together the jet ski scene from hard rain , the bug attacks from starship troopers , a couple of james bond like stunts and all those scenes from friday the thirteenth and freddy where you keep screaming &quot; don’t go there , he’s behind you &quot; and you end up with deep rising . for creepy crawly goodness , tight t-shirts , major firepower and the need to go to the bathroom every fifteen minutes from seing all that water .”</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(df, id <span class="op">==</span><span class="st"> </span><span class="dv">1508</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(texto)</code></pre>
-<p>[1] “Review capsule : side-splitting comedy that follows its own merciless logic almost through to the end . . . but not without providing a good deal of genuine laughs . most comedies these days have one flaw . they’re not funny . they think they’re funny , but they are devoid of anything really penetrating or dastardly . occasionally a good funny movie sneaks past the deadening hollywood preconceptions of humor and we get a real gem : ruthless people , for instance , which established a microcosm of a setup and played it out to the bitter end . liar liar is built the same way and is just about as funny . this is one of the few movies i’ve seen where i was laughing consistently almost all the way through : instead of a couple of set-pieces that inspired a laugh ( think of the dismal fatal instinct ) , the whole movie works like clockwork . jim carrey playes a high-powered lawyer , to whom lying is as natural as breathing . there is one thing he takes seriously , though : his son , and we can sense the affection that they have for each other right away . but his wife is divorced and seeing another man , and now it looks like they may move away together . the son goes with them , of course . the movie sets up this early material with good timing and a remarkable balance of jim carrey’s over-the-top persona with reality . then the plot springs into action : after being snubbed ( not deliberately ) by his father at his birthday , the kid makes a wish as he blows out the birthday candles : that for just one day , dad can’t lie . he gets the wish . what happens next is sidesplitting . everything turns into a confrontation : when cornered by a bum for some change , he shouts , &quot; no ! i’m not giving you any money because i know you’ll spend it on booze ! all i want to do is to get to the office without having to step over the debris of our decaying society ! &quot; he can’t even get into an elevator without earning a black eye . and what’s worse , he’s now gotten himself into an expensive divorce settlement that requires him to twist the truth like abstract wire sculpture . carrey , who i used to find unfunny , has gotten better at his schtick , even if it’s a limited one . he uses it to great effect in this movie . there is a scene where he tries to test his ability to lie and nearly demolishes his office in the process ( there’s a grin breaking out across my face right now , just remembering the scene ) . he can’t even write the lie ; his fingers twitch , his body buckles like someone in the throes of cyanide poisoning , and when he tries to talk it’s like he’s speaking in tongues . equally funny is a scene where he beats himself to a pulp ( don’t ask why ) , tries to drink water to keep from having outbursts in the courtroom ( it fails , with semi-predictable results ) , and winds up biting the bullet when he gets called into the boardroom to have everyone ask what they think of them . this scene alone may force people to stop the tape for minutes on end . the movie sustains its laughs and also its flashes of insight until almost the end . a shame , too , because the movie insists on having a big , ridiculous climax that involves carrey’s character flagging down a plane using a set of motorized stairs , then breaking his leg , etc . a simple reconciliation would do the trick . why is this stupid pent-up climax always obligatory ? it’s not even part of the movie’s real agenda . thankfully , liar liar survives it , and so does carrey . maybe they were being merciful , on reflection . if i’d laughed any more , i might have needed an iron lung .”</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(df, id <span class="op">==</span><span class="st"> </span><span class="dv">222</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(texto) <span class="co">#negativa</span></code></pre>
-<p>[1] “Review it’s probably inevitable that the popular virtual reality genre ( &quot; the matrix , &quot; &quot; existenz &quot; ) would collide with the even more popular serial-killer genre ( &quot; kiss the girls , &quot; &quot; se7en &quot; ) . the result should have been more interesting than &quot; the cell . &quot; as the movie opens , therapist catharine deane ( jennifer lopez ) treats a catatonic boy ( colton james ) by entering his mind through some sort of virtual reality technique that’s never fully explained . after months of therapy sessions in a surreal desert , catharine has no success to report . meanwhile , killer carl stargher ( vincent d’onofrio ) has claimed another victim . his particular hobby is to kidnap young women , keep them in a glass cell overnight , and drown them . he takes the corpse and soaks it in bleach , then suspends himself over the body and jerks off while watching a video tape of the drowning . although carl’s been doing this for awhile , he’s recently become sloppy , and fbi agent peter novak ( vince vaughn ) is closing in fast . not fast enough , though , to keep carl from sticking another woman ( tara subkoff ) in the cell or to catch him before he suffers a schizophrenic attack that leaves him in a coma . from the videos in carl’s house , peter can see that the drowning cell is automated and will fill with water forty hours after the abduction . to save the kidnapped girl , peter has to find the cell before the end of the day , and comatose carl’s not talking . so off they go to catharine in the hope that she can go inside carl’s mind and find out where the cell is in time . the focus of &quot; the cell &quot; in on the ornate interior of carl’s mind , but the universe director tarsem singh creates seems more an exercise in computer-generated spectacle than an exploration of the psychotic personality . for the most part , it’s style without substance . in his own mind , carl is a decadent emperor in flowing robes , ming the merciless , as well as a frightened boy ( jake thomas ) abused by his father . all in all , the mind of a psycho killer turns out to be a strangely dull place , and i kept wishing i could fast-forward to the next development . singh is best known for directing music videos , particularly rem’s &quot; losing my religion , &quot; and &quot; the cell &quot; seems very much like a really long , really slow mtv video with the sound deleted . singer lopez seems to think she’s in a video as well ; she devotes more time to posing in elaborate costumes than she does to acting . the premise had great promise . the computer-generated world within carl’s mind could have been a bizarre , surreal universe governed by insanity and symbolism rather than logic . the first room catharine enters in carl’s head shows this promise . she finds a horse standing in center of the room ; suddenly , sheets of sharp-edged glass fall into the horse , dividing it into segments . the panes of glass separate , pulling apart the pieces of the still-living horse . this scene is twisted , disturbing , and thought-provoking , because the psychological importance of the horse and its fate is left to the viewer to ponder . another element that should have been developed is the effect on catharine of merging with the mind of a psychopath . their minds begin to bleed together at one point in the movie , and this should have provided an opportunity to discover the dark corners of catharine’s own psyche . like sidney lumet’s &quot; the offence &quot; or michael mann’s &quot; manhunter , &quot; &quot; the cell &quot; could have explored how the madness of the killer brings out a repressed darkness in the investigator . however , catharine’s character is hardly developed at all , and lopez has no depth to offer the role . bottom line : don’t get trapped in this one .”</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(df, id <span class="op">==</span><span class="st"> </span><span class="dv">25</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(texto) <span class="co">#negativa</span></code></pre>
-<p>[1] “Review forgive the fevered criticism but the fervor of the crucible infects . set in 1692 at salem , massachusetts , the crucible opens with a group of teenage girls passionately singing and dancing around a boiling cauldron in the middle of a forest under the glow of a full moon . they beckon the names of men as the targets of their love spells . then one of the girls lets her hair down and sheds her clothes . not to be outdone in her quest to regain the attention of john proctor ( daniel day lewis ) , abigail ( winona ryder ) suddenly seizes a chicken , beats it against the ground and smears her face and lips with the fresh blood . taking even adolescent hormone surges into account , surely this chicken-bashing bit is a bit excessive , especially for prim puritan sensibilities ? surely to the puritan eye this is as close to a coven of witches as it gets ? the crucible errs from the beginning and arthur miller’s name should be summoned for blame here for the addition of the above scene to his screen adaptation of his play . this is far from a harmless event , a bad start to an already shaky morality tale . the play describes the film’s opening scene during tense exchanges that makes one wonder about the veracity of both accusation and reply , and this adds to the play’s charged atmosphere . in the film , the opening scene becomes an unintentional pandora’s box . not only is credulity stretched but abigail’s obsession is unfortunately spotlighted . it positions the crucible more as a cautionary fable about obsessive and malevolent women than against witch hunts ; it will bring back the memory of a rabbit boiling away in a pot . not surprisingly , the nighttime forest frenzy does not go unnoticed and when two girls fail to wake the following morning , witches are invoked by those eager to blame . when the girls are questioned , their confession of guilt is accompanied with an announcement of their return to god and they are thereafter converted to immaculate witnesses , led lustfully by abigail . with alarming synchronicity our hormonally-advantaged girls zealously gesture and point accusing fingers at innocents , constant reminders that abigail’s passion sets all this into inexorable motion . abigail seizes on this opportunity to rid herself of her rival for john proctor’s love , his wife elizabeth ( joan allen ) , by including her among those accused of witchcraft . appropriately narrow-waisted and equipped with a distractingly white smile ( watch his teeth deteriorate much too quickly to a murky yellow ) , day lewis plays the dashing moral hero with an over-earnestness that longs to be watched . director nicholas hytner is guilty of encouraging day lewis’ foaming-mouth fervour with shots where we stare up at proctor as if he was mounted on a pedestal for our admiration . otherwise , hytner’s direction is unremarkable . ryder’s performance as abigail is as consistent as her mood swings . her fits of frenzy are energetic enough but the quieter moments are less successful . abigail supposedly revels in her newfound power , but ryder fails at being convincingly haughty although there is much haughtiness to spare here . paul scofield is fine as the overzealous judge danforth , but the incessant moral posturings of all the characters along with the recurrent histrionics of the young girls pricks at the nerves . probably because she is the only refuge of restraint amidst all the huffing and puffing , allen’s elizabeth comes out as the most sympathetic character . a scene near the end featuring a private conversation between the imprisoned elizabeth and john is undeniably powerful because for once we are given a reprieve from the moral bantering and the human consequences are revealed . unfortunately , when john’s audience again increases to more than one his urge to pontificate returns and the human urgency of his situation is lost . it is clear that miller meant well but i do wish he did it with more delicacy and fewer diversions . his screenplay is an imperfect creature with the distractions coming out as loud as the message . the result is a clumsy muddle - i felt like the chicken from the opening scene , head ceaselessly banged with piousness too heavy-handed to be wholly believable . when the gallows beckoned , it was sweet release indeed . far from bewitching , the crucible tests the patience .”</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(df, id <span class="op">==</span><span class="st"> </span><span class="dv">728</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(texto) <span class="co">#negativa</span></code></pre>
-<p>[1] “Review girl 6 is , in a word , a mess . i was never able to determine what spike lee was trying to accomplish with this film . there was no sense of where the film was going , or any kind of coherent narrative . if there was a point to the film , i missed it . girl 6 , by the way , is the way theresa randle’s character is addressed in the phone sex workplace ; all the girls are known by their numbers . the plot , such as it is : theresa randle is a struggling n . y . actress , and eventually takes a job as a phone-sex operator . she begins to lose contact with reality , as her job consumes her . also , she must deal with the advances of her ex-husband ( isiah washington ) . he is an ex- con thief , and she tries to keep him away , while at the same time , it’s clear that she still harbors feelings for him . her neighbor , jimmy ( spike lee ) functions as the observer ; mediating between the ex- husband and girl 6 . he also functions as a point of stability , as he watches her become seduced by the lurid world of phone sex . the soundtrack , consisting of songs by prince , was jarring . it kept taking my attention from the film - not altogether a bad thing , i’ll grant you , as what was transpiring onscreen wasn’t that riveting . for parts of the middle of the film , the music stayed blissfully in the background . in the opening sequence and one scene later in the film , however , the music was particularly loud and distracting . of course , i’ve never really cared for prince’s ( or tafkap if you like ) music . prince fans might love the soundtrack , but it will probably be distracting , even to die-hard fans . of the performances , the only one that stood out was spike lee’s buddy character , jimmy . he was excellent as the always-broke neighbor of girl 6 . he should have stuck to acting in this film . there are several sequences that gave me the impression that he’d like to be oliver stone when he grows up . there are scenes shot with different types of film , which are purposely grainy , and reminiscent of some of the scenes in oliver stone’s natural born killers . in that film , they worked to propel the narrative . in this film , they just made me more confused . there are some amusing moments , and a few insights into the lives of the women who use their voices to make the phone-sex industry the multi-billion dollar industry that it has become . other than that , though , nothing much happens . there are a few intense moments , as when one caller becomes frightening , but even that is rather lackluster . i’m not the biggest fan of spike lee , though i’d agree that he has done some very good work in the past . in girl 6 , though , he seems to be floundering . he had an interesting idea , a fairly good setup , and seemed to wander aimlessly from there . girl 6 earns a grade of d .”</p>
-<p>Algunos de los errores son difíciles (por ejemplo, una reseña que dice que
-la película es tan mala que es buena). Otros quizá podemos hacer algo con nuestro
-método: en algunas partes vemos algunas problemas con nuestro método, por ejemplo,
-“no energy” - nuestro método no toma en cuenta el orden de las palabras. Podemos
-intentar capturar algo de esto usando bigramas (pares de palabras) en lugar
-de simplemente usar palabras.</p>
-<pre class="sourceCode r"><code class="sourceCode r">vocabulario &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent_grande, <span class="dv">3800</span>, <span class="dt">remove_stop =</span> <span class="ot">FALSE</span>)
-mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent_grande, df_pr, vocabulario, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)))</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describir_modelo_cv</span>(mod_x)</code></pre>
-<p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
-<pre><code>## [1] &quot;Lambda min: 0.0820849986238988&quot;
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(df_pr, id <span class="op">==</span><span class="st"> </span><span class="dv">1461</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(texto) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_sub</span>(<span class="dv">1</span>, <span class="dv">500</span>)</code></pre>
+<p>[1] “Review deep rising is one of &quot; those &quot; movies . the kind of movie which serves no purpose except to entertain us . it does not ask us to think about important questions like life on other planets or the possibility that there is no god . . . screw that , it says boldly , let’s see some computer generated monsters rip into , decapitate and generally cause irreparable booboos to a bunch of little known actors . heh ! them wacky monsters , gotta love ’em . of course , since we can rent about”</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(df_pr, id <span class="op">==</span><span class="st"> </span><span class="dv">1508</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(texto) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_sub</span>(<span class="dv">1</span>, <span class="dv">1000</span>)</code></pre>
+<p>[1] “Review capsule : side-splitting comedy that follows its own merciless logic almost through to the end . . . but not without providing a good deal of genuine laughs . most comedies these days have one flaw . they’re not funny . they think they’re funny , but they are devoid of anything really penetrating or dastardly . occasionally a good funny movie sneaks past the deadening hollywood preconceptions of humor and we get a real gem : ruthless people , for instance , which established a microcosm of a setup and played it out to the bitter end . liar liar is built the same way and is just about as funny . this is one of the few movies i’ve seen where i was laughing consistently almost all the way through : instead of a couple of set-pieces that inspired a laugh ( think of the dismal fatal instinct ) , the whole movie works like clockwork . jim carrey playes a high-powered lawyer , to whom lying is as natural as breathing . there is one thing he takes seriously , though : his son”</p>
+<p>Estas últimas son reseñas positivas que clasificamos incorrectamente
+como negativas. Vemos que en ambas el tono es irónico: por ejemplo,
+la primera argumenta que la película es mala, pero disfrutable. Esta
+fue etiquetada como una reseña positiva.</p>
+<p>Este fenómeno se puede ver como un problema difícil de <strong>sesgo</strong>:
+nuestro modelo simple difícilmente podrá captar esta estructura compleja
+de ironía.</p>
+<p>El problema es diferente para las reseñas negativas.
+Veamos algunas de las reseñas negativas peor clasificadas:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(df_pr, id <span class="op">==</span><span class="st"> </span><span class="dv">222</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(texto) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_sub</span>(<span class="dv">1</span>, <span class="dv">1000</span>) <span class="co">#negativa</span></code></pre>
+<p>[1] “Review it’s probably inevitable that the popular virtual reality genre ( &quot; the matrix , &quot; &quot; existenz &quot; ) would collide with the even more popular serial-killer genre ( &quot; kiss the girls , &quot; &quot; se7en &quot; ) . the result should have been more interesting than &quot; the cell . &quot; as the movie opens , therapist catharine deane ( jennifer lopez ) treats a catatonic boy ( colton james ) by entering his mind through some sort of virtual reality technique that’s never fully explained . after months of therapy sessions in a surreal desert , catharine has no success to report . meanwhile , killer carl stargher ( vincent d’onofrio ) has claimed another victim . his particular hobby is to kidnap young women , keep them in a glass cell overnight , and drown them . he takes the corpse and soaks it in bleach , then suspends himself over the body and jerks off while watching a video tape of the drowning . although carl’s been doing this for awhile , he’s recently become sloppy , and fbi agent peter nova”</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(df_pr, id <span class="op">==</span><span class="st"> </span><span class="dv">728</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(texto) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_sub</span>(<span class="dv">1</span>, <span class="dv">1000</span>) <span class="co">#negativa</span></code></pre>
+<p>[1] “Review girl 6 is , in a word , a mess . i was never able to determine what spike lee was trying to accomplish with this film . there was no sense of where the film was going , or any kind of coherent narrative . if there was a point to the film , i missed it . girl 6 , by the way , is the way theresa randle’s character is addressed in the phone sex workplace ; all the girls are known by their numbers . the plot , such as it is : theresa randle is a struggling n . y . actress , and eventually takes a job as a phone-sex operator . she begins to lose contact with reality , as her job consumes her . also , she must deal with the advances of her ex-husband ( isiah washington ) . he is an ex- con thief , and she tries to keep him away , while at the same time , it’s clear that she still harbors feelings for him . her neighbor , jimmy ( spike lee ) functions as the observer ; mediating between the ex- husband and girl 6 . he also functions as a point of stability , as he watches he”</p>
+<p>No está totalmente claro por qué nos equivocamos en estas dos reseñas.
+Podemos hacer un examen más cuidadoso de la construcción del predictor,
+obteniendo los coeficientes <span class="math inline">\(\beta\)</span> y el vector <span class="math inline">\(x\)</span> con los que se construyen
+el predictor:</p>
+<pre class="sourceCode r"><code class="sourceCode r">beta &lt;-<span class="st"> </span><span class="kw">coef</span>(mod_x<span class="op">$</span>mod) <span class="op">%&gt;%</span><span class="st"> </span>as.numeric
+nombres &lt;-<span class="st"> </span><span class="kw">rownames</span>(x)
+<span class="kw">head</span>(<span class="kw">sort</span>(x[nombres <span class="op">==</span><span class="st"> &quot;222&quot;</span>, ], <span class="dt">decreasing =</span> <span class="ot">TRUE</span>), <span class="dv">100</span>)</code></pre>
+<pre><code>##       the        in        of        to         a       and        is 
+##        52        21        17        17        16        14        10 
+##      cell      mind      have      that      this        as      been 
+##         9         7         5         5         5         4         4 
+##       has       his     horse    killer      more       she      than 
+##         4         4         4         4         4         4         4 
+##      with       all        an   another        by     could      fast 
+##         4         3         3         3         3         3         3 
+##       for     glass       out     peter     seems    should     video 
+##         3         3         3         3         3         3         3 
+##     after        at    before       boy       can  computer developed 
+##         2         2         2         2         2         2         2 
+##      find      from generated     genre        go        he       him 
+##         2         2         2         2         2         2         2 
+##         i      into        it      it&#39;s      keep      like     movie 
+##         2         2         2         2         2         2         2 
+##        no       not       off        on       one        or       own 
+##         2         2         2         2         2         2         2 
+##   popular   promise   reality    really      room   surreal      them 
+##         2         2         2         2         2         2         2 
+##      time  universe   virtual      well    acting     agent  although 
+##         2         2         2         2         1         1         1 
+##     apart    attack        be   because    become     begin      best 
+##         1         1         1         1         1         1         1 
+##   bizarre      body    bottom    brings       but     catch    center 
+##         1         1         1         1         1         1         1 
+## character   closing  costumes   creates      dark  darkness       day 
+##         1         1         1         1         1         1         1 
+##     depth    desert 
+##         1         1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">predictor &lt;-<span class="st"> </span>beta <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, x[nombres<span class="op">==</span><span class="st">&quot;222&quot;</span>,])  <span class="co"># beta*x</span>
+<span class="kw">sum</span>(predictor)</code></pre>
+<pre><code>## [1] 1.437326</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sort</span>(predictor[predictor <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>]) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td align="right">-0.5202993</td>
+</tr>
+<tr class="even">
+<td>sloppy</td>
+<td align="right">-0.3172574</td>
+</tr>
+<tr class="odd">
+<td>promise</td>
+<td align="right">-0.2760900</td>
+</tr>
+<tr class="even">
+<td>video</td>
+<td align="right">-0.1501897</td>
+</tr>
+<tr class="odd">
+<td>dull</td>
+<td align="right">-0.1331210</td>
+</tr>
+<tr class="even">
+<td>catch</td>
+<td align="right">-0.1169287</td>
+</tr>
+<tr class="odd">
+<td>should</td>
+<td align="right">-0.1159415</td>
+</tr>
+<tr class="even">
+<td>suffers</td>
+<td align="right">-0.1128175</td>
+</tr>
+<tr class="odd">
+<td>trapped</td>
+<td align="right">-0.1111792</td>
+</tr>
+<tr class="even">
+<td>could</td>
+<td align="right">-0.1011409</td>
+</tr>
+<tr class="odd">
+<td>pulling</td>
+<td align="right">-0.1003304</td>
+</tr>
+<tr class="even">
+<td>bottom</td>
+<td align="right">-0.0939438</td>
+</tr>
+<tr class="odd">
+<td>fast</td>
+<td align="right">-0.0911754</td>
+</tr>
+<tr class="even">
+<td>been</td>
+<td align="right">-0.0908088</td>
+</tr>
+<tr class="odd">
+<td>save</td>
+<td align="right">-0.0876571</td>
+</tr>
+<tr class="even">
+<td>explained</td>
+<td align="right">-0.0808605</td>
+</tr>
+<tr class="odd">
+<td>have</td>
+<td align="right">-0.0796675</td>
+</tr>
+<tr class="even">
+<td>mtv</td>
+<td align="right">-0.0714969</td>
+</tr>
+<tr class="odd">
+<td>talking</td>
+<td align="right">-0.0639503</td>
+</tr>
+<tr class="even">
+<td>kidnapped</td>
+<td align="right">-0.0600789</td>
+</tr>
+<tr class="odd">
+<td>water</td>
+<td align="right">-0.0600346</td>
+</tr>
+<tr class="even">
+<td>vince</td>
+<td align="right">-0.0571824</td>
+</tr>
+<tr class="odd">
+<td>begin</td>
+<td align="right">-0.0547786</td>
+</tr>
+<tr class="even">
+<td>jennifer</td>
+<td align="right">-0.0528719</td>
+</tr>
+<tr class="odd">
+<td>virtual</td>
+<td align="right">-0.0519579</td>
+</tr>
+<tr class="even">
+<td>twisted</td>
+<td align="right">-0.0508402</td>
+</tr>
+<tr class="odd">
+<td>center</td>
+<td align="right">-0.0505813</td>
+</tr>
+<tr class="even">
+<td>provided</td>
+<td align="right">-0.0492090</td>
+</tr>
+<tr class="odd">
+<td>psycho</td>
+<td align="right">-0.0489186</td>
+</tr>
+<tr class="even">
+<td>off</td>
+<td align="right">-0.0482361</td>
+</tr>
+<tr class="odd">
+<td>recently</td>
+<td align="right">-0.0482342</td>
+</tr>
+<tr class="even">
+<td>result</td>
+<td align="right">-0.0476513</td>
+</tr>
+<tr class="odd">
+<td>women</td>
+<td align="right">-0.0472648</td>
+</tr>
+<tr class="even">
+<td>point</td>
+<td align="right">-0.0472133</td>
+</tr>
+<tr class="odd">
+<td>within</td>
+<td align="right">-0.0458799</td>
+</tr>
+<tr class="even">
+<td>forward</td>
+<td align="right">-0.0456438</td>
+</tr>
+<tr class="odd">
+<td>exercise</td>
+<td align="right">-0.0452252</td>
+</tr>
+<tr class="even">
+<td>no</td>
+<td align="right">-0.0410514</td>
+</tr>
+<tr class="odd">
+<td>technique</td>
+<td align="right">-0.0405685</td>
+</tr>
+<tr class="even">
+<td>director</td>
+<td align="right">-0.0358213</td>
+</tr>
+<tr class="odd">
+<td>focus</td>
+<td align="right">-0.0351205</td>
+</tr>
+<tr class="even">
+<td>acting</td>
+<td align="right">-0.0345010</td>
+</tr>
+<tr class="odd">
+<td>interesting</td>
+<td align="right">-0.0334681</td>
+</tr>
+<tr class="even">
+<td>style</td>
+<td align="right">-0.0332168</td>
+</tr>
+<tr class="odd">
+<td>thomas</td>
+<td align="right">-0.0322831</td>
+</tr>
+<tr class="even">
+<td>kept</td>
+<td align="right">-0.0316398</td>
+</tr>
+<tr class="odd">
+<td>hardly</td>
+<td align="right">-0.0309470</td>
+</tr>
+<tr class="even">
+<td>another</td>
+<td align="right">-0.0307244</td>
+</tr>
+<tr class="odd">
+<td>attack</td>
+<td align="right">-0.0302758</td>
+</tr>
+<tr class="even">
+<td>explored</td>
+<td align="right">-0.0292849</td>
+</tr>
+<tr class="odd">
+<td>then</td>
+<td align="right">-0.0292602</td>
+</tr>
+<tr class="even">
+<td>or</td>
+<td align="right">-0.0290317</td>
+</tr>
+<tr class="odd">
+<td>victim</td>
+<td align="right">-0.0276020</td>
+</tr>
+<tr class="even">
+<td>fill</td>
+<td align="right">-0.0267911</td>
+</tr>
+<tr class="odd">
+<td>hope</td>
+<td align="right">-0.0266701</td>
+</tr>
+<tr class="even">
+<td>even</td>
+<td align="right">-0.0250174</td>
+</tr>
+<tr class="odd">
+<td>enough</td>
+<td align="right">-0.0249711</td>
+</tr>
+<tr class="even">
+<td>woman</td>
+<td align="right">-0.0244227</td>
+</tr>
+<tr class="odd">
+<td>fall</td>
+<td align="right">-0.0234435</td>
+</tr>
+<tr class="even">
+<td>apart</td>
+<td align="right">-0.0233941</td>
+</tr>
+<tr class="odd">
+<td>out</td>
+<td align="right">-0.0230786</td>
+</tr>
+<tr class="even">
+<td>this</td>
+<td align="right">-0.0196350</td>
+</tr>
+<tr class="odd">
+<td>to</td>
+<td align="right">-0.0184586</td>
+</tr>
+<tr class="even">
+<td>premise</td>
+<td align="right">-0.0180929</td>
+</tr>
+<tr class="odd">
+<td>she’s</td>
+<td align="right">-0.0179955</td>
+</tr>
+<tr class="even">
+<td>killer</td>
+<td align="right">-0.0173511</td>
+</tr>
+<tr class="odd">
+<td>left</td>
+<td align="right">-0.0173469</td>
+</tr>
+<tr class="even">
+<td>development</td>
+<td align="right">-0.0172162</td>
+</tr>
+<tr class="odd">
+<td>how</td>
+<td align="right">-0.0165661</td>
+</tr>
+<tr class="even">
+<td>into</td>
+<td align="right">-0.0162641</td>
+</tr>
+<tr class="odd">
+<td>at</td>
+<td align="right">-0.0153004</td>
+</tr>
+<tr class="even">
+<td>discover</td>
+<td align="right">-0.0150697</td>
+</tr>
+<tr class="odd">
+<td>them</td>
+<td align="right">-0.0133533</td>
+</tr>
+<tr class="even">
+<td>would</td>
+<td align="right">-0.0129188</td>
+</tr>
+<tr class="odd">
+<td>james</td>
+<td align="right">-0.0124600</td>
+</tr>
+<tr class="even">
+<td>on</td>
+<td align="right">-0.0124260</td>
+</tr>
+<tr class="odd">
+<td>where</td>
+<td align="right">-0.0121713</td>
+</tr>
+<tr class="even">
+<td>sort</td>
+<td align="right">-0.0121419</td>
+</tr>
+<tr class="odd">
+<td>much</td>
+<td align="right">-0.0114857</td>
+</tr>
+<tr class="even">
+<td>costumes</td>
+<td align="right">-0.0111567</td>
+</tr>
+<tr class="odd">
+<td>turns</td>
+<td align="right">-0.0110439</td>
+</tr>
+<tr class="even">
+<td>so</td>
+<td align="right">-0.0108164</td>
+</tr>
+<tr class="odd">
+<td>movie</td>
+<td align="right">-0.0108057</td>
+</tr>
+<tr class="even">
+<td>end</td>
+<td align="right">-0.0107060</td>
+</tr>
+<tr class="odd">
+<td>review</td>
+<td align="right">-0.0105867</td>
+</tr>
+<tr class="even">
+<td>be</td>
+<td align="right">-0.0104210</td>
+</tr>
+<tr class="odd">
+<td>don’t</td>
+<td align="right">-0.0102111</td>
+</tr>
+<tr class="even">
+<td>had</td>
+<td align="right">-0.0100659</td>
+</tr>
+<tr class="odd">
+<td>like</td>
+<td align="right">-0.0100186</td>
+</tr>
+<tr class="even">
+<td>because</td>
+<td align="right">-0.0099953</td>
+</tr>
+<tr class="odd">
+<td>seems</td>
+<td align="right">-0.0096492</td>
+</tr>
+<tr class="even">
+<td>girls</td>
+<td align="right">-0.0096262</td>
+</tr>
+<tr class="odd">
+<td>tape</td>
+<td align="right">-0.0089222</td>
+</tr>
+<tr class="even">
+<td>through</td>
+<td align="right">-0.0089024</td>
+</tr>
+<tr class="odd">
+<td>character</td>
+<td align="right">-0.0087373</td>
+</tr>
+<tr class="even">
+<td>all</td>
+<td align="right">-0.0081031</td>
+</tr>
+<tr class="odd">
+<td>room</td>
+<td align="right">-0.0078808</td>
+</tr>
+<tr class="even">
+<td>long</td>
+<td align="right">-0.0074416</td>
+</tr>
+<tr class="odd">
+<td>get</td>
+<td align="right">-0.0068225</td>
+</tr>
+<tr class="even">
+<td>some</td>
+<td align="right">-0.0054598</td>
+</tr>
+<tr class="odd">
+<td>thought</td>
+<td align="right">-0.0052326</td>
+</tr>
+<tr class="even">
+<td>fbi</td>
+<td align="right">-0.0052078</td>
+</tr>
+<tr class="odd">
+<td>bizarre</td>
+<td align="right">-0.0050159</td>
+</tr>
+<tr class="even">
+<td>opportunity</td>
+<td align="right">-0.0048392</td>
+</tr>
+<tr class="odd">
+<td>house</td>
+<td align="right">-0.0047232</td>
+</tr>
+<tr class="even">
+<td>forty</td>
+<td align="right">-0.0037017</td>
+</tr>
+<tr class="odd">
+<td>after</td>
+<td align="right">-0.0036686</td>
+</tr>
+<tr class="even">
+<td>minds</td>
+<td align="right">-0.0035547</td>
+</tr>
+<tr class="odd">
+<td>doing</td>
+<td align="right">-0.0035518</td>
+</tr>
+<tr class="even">
+<td>my</td>
+<td align="right">-0.0030584</td>
+</tr>
+<tr class="odd">
+<td>hours</td>
+<td align="right">-0.0030343</td>
+</tr>
+<tr class="even">
+<td>scene</td>
+<td align="right">-0.0029061</td>
+</tr>
+<tr class="odd">
+<td>girl</td>
+<td align="right">-0.0026162</td>
+</tr>
+<tr class="even">
+<td>i</td>
+<td align="right">-0.0024423</td>
+</tr>
+<tr class="odd">
+<td>psychotic</td>
+<td align="right">-0.0014919</td>
+</tr>
+<tr class="even">
+<td>next</td>
+<td align="right">-0.0013199</td>
+</tr>
+<tr class="odd">
+<td>singer</td>
+<td align="right">-0.0012470</td>
+</tr>
+<tr class="even">
+<td>that</td>
+<td align="right">-0.0007843</td>
+</tr>
+<tr class="odd">
+<td>watching</td>
+<td align="right">-0.0000763</td>
+</tr>
+<tr class="even">
+<td>but</td>
+<td align="right">0.0001236</td>
+</tr>
+<tr class="odd">
+<td>standing</td>
+<td align="right">0.0002228</td>
+</tr>
+<tr class="even">
+<td>himself</td>
+<td align="right">0.0003255</td>
+</tr>
+<tr class="odd">
+<td>pieces</td>
+<td align="right">0.0003999</td>
+</tr>
+<tr class="even">
+<td>popular</td>
+<td align="right">0.0007742</td>
+</tr>
+<tr class="odd">
+<td>its</td>
+<td align="right">0.0017265</td>
+</tr>
+<tr class="even">
+<td>she</td>
+<td align="right">0.0022264</td>
+</tr>
+<tr class="odd">
+<td>can</td>
+<td align="right">0.0025564</td>
+</tr>
+<tr class="even">
+<td>think</td>
+<td align="right">0.0025935</td>
+</tr>
+<tr class="odd">
+<td>they</td>
+<td align="right">0.0027960</td>
+</tr>
+<tr class="even">
+<td>over</td>
+<td align="right">0.0029586</td>
+</tr>
+<tr class="odd">
+<td>part</td>
+<td align="right">0.0036062</td>
+</tr>
+<tr class="even">
+<td>personality</td>
+<td align="right">0.0037015</td>
+</tr>
+<tr class="odd">
+<td>he’s</td>
+<td align="right">0.0039892</td>
+</tr>
+<tr class="even">
+<td>one</td>
+<td align="right">0.0040252</td>
+</tr>
+<tr class="odd">
+<td>existenz</td>
+<td align="right">0.0040481</td>
+</tr>
+<tr class="even">
+<td>never</td>
+<td align="right">0.0042116</td>
+</tr>
+<tr class="odd">
+<td>it</td>
+<td align="right">0.0042247</td>
+</tr>
+<tr class="even">
+<td>substance</td>
+<td align="right">0.0042565</td>
+</tr>
+<tr class="odd">
+<td>that’s</td>
+<td align="right">0.0045095</td>
+</tr>
+<tr class="even">
+<td>kiss</td>
+<td align="right">0.0054557</td>
+</tr>
+<tr class="odd">
+<td>an</td>
+<td align="right">0.0056231</td>
+</tr>
+<tr class="even">
+<td>known</td>
+<td align="right">0.0057068</td>
+</tr>
+<tr class="odd">
+<td>really</td>
+<td align="right">0.0057512</td>
+</tr>
+<tr class="even">
+<td>element</td>
+<td align="right">0.0058064</td>
+</tr>
+<tr class="odd">
+<td>not</td>
+<td align="right">0.0059663</td>
+</tr>
+<tr class="even">
+<td>place</td>
+<td align="right">0.0060158</td>
+</tr>
+<tr class="odd">
+<td>horse</td>
+<td align="right">0.0070165</td>
+</tr>
+<tr class="even">
+<td>go</td>
+<td align="right">0.0072319</td>
+</tr>
+<tr class="odd">
+<td>without</td>
+<td align="right">0.0073540</td>
+</tr>
+<tr class="even">
+<td>time</td>
+<td align="right">0.0078486</td>
+</tr>
+<tr class="odd">
+<td>however</td>
+<td align="right">0.0078614</td>
+</tr>
+<tr class="even">
+<td>for</td>
+<td align="right">0.0081780</td>
+</tr>
+<tr class="odd">
+<td>their</td>
+<td align="right">0.0088714</td>
+</tr>
+<tr class="even">
+<td>first</td>
+<td align="right">0.0093176</td>
+</tr>
+<tr class="odd">
+<td>closing</td>
+<td align="right">0.0100908</td>
+</tr>
+<tr class="even">
+<td>serial</td>
+<td align="right">0.0104635</td>
+</tr>
+<tr class="odd">
+<td>of</td>
+<td align="right">0.0108933</td>
+</tr>
+<tr class="even">
+<td>rather</td>
+<td align="right">0.0113546</td>
+</tr>
+<tr class="odd">
+<td>opens</td>
+<td align="right">0.0114884</td>
+</tr>
+<tr class="even">
+<td>him</td>
+<td align="right">0.0115767</td>
+</tr>
+<tr class="odd">
+<td>michael</td>
+<td align="right">0.0115885</td>
+</tr>
+<tr class="even">
+<td>he</td>
+<td align="right">0.0116202</td>
+</tr>
+<tr class="odd">
+<td>living</td>
+<td align="right">0.0126425</td>
+</tr>
+<tr class="even">
+<td>fate</td>
+<td align="right">0.0126835</td>
+</tr>
+<tr class="odd">
+<td>meanwhile</td>
+<td align="right">0.0129676</td>
+</tr>
+<tr class="even">
+<td>though</td>
+<td align="right">0.0129746</td>
+</tr>
+<tr class="odd">
+<td>his</td>
+<td align="right">0.0136937</td>
+</tr>
+<tr class="even">
+<td>slow</td>
+<td align="right">0.0141722</td>
+</tr>
+<tr class="odd">
+<td>peter</td>
+<td align="right">0.0144512</td>
+</tr>
+<tr class="even">
+<td>vincent</td>
+<td align="right">0.0148222</td>
+</tr>
+<tr class="odd">
+<td>young</td>
+<td align="right">0.0150035</td>
+</tr>
+<tr class="even">
+<td>day</td>
+<td align="right">0.0150646</td>
+</tr>
+<tr class="odd">
+<td>does</td>
+<td align="right">0.0152965</td>
+</tr>
+<tr class="even">
+<td>it’s</td>
+<td align="right">0.0154444</td>
+</tr>
+<tr class="odd">
+<td>by</td>
+<td align="right">0.0156547</td>
+</tr>
+<tr class="even">
+<td>depth</td>
+<td align="right">0.0156696</td>
+</tr>
+<tr class="odd">
+<td>importance</td>
+<td align="right">0.0159429</td>
+</tr>
+<tr class="even">
+<td>while</td>
+<td align="right">0.0163877</td>
+</tr>
+<tr class="odd">
+<td>will</td>
+<td align="right">0.0164211</td>
+</tr>
+<tr class="even">
+<td>world</td>
+<td align="right">0.0165024</td>
+</tr>
+<tr class="odd">
+<td>has</td>
+<td align="right">0.0168118</td>
+</tr>
+<tr class="even">
+<td>particular</td>
+<td align="right">0.0174925</td>
+</tr>
+<tr class="odd">
+<td>more</td>
+<td align="right">0.0176460</td>
+</tr>
+<tr class="even">
+<td>a</td>
+<td align="right">0.0189342</td>
+</tr>
+<tr class="odd">
+<td>effect</td>
+<td align="right">0.0193250</td>
+</tr>
+<tr class="even">
+<td>agent</td>
+<td align="right">0.0199253</td>
+</tr>
+<tr class="odd">
+<td>creates</td>
+<td align="right">0.0209483</td>
+</tr>
+<tr class="even">
+<td>leaves</td>
+<td align="right">0.0215036</td>
+</tr>
+<tr class="odd">
+<td>see</td>
+<td align="right">0.0217573</td>
+</tr>
+<tr class="even">
+<td>with</td>
+<td align="right">0.0231662</td>
+</tr>
+<tr class="odd">
+<td>role</td>
+<td align="right">0.0232334</td>
+</tr>
+<tr class="even">
+<td>from</td>
+<td align="right">0.0234281</td>
+</tr>
+<tr class="odd">
+<td>body</td>
+<td align="right">0.0234823</td>
+</tr>
+<tr class="even">
+<td>than</td>
+<td align="right">0.0237709</td>
+</tr>
+<tr class="odd">
+<td>probably</td>
+<td align="right">0.0239042</td>
+</tr>
+<tr class="even">
+<td>developed</td>
+<td align="right">0.0240430</td>
+</tr>
+<tr class="odd">
+<td>elaborate</td>
+<td align="right">0.0243947</td>
+</tr>
+<tr class="even">
+<td>suddenly</td>
+<td align="right">0.0247735</td>
+</tr>
+<tr class="odd">
+<td>logic</td>
+<td align="right">0.0249532</td>
+</tr>
+<tr class="even">
+<td>most</td>
+<td align="right">0.0265502</td>
+</tr>
+<tr class="odd">
+<td>line</td>
+<td align="right">0.0271946</td>
+</tr>
+<tr class="even">
+<td>music</td>
+<td align="right">0.0273477</td>
+</tr>
+<tr class="odd">
+<td>as</td>
+<td align="right">0.0278241</td>
+</tr>
+<tr class="even">
+<td>still</td>
+<td align="right">0.0292254</td>
+</tr>
+<tr class="odd">
+<td>months</td>
+<td align="right">0.0294009</td>
+</tr>
+<tr class="even">
+<td>shows</td>
+<td align="right">0.0296746</td>
+</tr>
+<tr class="odd">
+<td>psychological</td>
+<td align="right">0.0313499</td>
+</tr>
+<tr class="even">
+<td>head</td>
+<td align="right">0.0321303</td>
+</tr>
+<tr class="odd">
+<td>boy</td>
+<td align="right">0.0340266</td>
+</tr>
+<tr class="even">
+<td>darkness</td>
+<td align="right">0.0342972</td>
+</tr>
+<tr class="odd">
+<td>become</td>
+<td align="right">0.0346070</td>
+</tr>
+<tr class="even">
+<td>very</td>
+<td align="right">0.0348716</td>
+</tr>
+<tr class="odd">
+<td>father</td>
+<td align="right">0.0352316</td>
+</tr>
+<tr class="even">
+<td>although</td>
+<td align="right">0.0354252</td>
+</tr>
+<tr class="odd">
+<td>sound</td>
+<td align="right">0.0358830</td>
+</tr>
+<tr class="even">
+<td>finds</td>
+<td align="right">0.0375483</td>
+</tr>
+<tr class="odd">
+<td>matrix</td>
+<td align="right">0.0377628</td>
+</tr>
+<tr class="even">
+<td>particularly</td>
+<td align="right">0.0390302</td>
+</tr>
+<tr class="odd">
+<td>brings</td>
+<td align="right">0.0400255</td>
+</tr>
+<tr class="even">
+<td>success</td>
+<td align="right">0.0403674</td>
+</tr>
+<tr class="odd">
+<td>before</td>
+<td align="right">0.0412008</td>
+</tr>
+<tr class="even">
+<td>directing</td>
+<td align="right">0.0413102</td>
+</tr>
+<tr class="odd">
+<td>viewer</td>
+<td align="right">0.0421106</td>
+</tr>
+<tr class="even">
+<td>sidney</td>
+<td align="right">0.0425819</td>
+</tr>
+<tr class="odd">
+<td>best</td>
+<td align="right">0.0432040</td>
+</tr>
+<tr class="even">
+<td>the</td>
+<td align="right">0.0439582</td>
+</tr>
+<tr class="odd">
+<td>is</td>
+<td align="right">0.0443391</td>
+</tr>
+<tr class="even">
+<td>takes</td>
+<td align="right">0.0448486</td>
+</tr>
+<tr class="odd">
+<td>dark</td>
+<td align="right">0.0449853</td>
+</tr>
+<tr class="even">
+<td>inside</td>
+<td align="right">0.0476245</td>
+</tr>
+<tr class="odd">
+<td>separate</td>
+<td align="right">0.0479765</td>
+</tr>
+<tr class="even">
+<td>in</td>
+<td align="right">0.0487678</td>
+</tr>
+<tr class="odd">
+<td>find</td>
+<td align="right">0.0500643</td>
+</tr>
+<tr class="even">
+<td>great</td>
+<td align="right">0.0523020</td>
+</tr>
+<tr class="odd">
+<td>together</td>
+<td align="right">0.0581238</td>
+</tr>
+<tr class="even">
+<td>computer</td>
+<td align="right">0.0586483</td>
+</tr>
+<tr class="odd">
+<td>genre</td>
+<td align="right">0.0593194</td>
+</tr>
+<tr class="even">
+<td>own</td>
+<td align="right">0.0625957</td>
+</tr>
+<tr class="odd">
+<td>reality</td>
+<td align="right">0.0627538</td>
+</tr>
+<tr class="even">
+<td>disturbing</td>
+<td align="right">0.0636809</td>
+</tr>
+<tr class="odd">
+<td>keep</td>
+<td align="right">0.0642032</td>
+</tr>
+<tr class="even">
+<td>and</td>
+<td align="right">0.0648463</td>
+</tr>
+<tr class="odd">
+<td>offer</td>
+<td align="right">0.0736850</td>
+</tr>
+<tr class="even">
+<td>strangely</td>
+<td align="right">0.0743557</td>
+</tr>
+<tr class="odd">
+<td>inevitable</td>
+<td align="right">0.0759366</td>
+</tr>
+<tr class="even">
+<td>fully</td>
+<td align="right">0.0789776</td>
+</tr>
+<tr class="odd">
+<td>jake</td>
+<td align="right">0.0797114</td>
+</tr>
+<tr class="even">
+<td>frightened</td>
+<td align="right">0.0824091</td>
+</tr>
+<tr class="odd">
+<td>provoking</td>
+<td align="right">0.0846733</td>
+</tr>
+<tr class="even">
+<td>well</td>
+<td align="right">0.0880060</td>
+</tr>
+<tr class="odd">
+<td>desert</td>
+<td align="right">0.0899893</td>
+</tr>
+<tr class="even">
+<td>treats</td>
+<td align="right">0.0985579</td>
+</tr>
+<tr class="odd">
+<td>losing</td>
+<td align="right">0.0990976</td>
+</tr>
+<tr class="even">
+<td>religion</td>
+<td align="right">0.1298072</td>
+</tr>
+<tr class="odd">
+<td>generated</td>
+<td align="right">0.1304031</td>
+</tr>
+<tr class="even">
+<td>universe</td>
+<td align="right">0.1438618</td>
+</tr>
+<tr class="odd">
+<td>madness</td>
+<td align="right">0.1580777</td>
+</tr>
+<tr class="even">
+<td>sharp</td>
+<td align="right">0.1604157</td>
+</tr>
+<tr class="odd">
+<td>enters</td>
+<td align="right">0.2131698</td>
+</tr>
+<tr class="even">
+<td>surreal</td>
+<td align="right">0.2394179</td>
+</tr>
+<tr class="odd">
+<td>mind</td>
+<td align="right">0.2858087</td>
+</tr>
+<tr class="even">
+<td>glass</td>
+<td align="right">0.4687988</td>
+</tr>
+<tr class="odd">
+<td>cell</td>
+<td align="right">0.7086423</td>
+</tr>
+</tbody>
+</table>
+<pre class="sourceCode r"><code class="sourceCode r">beta &lt;-<span class="st"> </span><span class="kw">coef</span>(mod_x<span class="op">$</span>mod) <span class="op">%&gt;%</span><span class="st"> </span>as.numeric
+nombres &lt;-<span class="st"> </span><span class="kw">rownames</span>(x)
+predictor &lt;-<span class="st"> </span>beta <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, x[nombres<span class="op">==</span><span class="st">&quot;728&quot;</span>,])  <span class="co"># beta*x</span>
+<span class="kw">sum</span>(predictor)</code></pre>
+<pre><code>## [1] 1.177288</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sort</span>(predictor[predictor <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>]) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td align="right">-0.5202993</td>
+</tr>
+<tr class="even">
+<td>mess</td>
+<td align="right">-0.2022808</td>
+</tr>
+<tr class="odd">
+<td>impression</td>
+<td align="right">-0.1506333</td>
+</tr>
+<tr class="even">
+<td>grade</td>
+<td align="right">-0.1503932</td>
+</tr>
+<tr class="odd">
+<td>struggling</td>
+<td align="right">-0.1301878</td>
+</tr>
+<tr class="even">
+<td>there</td>
+<td align="right">-0.1228140</td>
+</tr>
+<tr class="odd">
+<td>loud</td>
+<td align="right">-0.1042231</td>
+</tr>
+<tr class="even">
+<td>point</td>
+<td align="right">-0.0944266</td>
+</tr>
+<tr class="odd">
+<td>onscreen</td>
+<td align="right">-0.0910190</td>
+</tr>
+<tr class="even">
+<td>nothing</td>
+<td align="right">-0.0838901</td>
+</tr>
+<tr class="odd">
+<td>tries</td>
+<td align="right">-0.0810926</td>
+</tr>
+<tr class="even">
+<td>stuck</td>
+<td align="right">-0.0777950</td>
+</tr>
+<tr class="odd">
+<td>seemed</td>
+<td align="right">-0.0768979</td>
+</tr>
+<tr class="even">
+<td>numbers</td>
+<td align="right">-0.0716475</td>
+</tr>
+<tr class="odd">
+<td>bad</td>
+<td align="right">-0.0704995</td>
+</tr>
+<tr class="even">
+<td>confused</td>
+<td align="right">-0.0645791</td>
+</tr>
+<tr class="odd">
+<td>con</td>
+<td align="right">-0.0619718</td>
+</tr>
+<tr class="even">
+<td>missed</td>
+<td align="right">-0.0598450</td>
+</tr>
+<tr class="odd">
+<td>sex</td>
+<td align="right">-0.0582862</td>
+</tr>
+<tr class="even">
+<td>wasn’t</td>
+<td align="right">-0.0534325</td>
+</tr>
+<tr class="odd">
+<td>even</td>
+<td align="right">-0.0500348</td>
+</tr>
+<tr class="even">
+<td>phone</td>
+<td align="right">-0.0499893</td>
+</tr>
+<tr class="odd">
+<td>plot</td>
+<td align="right">-0.0488645</td>
+</tr>
+<tr class="even">
+<td>women</td>
+<td align="right">-0.0472648</td>
+</tr>
+<tr class="odd">
+<td>lose</td>
+<td align="right">-0.0471523</td>
+</tr>
+<tr class="even">
+<td>stone</td>
+<td align="right">-0.0467291</td>
+</tr>
+<tr class="odd">
+<td>middle</td>
+<td align="right">-0.0416681</td>
+</tr>
+<tr class="even">
+<td>lee</td>
+<td align="right">-0.0414526</td>
+</tr>
+<tr class="odd">
+<td>trying</td>
+<td align="right">-0.0402636</td>
+</tr>
+<tr class="even">
+<td>should</td>
+<td align="right">-0.0386472</td>
+</tr>
+<tr class="odd">
+<td>was</td>
+<td align="right">-0.0380697</td>
+</tr>
+<tr class="even">
+<td>any</td>
+<td align="right">-0.0374969</td>
+</tr>
+<tr class="odd">
+<td>sequences</td>
+<td align="right">-0.0373245</td>
+</tr>
+<tr class="even">
+<td>only</td>
+<td align="right">-0.0365272</td>
+</tr>
+<tr class="odd">
+<td>buddy</td>
+<td align="right">-0.0357364</td>
+</tr>
+<tr class="even">
+<td>he’d</td>
+<td align="right">-0.0345297</td>
+</tr>
+<tr class="odd">
+<td>acting</td>
+<td align="right">-0.0345010</td>
+</tr>
+<tr class="even">
+<td>interesting</td>
+<td align="right">-0.0334681</td>
+</tr>
+<tr class="odd">
+<td>i’d</td>
+<td align="right">-0.0325935</td>
+</tr>
+<tr class="even">
+<td>kept</td>
+<td align="right">-0.0316398</td>
+</tr>
+<tr class="odd">
+<td>be</td>
+<td align="right">-0.0312630</td>
+</tr>
+<tr class="even">
+<td>if</td>
+<td align="right">-0.0309857</td>
+</tr>
+<tr class="odd">
+<td>fan</td>
+<td align="right">-0.0303648</td>
+</tr>
+<tr class="even">
+<td>becomes</td>
+<td align="right">-0.0292044</td>
+</tr>
+<tr class="odd">
+<td>or</td>
+<td align="right">-0.0290317</td>
+</tr>
+<tr class="even">
+<td>idea</td>
+<td align="right">-0.0261244</td>
+</tr>
+<tr class="odd">
+<td>die</td>
+<td align="right">-0.0243408</td>
+</tr>
+<tr class="even">
+<td>such</td>
+<td align="right">-0.0222690</td>
+</tr>
+<tr class="odd">
+<td>i’m</td>
+<td align="right">-0.0215163</td>
+</tr>
+<tr class="even">
+<td>actress</td>
+<td align="right">-0.0205609</td>
+</tr>
+<tr class="odd">
+<td>no</td>
+<td align="right">-0.0205257</td>
+</tr>
+<tr class="even">
+<td>hard</td>
+<td align="right">-0.0196748</td>
+</tr>
+<tr class="odd">
+<td>character</td>
+<td align="right">-0.0174746</td>
+</tr>
+<tr class="even">
+<td>some</td>
+<td align="right">-0.0163793</td>
+</tr>
+<tr class="odd">
+<td>away</td>
+<td align="right">-0.0162291</td>
+</tr>
+<tr class="even">
+<td>have</td>
+<td align="right">-0.0159335</td>
+</tr>
+<tr class="odd">
+<td>girl</td>
+<td align="right">-0.0156973</td>
+</tr>
+<tr class="even">
+<td>happens</td>
+<td align="right">-0.0150229</td>
+</tr>
+<tr class="odd">
+<td>make</td>
+<td align="right">-0.0141744</td>
+</tr>
+<tr class="even">
+<td>to</td>
+<td align="right">-0.0130296</td>
+</tr>
+<tr class="odd">
+<td>background</td>
+<td align="right">-0.0129527</td>
+</tr>
+<tr class="even">
+<td>where</td>
+<td align="right">-0.0121713</td>
+</tr>
+<tr class="odd">
+<td>this</td>
+<td align="right">-0.0117810</td>
+</tr>
+<tr class="even">
+<td>setup</td>
+<td align="right">-0.0115887</td>
+</tr>
+<tr class="odd">
+<td>much</td>
+<td align="right">-0.0114857</td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td align="right">-0.0113921</td>
+</tr>
+<tr class="odd">
+<td>made</td>
+<td align="right">-0.0112626</td>
+</tr>
+<tr class="even">
+<td>gave</td>
+<td align="right">-0.0109618</td>
+</tr>
+<tr class="odd">
+<td>going</td>
+<td align="right">-0.0106231</td>
+</tr>
+<tr class="even">
+<td>might</td>
+<td align="right">-0.0105983</td>
+</tr>
+<tr class="odd">
+<td>review</td>
+<td align="right">-0.0105867</td>
+</tr>
+<tr class="even">
+<td>scenes</td>
+<td align="right">-0.0100794</td>
+</tr>
+<tr class="odd">
+<td>had</td>
+<td align="right">-0.0100659</td>
+</tr>
+<tr class="even">
+<td>like</td>
+<td align="right">-0.0100186</td>
+</tr>
+<tr class="odd">
+<td>later</td>
+<td align="right">-0.0097639</td>
+</tr>
+<tr class="even">
+<td>girls</td>
+<td align="right">-0.0096262</td>
+</tr>
+<tr class="odd">
+<td>up</td>
+<td align="right">-0.0090409</td>
+</tr>
+<tr class="even">
+<td>course</td>
+<td align="right">-0.0089834</td>
+</tr>
+<tr class="odd">
+<td>just</td>
+<td align="right">-0.0083408</td>
+</tr>
+<tr class="even">
+<td>her</td>
+<td align="right">-0.0082487</td>
+</tr>
+<tr class="odd">
+<td>into</td>
+<td align="right">-0.0081321</td>
+</tr>
+<tr class="even">
+<td>out</td>
+<td align="right">-0.0076929</td>
+</tr>
+<tr class="odd">
+<td>at</td>
+<td align="right">-0.0076502</td>
+</tr>
+<tr class="even">
+<td>jimmy</td>
+<td align="right">-0.0071043</td>
+</tr>
+<tr class="odd">
+<td>when</td>
+<td align="right">-0.0057891</td>
+</tr>
+<tr class="even">
+<td>work</td>
+<td align="right">-0.0054795</td>
+</tr>
+<tr class="odd">
+<td>seems</td>
+<td align="right">-0.0032164</td>
+</tr>
+<tr class="even">
+<td>my</td>
+<td align="right">-0.0030584</td>
+</tr>
+<tr class="odd">
+<td>thing</td>
+<td align="right">-0.0029429</td>
+</tr>
+<tr class="even">
+<td>scene</td>
+<td align="right">-0.0029061</td>
+</tr>
+<tr class="odd">
+<td>all</td>
+<td align="right">-0.0027010</td>
+</tr>
+<tr class="even">
+<td>i</td>
+<td align="right">-0.0024423</td>
+</tr>
+<tr class="odd">
+<td>that</td>
+<td align="right">-0.0015686</td>
+</tr>
+<tr class="even">
+<td>altogether</td>
+<td align="right">-0.0006508</td>
+</tr>
+<tr class="odd">
+<td>opening</td>
+<td align="right">0.0001563</td>
+</tr>
+<tr class="even">
+<td>but</td>
+<td align="right">0.0002473</td>
+</tr>
+<tr class="odd">
+<td>amusing</td>
+<td align="right">0.0003099</td>
+</tr>
+<tr class="even">
+<td>songs</td>
+<td align="right">0.0007721</td>
+</tr>
+<tr class="odd">
+<td>fans</td>
+<td align="right">0.0014369</td>
+</tr>
+<tr class="even">
+<td>which</td>
+<td align="right">0.0015447</td>
+</tr>
+<tr class="odd">
+<td>she</td>
+<td align="right">0.0022264</td>
+</tr>
+<tr class="even">
+<td>begins</td>
+<td align="right">0.0022827</td>
+</tr>
+<tr class="odd">
+<td>really</td>
+<td align="right">0.0028756</td>
+</tr>
+<tr class="even">
+<td>past</td>
+<td align="right">0.0029292</td>
+</tr>
+<tr class="odd">
+<td>an</td>
+<td align="right">0.0037487</td>
+</tr>
+<tr class="even">
+<td>time</td>
+<td align="right">0.0039243</td>
+</tr>
+<tr class="odd">
+<td>more</td>
+<td align="right">0.0044115</td>
+</tr>
+<tr class="even">
+<td>are</td>
+<td align="right">0.0047948</td>
+</tr>
+<tr class="odd">
+<td>ex</td>
+<td align="right">0.0049676</td>
+</tr>
+<tr class="even">
+<td>they</td>
+<td align="right">0.0055921</td>
+</tr>
+<tr class="odd">
+<td>me</td>
+<td align="right">0.0057067</td>
+</tr>
+<tr class="even">
+<td>known</td>
+<td align="right">0.0057068</td>
+</tr>
+<tr class="odd">
+<td>than</td>
+<td align="right">0.0059427</td>
+</tr>
+<tr class="even">
+<td>not</td>
+<td align="right">0.0059663</td>
+</tr>
+<tr class="odd">
+<td>one</td>
+<td align="right">0.0060378</td>
+</tr>
+<tr class="even">
+<td>who</td>
+<td align="right">0.0067409</td>
+</tr>
+<tr class="odd">
+<td>other</td>
+<td align="right">0.0076092</td>
+</tr>
+<tr class="even">
+<td>it’s</td>
+<td align="right">0.0077222</td>
+</tr>
+<tr class="odd">
+<td>however</td>
+<td align="right">0.0078614</td>
+</tr>
+<tr class="even">
+<td>types</td>
+<td align="right">0.0080658</td>
+</tr>
+<tr class="odd">
+<td>for</td>
+<td align="right">0.0081780</td>
+</tr>
+<tr class="even">
+<td>same</td>
+<td align="right">0.0082892</td>
+</tr>
+<tr class="odd">
+<td>has</td>
+<td align="right">0.0084059</td>
+</tr>
+<tr class="even">
+<td>determine</td>
+<td align="right">0.0084183</td>
+</tr>
+<tr class="odd">
+<td>never</td>
+<td align="right">0.0084232</td>
+</tr>
+<tr class="even">
+<td>sense</td>
+<td align="right">0.0084978</td>
+</tr>
+<tr class="odd">
+<td>thief</td>
+<td align="right">0.0094086</td>
+</tr>
+<tr class="even">
+<td>it</td>
+<td align="right">0.0105618</td>
+</tr>
+<tr class="odd">
+<td>of</td>
+<td align="right">0.0108933</td>
+</tr>
+<tr class="even">
+<td>rather</td>
+<td align="right">0.0113546</td>
+</tr>
+<tr class="odd">
+<td>him</td>
+<td align="right">0.0115767</td>
+</tr>
+<tr class="even">
+<td>grows</td>
+<td align="right">0.0122519</td>
+</tr>
+<tr class="odd">
+<td>sequence</td>
+<td align="right">0.0122732</td>
+</tr>
+<tr class="even">
+<td>dollar</td>
+<td align="right">0.0123269</td>
+</tr>
+<tr class="odd">
+<td>love</td>
+<td align="right">0.0130239</td>
+</tr>
+<tr class="even">
+<td>a</td>
+<td align="right">0.0142007</td>
+</tr>
+<tr class="odd">
+<td>kind</td>
+<td align="right">0.0150748</td>
+</tr>
+<tr class="even">
+<td>use</td>
+<td align="right">0.0150783</td>
+</tr>
+<tr class="odd">
+<td>lives</td>
+<td align="right">0.0152753</td>
+</tr>
+<tr class="even">
+<td>you</td>
+<td align="right">0.0153545</td>
+</tr>
+<tr class="odd">
+<td>must</td>
+<td align="right">0.0160841</td>
+</tr>
+<tr class="even">
+<td>what</td>
+<td align="right">0.0161985</td>
+</tr>
+<tr class="odd">
+<td>while</td>
+<td align="right">0.0163877</td>
+</tr>
+<tr class="even">
+<td>will</td>
+<td align="right">0.0164211</td>
+</tr>
+<tr class="odd">
+<td>world</td>
+<td align="right">0.0165024</td>
+</tr>
+<tr class="even">
+<td>their</td>
+<td align="right">0.0177427</td>
+</tr>
+<tr class="odd">
+<td>feelings</td>
+<td align="right">0.0178434</td>
+</tr>
+<tr class="even">
+<td>word</td>
+<td align="right">0.0180196</td>
+</tr>
+<tr class="odd">
+<td>washington</td>
+<td align="right">0.0198875</td>
+</tr>
+<tr class="even">
+<td>grant</td>
+<td align="right">0.0199556</td>
+</tr>
+<tr class="odd">
+<td>by</td>
+<td align="right">0.0208729</td>
+</tr>
+<tr class="even">
+<td>parts</td>
+<td align="right">0.0210454</td>
+</tr>
+<tr class="odd">
+<td>prince</td>
+<td align="right">0.0216244</td>
+</tr>
+<tr class="even">
+<td>taking</td>
+<td align="right">0.0221986</td>
+</tr>
+<tr class="odd">
+<td>with</td>
+<td align="right">0.0231662</td>
+</tr>
+<tr class="even">
+<td>from</td>
+<td align="right">0.0234281</td>
+</tr>
+<tr class="odd">
+<td>probably</td>
+<td align="right">0.0239042</td>
+</tr>
+<tr class="even">
+<td>way</td>
+<td align="right">0.0242771</td>
+</tr>
+<tr class="odd">
+<td>i’ve</td>
+<td align="right">0.0245634</td>
+</tr>
+<tr class="even">
+<td>worked</td>
+<td align="right">0.0249386</td>
+</tr>
+<tr class="odd">
+<td>in</td>
+<td align="right">0.0255450</td>
+</tr>
+<tr class="even">
+<td>few</td>
+<td align="right">0.0262726</td>
+</tr>
+<tr class="odd">
+<td>done</td>
+<td align="right">0.0263053</td>
+</tr>
+<tr class="even">
+<td>the</td>
+<td align="right">0.0287419</td>
+</tr>
+<tr class="odd">
+<td>n</td>
+<td align="right">0.0287966</td>
+</tr>
+<tr class="even">
+<td>still</td>
+<td align="right">0.0292254</td>
+</tr>
+<tr class="odd">
+<td>biggest</td>
+<td align="right">0.0296875</td>
+</tr>
+<tr class="even">
+<td>is</td>
+<td align="right">0.0310374</td>
+</tr>
+<tr class="odd">
+<td>reality</td>
+<td align="right">0.0313769</td>
+</tr>
+<tr class="even">
+<td>keep</td>
+<td align="right">0.0321016</td>
+</tr>
+<tr class="odd">
+<td>good</td>
+<td align="right">0.0340647</td>
+</tr>
+<tr class="even">
+<td>film</td>
+<td align="right">0.0344213</td>
+</tr>
+<tr class="odd">
+<td>always</td>
+<td align="right">0.0348183</td>
+</tr>
+<tr class="even">
+<td>very</td>
+<td align="right">0.0348716</td>
+</tr>
+<tr class="odd">
+<td>and</td>
+<td align="right">0.0370550</td>
+</tr>
+<tr class="even">
+<td>moments</td>
+<td align="right">0.0371737</td>
+</tr>
+<tr class="odd">
+<td>between</td>
+<td align="right">0.0372559</td>
+</tr>
+<tr class="even">
+<td>though</td>
+<td align="right">0.0389237</td>
+</tr>
+<tr class="odd">
+<td>particularly</td>
+<td align="right">0.0390302</td>
+</tr>
+<tr class="even">
+<td>agree</td>
+<td align="right">0.0441769</td>
+</tr>
+<tr class="odd">
+<td>takes</td>
+<td align="right">0.0448486</td>
+</tr>
+<tr class="even">
+<td>able</td>
+<td align="right">0.0480575</td>
+</tr>
+<tr class="odd">
+<td>i’ll</td>
+<td align="right">0.0480974</td>
+</tr>
+<tr class="even">
+<td>eventually</td>
+<td align="right">0.0484890</td>
+</tr>
+<tr class="odd">
+<td>born</td>
+<td align="right">0.0494355</td>
+</tr>
+<tr class="even">
+<td>shot</td>
+<td align="right">0.0500720</td>
+</tr>
+<tr class="odd">
+<td>different</td>
+<td align="right">0.0507236</td>
+</tr>
+<tr class="even">
+<td>several</td>
+<td align="right">0.0510954</td>
+</tr>
+<tr class="odd">
+<td>he</td>
+<td align="right">0.0522909</td>
+</tr>
+<tr class="even">
+<td>killers</td>
+<td align="right">0.0530381</td>
+</tr>
+<tr class="odd">
+<td>clear</td>
+<td align="right">0.0549046</td>
+</tr>
+<tr class="even">
+<td>attention</td>
+<td align="right">0.0549228</td>
+</tr>
+<tr class="odd">
+<td>contact</td>
+<td align="right">0.0574982</td>
+</tr>
+<tr class="even">
+<td>as</td>
+<td align="right">0.0626043</td>
+</tr>
+<tr class="odd">
+<td>multi</td>
+<td align="right">0.0640192</td>
+</tr>
+<tr class="even">
+<td>deal</td>
+<td align="right">0.0648396</td>
+</tr>
+<tr class="odd">
+<td>also</td>
+<td align="right">0.0659141</td>
+</tr>
+<tr class="even">
+<td>become</td>
+<td align="right">0.0692140</td>
+</tr>
+<tr class="odd">
+<td>fairly</td>
+<td align="right">0.0745365</td>
+</tr>
+<tr class="even">
+<td>narrative</td>
+<td align="right">0.0791347</td>
+</tr>
+<tr class="odd">
+<td>performances</td>
+<td align="right">0.0816109</td>
+</tr>
+<tr class="even">
+<td>music</td>
+<td align="right">0.0820430</td>
+</tr>
+<tr class="odd">
+<td>neighbor</td>
+<td align="right">0.0848025</td>
+</tr>
+<tr class="even">
+<td>watches</td>
+<td align="right">0.0876229</td>
+</tr>
+<tr class="odd">
+<td>broke</td>
+<td align="right">0.0936433</td>
+</tr>
+<tr class="even">
+<td>natural</td>
+<td align="right">0.0969546</td>
+</tr>
+<tr class="odd">
+<td>reminiscent</td>
+<td align="right">0.1004395</td>
+</tr>
+<tr class="even">
+<td>voices</td>
+<td align="right">0.1151647</td>
+</tr>
+<tr class="odd">
+<td>excellent</td>
+<td align="right">0.1228298</td>
+</tr>
+<tr class="even">
+<td>intense</td>
+<td align="right">0.1262374</td>
+</tr>
+<tr class="odd">
+<td>frightening</td>
+<td align="right">0.1264323</td>
+</tr>
+<tr class="even">
+<td>oliver</td>
+<td align="right">0.1275805</td>
+</tr>
+<tr class="odd">
+<td>job</td>
+<td align="right">0.1327543</td>
+</tr>
+<tr class="even">
+<td>husband</td>
+<td align="right">0.1379187</td>
+</tr>
+<tr class="odd">
+<td>distracting</td>
+<td align="right">0.1526334</td>
+</tr>
+<tr class="even">
+<td>soundtrack</td>
+<td align="right">0.1612572</td>
+</tr>
+<tr class="odd">
+<td>industry</td>
+<td align="right">0.2074668</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td align="right">0.4226458</td>
+</tr>
+</tbody>
+</table>
+<p>Y notamos que en primer caso, palabras “cell” es consideradas
+como positivas y en el segundo caso, se considera la ocurrencia de “6”
+como positiva. Sin embargo, observamos que en ambos casos la
+palabra problemática es usada de manera distinta en estas reseñas
+que en el resto (la primera es la película The Cell, y la segunda es
+Girl 6). La frecuencia alta de estas palabras en estas dos reseñas
+contribuye incorrectamente a denotar estas reseñas como positivas.</p>
+<p>Estas películas <em>extrapolan</em> demasiado lejos de los datos de entrenamiento.
+Típicamente, la extrapolación fuerte produce problemas tanto de
+<strong>sesgo</strong> (modelo poco apropiado para los valores que observamos)
+como <strong>varianza</strong>, pues estamos haciendo predicciones donde hay
+pocos datos.</p>
+<p>En este caso, podemos intentar reducir el sesgo tomando el logaritmo
+de los conteos de palabras en lugar de los conteos crudos. Esto reduce
+la influencia de conteos altos de palabras en relación a conteos altos
+(también podemos intentar usar indicadoras 0-1 en lugar de conteos).
+Después de algunos experimentos, podemos mejorar un poco:</p>
+<pre class="sourceCode r"><code class="sourceCode r">vocabulario &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent_grande, <span class="dv">8500</span>, <span class="dt">remove_stop =</span> <span class="ot">FALSE</span>)
+mod_x &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent_grande, df_pr, vocabulario, <span class="dt">alpha =</span> <span class="fl">0.01</span>, <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">2</span>, <span class="fl">0.1</span>)), <span class="dt">log_transform =</span> <span class="ot">TRUE</span>)
+<span class="kw">describir_modelo_cv</span>(mod_x)</code></pre>
+<p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<pre><code>## [1] &quot;Lambda min: 0.03688316740124&quot;
 ## [1] &quot;Error entrenamiento: 0&quot;
 ## [1] &quot;Error prueba: 0.11&quot;
-## [1] &quot;Devianza entrena:0.143&quot;
-## [1] &quot;Devianza prueba:0.626&quot;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">vocabulario_bigramas &lt;-<span class="st"> </span><span class="kw">calc_vocabulario</span>(df_ent_grande, <span class="dv">500</span>, <span class="dt">bigram =</span> <span class="ot">TRUE</span>)
-vocabulario_bigramas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(frec))</code></pre>
-<pre><code>## # A tibble: 509 x 2
-##    palabra    frec
-##    &lt;chr&gt;     &lt;int&gt;
-##  1 of the     6984
-##  2 in the     4609
-##  3 the film   3167
-##  4 is a       2325
-##  5 to be      2218
-##  6 to the     2187
-##  7 and the    2019
-##  8 on the     1780
-##  9 in a       1756
-## 10 the movie  1580
-## # ... with 499 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">vocabulario_bigramas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>((frec))</code></pre>
-<pre><code>## # A tibble: 509 x 2
-##    palabra          frec
-##    &lt;chr&gt;           &lt;int&gt;
-##  1 and one           117
-##  2 are so            117
-##  3 decides to        117
-##  4 for some          117
-##  5 might have        117
-##  6 piece of          117
-##  7 sci fi            117
-##  8 science fiction   117
-##  9 that his          117
-## 10 the case          117
-## # ... with 499 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)
-mod_bigramas &lt;-<span class="st"> </span><span class="kw">correr_modelo_cv</span>(df_ent_grande, df_pr, vocabulario_bigramas, 
-                                <span class="dt">alpha=</span><span class="dv">1</span>,
-                          <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">2</span>,<span class="fl">0.1</span>)), <span class="dt">bigram =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## Joining, by = &quot;palabra&quot;
-## Joining, by = &quot;palabra&quot;</code></pre>
-<pre><code>## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.
-
-## Warning: Trying to compute distinct() for variables not found in the data:
-## - `row_col`, `column_col`
-## This is an error, but only a warning is raised for compatibility reasons.
-## The operation will return the input unchanged.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describir_modelo_cv</span>(mod_bigramas)</code></pre>
-<p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
-<pre><code>## [1] &quot;Lambda min: 0.0111089965382423&quot;
-## [1] &quot;Error entrenamiento: 0.19&quot;
-## [1] &quot;Error prueba: 0.28&quot;
-## [1] &quot;Devianza entrena:0.892&quot;
-## [1] &quot;Devianza prueba:1.078&quot;</code></pre>
-<p>Este resultado no es tan malo. Podemos intentar construir un modelo juntando unigramas
-y bigramas:</p>
-<pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span>mod_x<span class="op">$</span>entrena<span class="op">$</span>y
-x_<span class="dv">1</span> &lt;-<span class="st"> </span>mod_x<span class="op">$</span>entrena<span class="op">$</span>x
-x_<span class="dv">2</span> &lt;-<span class="st"> </span>mod_bigramas<span class="op">$</span>entrena<span class="op">$</span>x
-mod_ub &lt;-<span class="st"> </span><span class="kw">cv.glmnet</span>(<span class="dt">x =</span> <span class="kw">cbind</span>(x_<span class="dv">1</span>, x_<span class="dv">2</span>), 
-                       <span class="dt">y =</span> y, <span class="dt">alpha =</span> <span class="fl">0.0</span>, <span class="dt">family =</span><span class="st">&#39;binomial&#39;</span>,
-                       <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">1</span>,<span class="fl">0.1</span>)))
-
-<span class="kw">plot</span>(mod_ub)</code></pre>
-<p><img src="06-diag-mejora_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r">x_1p &lt;-<span class="st"> </span>mod_x<span class="op">$</span>prueba<span class="op">$</span>x
-x_2p &lt;-<span class="st"> </span>mod_bigramas<span class="op">$</span>prueba<span class="op">$</span>x
-preds_ent &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_ub, <span class="dt">newx =</span> <span class="kw">cbind</span>(x_<span class="dv">1</span>,x_<span class="dv">2</span>), <span class="dt">type=</span><span class="st">&#39;class&#39;</span>, <span class="dt">lambda =</span><span class="st">&#39;lambda.min&#39;</span>)
-<span class="kw">mean</span>(preds_ent <span class="op">!=</span><span class="st"> </span>mod_x<span class="op">$</span>entrena<span class="op">$</span>y)</code></pre>
-<pre><code>## [1] 0.0006349206</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">preds_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_ub, <span class="dt">newx =</span> <span class="kw">cbind</span>(x_1p,x_2p), <span class="dt">type=</span><span class="st">&#39;class&#39;</span>, <span class="dt">lambda =</span><span class="st">&#39;lambda.min&#39;</span>)
-<span class="kw">mean</span>(preds_<span class="dv">1</span> <span class="op">!=</span><span class="st"> </span>mod_x<span class="op">$</span>prueba<span class="op">$</span>y)</code></pre>
-<pre><code>## [1] 0.1129412</code></pre>
+## [1] &quot;Devianza entrena:0.058&quot;
+## [1] &quot;Devianza prueba:0.572&quot;</code></pre>
 
 </div>
 </div>
