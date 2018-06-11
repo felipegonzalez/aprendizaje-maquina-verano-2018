@@ -100,7 +100,7 @@ errores
 
 ```
 ## error_valida error_prueba 
-##     1.540502     3.475911
+##      1.71412      3.22767
 ```
 
 ```r
@@ -221,7 +221,7 @@ seleccion_ajuste()
 
 ```
 ## error_valida error_prueba 
-##        0.220        0.496
+##        0.100        0.498
 ```
 
 El resultado es catastrófico otra vez:
@@ -297,7 +297,7 @@ que un cliente permanece. Por simplicidad, suponemos que todos los clientes empi
 en el tiempo 0.
 
 - Vamos a suponer durante el tiempo 0.5 y 1.5, hubo una campaña de ventas para
-intentar recuperar a clientes abandonadores. Una fracción los clientes que abandonaron entre el tiempo 0.5 y 1.5 recibieron una llamada de servicio a cliente. Esto está registrado en la base de datos.
+intentar recuperar a clientes abandonadores. Una fracción los clientes que  abandonaron entre el tiempo 0.5 y 1.5 recibieron una llamada de servicio a cliente. Esto está registrado en la base de datos.
 
 
 
@@ -506,7 +506,7 @@ preds <- predict(mod_1, valida, type = 'response')
 ## [1] 1.159981
 ```
 
-Y como esperábamos, el error es más subió. 
+Y como esperábamos, el error es más grande. 
 
 Ahora calificamos a los clientes corrientes del día de hoy (t=2)
 
@@ -530,7 +530,8 @@ Tenemos filtración adicional de datos porque usamos *las visitas totales hasta 
 es grande, quiere decir que un cliente no abandona en el futuro. Así en el modelo usamos
 el hecho de que no había abandonado para predecir que no abandonó (!!)
 
-Podemos corregir nuestro modelo haciendo:
+Podemos corregir nuestro modelo usando el número de visitas antes
+del momento $t=1$, que es nuestro punto de corte para la predicción:
 
 
 ```r
@@ -589,8 +590,6 @@ summary(mod_2)
 
 Nótese que el coeficiente de *num_visitas* es mucho más chico esta vez.
 
-Esto tiene sentido: cuantas más visitas, menor proabilidad de abandonar.
-Probamos (tasa de correctos)
 
 Validamos:
 

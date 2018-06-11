@@ -1600,19 +1600,27 @@ Después de algunos experimentos, podemos mejorar un poco:
 
 
 ```r
+usar_cache <- TRUE
 vocabulario <- calc_vocabulario(df_ent_grande, 8500, remove_stop = FALSE)
-mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, alpha = 0.01, lambda = exp(seq(-5, 2, 0.1)), log_transform = TRUE)
+if(!usar_cache){
+    mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, 
+                              alpha = 0.01, lambda = exp(seq(-5, 2, 0.1)),
+                              log_transform = TRUE)
+    saveRDS(mod_x, file = "./cache_obj/mod_sentiment_log.rds")
+  } else {
+    mod_x <- readRDS("./cache_obj/mod_sentiment_log.rds")
+  }
 describir_modelo_cv(mod_x)
 ```
 
 <img src="06-diag-mejora_files/figure-html/unnamed-chunk-39-1.png" width="672" />
 
 ```
-## [1] "Lambda min: 0.03688316740124"
+## [1] "Lambda min: 0.0273237224472926"
 ## [1] "Error entrenamiento: 0"
 ## [1] "Error prueba: 0.11"
-## [1] "Devianza entrena:0.058"
-## [1] "Devianza prueba:0.572"
+## [1] "Devianza entrena:0.045"
+## [1] "Devianza prueba:0.565"
 ```
 
 
