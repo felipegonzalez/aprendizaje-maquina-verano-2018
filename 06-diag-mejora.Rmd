@@ -64,10 +64,7 @@ de pelíıculas: buscamos clasificar una reseña como positiva o negativa depend
 
 ```{r, message=FALSE, warning=FALSE, echo =FALSE}
 library(methods)
-library(readr)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 usar_cache <- FALSE
 ```
 
@@ -105,7 +102,7 @@ Construimos un data frame:
 source('./scripts/funciones_sentiment.R')
 df <- prep_df('./datos/sentiment/') %>% unnest(texto)
 nrow(df)
-df$texto[1]
+str_sub(df$texto[1], 1, 200)
 ```
   
 Ahora separamos una muestra de prueba (y una de entrenamiento más chica
@@ -166,8 +163,7 @@ Y notamos que
 ayudar.
 
 ¿Qué hacer? Nuestro clasificador ni siquiera puede clasificar bien la muestra de entrenamiento,
-lo que implica que nuestro modelo tiene sesgo alto. Controlar la varianza
-no nos va a ayudar a resolver nuestro problema en este punto. Podemos intentar un modelo
+lo que implica que nuestro modelo tiene sesgo demasiado alto. Controlar la varianza no nos va a ayudar a resolver nuestro problema en este punto. Podemos intentar un modelo
 más flexible.
 
 ```{block2, type='comentario'}
@@ -193,7 +189,7 @@ el error de entrenamiento es muy alto):
 Por ejemplo, si juntáramos más datos de entrenamiento (con el costo que esto
 implica), obtendríamos:
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 mod_x <- correr_modelo(df_ent_grande, df_pr, vocabulario, lambda = 1e-1)
 ```
 Vemos que aunque bajó ligeramente el error de prueba, el error es demasiado alto.
@@ -208,14 +204,14 @@ cuando tenemos más datos.
 
 En lugar de eso, podemos comenzar quitando regularización, por ejemplo
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda =1e-10)
 ```
 
 Y notamos que reducimos un poco el sesgo. Por el momento, seguiremos intentando reducir sesgo. Podemos ahora incluir más variables
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 vocabulario <- calc_vocabulario(df_ent, 3000)
 mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=1e-10)
 ```
@@ -231,14 +227,15 @@ sobreajuste (el problema es varianza).
 
 Podemos regularizar más:
 
-```{r}
-mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=1e-6)
+```{r, message=FALSE, warning=FALSE}
+mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=1e-5)
 ```
 
-```{r}
-mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=0.05)
+```{r, message=FALSE, warning=FALSE}
+mod_x <- correr_modelo(df_ent, df_pr, vocabulario, lambda=0.01)
 ```
 
+Y logramos reducir considerablemente el error y devianza de prueba.
 
 ## Refinando el pipeline
 
@@ -287,11 +284,12 @@ tail(vocabulario %>% arrange(desc(frec)),20)
 ```
 
 Este vocabulario parece que puede ser más útil. Vamos a tener que ajustar
-la regularización de nuevo (y también el número de entradas). Nota:
+la regularización de nuevo (y también el número de entradas). Usaremos
+ahora validación cruzada para seleccionar modelos. Nota:
 este proceso también lo podemos hacer con cv.glmnet de manera más rápida.
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, 
                           lambda = exp(seq(-10,5,0.1)))
 saveRDS(mod_x, file = './cache_obj/mod_sentiment_1.rds')
@@ -299,44 +297,32 @@ describir_modelo_cv(mod_x)
 ```
 
 No estamos mejorando. Podemos intentar con un número diferente de entradas:
-```{r}
+```{r, message=FALSE, warning=FALSE}
 vocabulario <- calc_vocabulario(df_ent, 4000, remove_stop = TRUE)
-if(!usar_cache){
-  mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-10,5,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_2.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_2.rds')
-  describir_modelo_cv(mod_x)
-}
+mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-10,5,0.1)))
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_2.rds')
+describir_modelo_cv(mod_x)
 ```
 
 Y parece que nuestra estrategia no está funcionando muy bien.
 Regresamos a nuestro modelo con ridge
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 vocabulario <- calc_vocabulario(df_ent, 3000, remove_stop = FALSE)
-
-if(!usar_cache){
 mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_3.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_3.rds')
-  describir_modelo_cv(mod_x)
-}
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_3.rds')
+describir_modelo_cv(mod_x)
+
 ```
 
 Podemos intentar aumentar el número de palabras y aumentar también la
 regularización
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 vocabulario <- calc_vocabulario(df_ent, 4000, remove_stop = FALSE)
-if(!usar_cache){
-  mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_4.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_4.rds')
-  describir_modelo_cv(mod_x)
-}
+mod_x <- correr_modelo_cv(df_ent, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_4.rds')
+describir_modelo_cv(mod_x)
 ```
 
 ## Consiguiendo más datos
@@ -354,25 +340,18 @@ podríamos etiquetar más reviews: esto es relativamente barato y rápido
 
 ```{r}
 vocabulario <- calc_vocabulario(df_ent_grande, 3000, remove_stop = FALSE)
-if(!usar_cache){
-  mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_5.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_5.rds')
-  describir_modelo_cv(mod_x)
-}
+mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_5.rds')
+describir_modelo_cv(mod_x)
 ```
 
 Y ya casi logramos nuestro objetivo. Podemos intentar con más palabras
 ```{r}
 vocabulario <- calc_vocabulario(df_ent_grande, 4000, remove_stop = FALSE)
-if(!usar_cache){
-  mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
-  saveRDS(mod_x, file = './cache_obj/mod_sentiment_6.rds')
-} else {
-  mod_x <- readRDS('./cache_obj/mod_sentiment_6.rds')
-  describir_modelo_cv(mod_x)
-}
+mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
+saveRDS(mod_x, file = './cache_obj/mod_sentiment_6.rds')
+mod_x <- readRDS('./cache_obj/mod_sentiment_6.rds')
+describir_modelo_cv(mod_x)
 ```
 
 
@@ -439,12 +418,6 @@ intentar refinar más y ver qué pasa.
 
 ## Examen de modelo y Análisis de errores
 
-
-
-
-
-
-
 Ahora podemos ver qué errores estamos cometiendo, y cómo está funcionando el modelo. Busquemos los peores. Corremos el mejor
 modelo hasta ahora:
 
@@ -452,7 +425,6 @@ modelo hasta ahora:
 vocabulario <- calc_vocabulario(df_ent_grande, 4000, remove_stop = FALSE)
 mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
 describir_modelo_cv(mod_x)
-
 ```
 
 ```{r}
@@ -461,10 +433,7 @@ coef_df <- data_frame(palabra = rownames(coeficientes),
                       coef = coeficientes[,1])
 arrange(coef_df, coef) %>% print(n=20)
 arrange(coef_df, desc(coef)) %>% print(n=20)
-
 ```
-
-
 
 
 Y busquemos las diferencias más grandes del la probabilidad ajustada con la
@@ -473,68 +442,80 @@ clase observada
 ```{r}
 y <- mod_x$prueba$y
 x <- mod_x$prueba$x
-probs <- predict(mod_x$mod, newx = x, type ='response', s='lambda.min')
-
+probs <- predict(mod_x$mod, newx = x, type = 'response', s ='lambda.min')
 df_1 <- data_frame(id = rownames(x), y=y, prob = probs[,1]) %>%
   mutate(error = y - prob) %>% arrange(desc(abs(error)))
 df_1
 ```
 
 ```{r, results='asis'}
-filter(df, id == 1461) %>% pull(texto)
-filter(df, id == 1508) %>% pull(texto)
+filter(df_pr, id == 1461) %>% pull(texto) %>% str_sub(1, 500)
+filter(df_pr, id == 1508) %>% pull(texto) %>% str_sub(1, 1000)
 ```
+
+Estas últimas son reseñas positivas que clasificamos incorrectamente
+como negativas. Vemos que en ambas el tono es irónico: por ejemplo,
+la primera argumenta que la película es mala, pero disfrutable. Esta
+fue etiquetada como una reseña positiva. 
+
+Este fenómeno se puede ver como un problema difícil de **sesgo**:
+nuestro modelo simple difícilmente podrá captar esta estructura compleja
+de ironía.
+
+El problema es diferente para las reseñas negativas. 
+Veamos algunas de las reseñas negativas peor clasificadas:
 
 ```{r, results='asis'}
-filter(df, id == 222) %>% pull(texto) #negativa
-filter(df, id == 25) %>% pull(texto) #negativa
-filter(df, id == 728) %>% pull(texto) #negativa
-
+filter(df_pr, id == 222) %>% pull(texto) %>% str_sub(1, 1000) #negativa
+filter(df_pr, id == 728) %>% pull(texto) %>% str_sub(1, 1000) #negativa
 ```
 
-Algunos de los errores son difíciles (por ejemplo, una reseña que dice que
-la película es tan mala que es buena). Otros quizá podemos hacer algo con nuestro
-método: en algunas partes vemos algunas problemas con nuestro método, por ejemplo, 
-"no energy" - nuestro método no toma en cuenta el orden de las palabras. Podemos
-intentar capturar algo de esto usando bigramas (pares de palabras) en lugar
-de simplemente usar palabras.
+No está totalmente claro por qué nos equivocamos en estas dos reseñas.
+Podemos hacer un examen más cuidadoso de la construcción del predictor,
+obteniendo los coeficientes $\beta$ y el vector $x$ con los que se construyen
+el predictor:
 
 ```{r}
-vocabulario <- calc_vocabulario(df_ent_grande, 3800, remove_stop = FALSE)
-mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, lambda = exp(seq(-5,2,0.1)))
+beta <- coef(mod_x$mod) %>% as.numeric
+nombres <- rownames(x)
+head(sort(x[nombres == "222", ], decreasing = TRUE), 100)
+predictor <- beta * c(1, x[nombres=="222",])  # beta*x
+sum(predictor)
+sort(predictor[predictor != 0]) %>% knitr::kable()
+```
+
+```{r}
+beta <- coef(mod_x$mod) %>% as.numeric
+nombres <- rownames(x)
+predictor <- beta * c(1, x[nombres=="728",])  # beta*x
+sum(predictor)
+sort(predictor[predictor != 0]) %>% knitr::kable()
+```
+
+Y notamos que en primer caso, palabras "cell" es consideradas
+como positivas y en el segundo caso, se considera la ocurrencia de "6" 
+como positiva. Sin embargo, observamos que en ambos casos la
+palabra problemática es usada de manera distinta en estas reseñas
+que en el resto (la primera es la película The Cell, y la segunda es
+Girl 6). La frecuencia alta de estas palabras en estas dos reseñas
+contribuye incorrectamente a denotar estas reseñas como positivas.
+
+Estas películas *extrapolan* demasiado lejos de los datos de entrenamiento. 
+Típicamente, la extrapolación fuerte produce problemas tanto de
+**sesgo** (modelo poco apropiado para los valores que observamos) 
+como **varianza**, pues estamos haciendo predicciones donde hay 
+pocos datos. 
+
+En este caso, podemos intentar reducir el sesgo tomando el logaritmo
+de los conteos de palabras en lugar de los conteos crudos. Esto reduce
+la influencia de conteos altos de palabras en relación a conteos altos
+(también podemos intentar usar indicadoras 0-1 en lugar de conteos). 
+Después de algunos experimentos, podemos mejorar un poco:
+
+```{r, message=FALSE, warning=FALSE}
+vocabulario <- calc_vocabulario(df_ent_grande, 8500, remove_stop = FALSE)
+mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, alpha = 0.01, lambda = exp(seq(-5, 2, 0.1)), log_transform = TRUE)
 describir_modelo_cv(mod_x)
-vocabulario_bigramas <- calc_vocabulario(df_ent_grande, 500, bigram = TRUE)
-vocabulario_bigramas %>% arrange(desc(frec))
-vocabulario_bigramas %>% arrange((frec))
-```
-
-```{r}
-library(stringr)
-mod_bigramas <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario_bigramas, 
-                                alpha=1,
-                          lambda = exp(seq(-7,2,0.1)), bigram = TRUE)
-describir_modelo_cv(mod_bigramas)
-```
-
-Este resultado no es tan malo. Podemos intentar construir un modelo juntando unigramas
-y bigramas:
-
-```{r}
-y <- mod_x$entrena$y
-x_1 <- mod_x$entrena$x
-x_2 <- mod_bigramas$entrena$x
-mod_ub <- cv.glmnet(x = cbind(x_1, x_2), 
-                       y = y, alpha = 0.0, family ='binomial',
-                       lambda = exp(seq(-5,1,0.1)))
-
-plot(mod_ub)
-x_1p <- mod_x$prueba$x
-x_2p <- mod_bigramas$prueba$x
-preds_ent <- predict(mod_ub, newx = cbind(x_1,x_2), type='class', lambda ='lambda.min')
-mean(preds_ent != mod_x$entrena$y)
-
-preds_1 <- predict(mod_ub, newx = cbind(x_1p,x_2p), type='class', lambda ='lambda.min')
-mean(preds_1 != mod_x$prueba$y)
 ```
 
 

@@ -78,8 +78,9 @@ tokenizar_datos <- function(df, vocabulario, stem=FALSE, bigrams = FALSE){
 
 obtener_xy <- function(df){
   df <- df %>% arrange(id)
-  x <- df %>% ungroup %>% 
-    cast_sparse(id, palabra, frec_doc) 
+  x <- df %>% group_by(id, palabra, tipo) %>%
+       summarise(frec_doc = sum(frec_doc)) %>%
+       cast_sparse("id", "palabra", "frec_doc") 
   x <- x[!is.na(rownames(x)), ]
   y <-  df %>% ungroup %>% select(id, tipo) %>% unique
   y <- y[!is.na(y$id), ]
@@ -155,23 +156,26 @@ correr_modelo <- function(df_ent, df_pr, vocabulario,
 correr_modelo_cv <- function(df_ent, df_pr, vocabulario, 
                              alpha = 0, lambda = NULL, 
                              stem=FALSE, bigram = FALSE, 
-                             standardize = TRUE){
-  if(!bigram){
-    df_filt_ent <- tokenizar_datos(df_ent, vocabulario, stem = stem)
-    df_filt_pr <- tokenizar_datos(df_pr, vocabulario, stem = stem)
-  } else {
-    df_filt_ent <- tokenizar_datos(df_ent, vocabulario, bigram = TRUE)
-    df_filt_pr <- tokenizar_datos(df_pr, vocabulario, bigram = TRUE)
-  }
-  mat_ent <- obtener_xy(df_filt_ent)
-  dim(mat_ent$x)
-  length(mat_ent$y)
-  mat_pr <- obtener_xy(df_filt_pr)
-  
-  mod_reg <- cv.glmnet(x = mat_ent$x , y = mat_ent$y , alpha = alpha, 
-                       lambda = lambda, standardize = standardize,
-                    family ='binomial', parallel = TRUE)
-  list(mod = mod_reg, entrena = mat_ent, prueba = mat_pr)
+                             standardize = TRUE, log_transform = FALSE){
+    if(!bigram){
+        df_filt_ent <- tokenizar_datos(df_ent, vocabulario, stem = stem)
+        df_filt_pr <- tokenizar_datos(df_pr, vocabulario, stem = stem)
+    } else {
+        df_filt_ent <- tokenizar_datos(df_ent, vocabulario, bigram = TRUE)
+        df_filt_pr <- tokenizar_datos(df_pr, vocabulario, bigram = TRUE)
+    }
+    mat_ent <- obtener_xy(df_filt_ent)
+    dim(mat_ent$x)
+    length(mat_ent$y)
+    mat_pr <- obtener_xy(df_filt_pr)
+    if(log_transform){
+        mat_ent$x <- log(1 + mat_ent$x)
+        mat_pr$x <- log(1 + mat_pr$x)
+    }
+    mod_reg <- cv.glmnet(x = mat_ent$x , y = mat_ent$y , alpha = alpha, 
+                         lambda = lambda, standardize = standardize,
+                         family ='binomial', parallel = TRUE)
+    list(mod = mod_reg, entrena = mat_ent, prueba = mat_pr)
 }
 
 describir_modelo_cv <- function(corrida){
