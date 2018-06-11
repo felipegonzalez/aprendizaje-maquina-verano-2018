@@ -513,8 +513,16 @@ la influencia de conteos altos de palabras en relación a conteos altos
 Después de algunos experimentos, podemos mejorar un poco:
 
 ```{r, message=FALSE, warning=FALSE}
+usar_cache <- TRUE
 vocabulario <- calc_vocabulario(df_ent_grande, 8500, remove_stop = FALSE)
-mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, alpha = 0.01, lambda = exp(seq(-5, 2, 0.1)), log_transform = TRUE)
+if(!usar_cache){
+    mod_x <- correr_modelo_cv(df_ent_grande, df_pr, vocabulario, 
+                              alpha = 0.01, lambda = exp(seq(-5, 2, 0.1)),
+                              log_transform = TRUE)
+    saveRDS(mod_x, file = "./cache_obj/mod_sentiment_log.rds")
+  } else {
+    mod_x <- readRDS("./cache_obj/mod_sentiment_log.rds")
+  }
 describir_modelo_cv(mod_x)
 ```
 
