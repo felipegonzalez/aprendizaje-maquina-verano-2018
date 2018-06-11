@@ -1008,7 +1008,8 @@ en lugar de la entropía. La impureza de Gini está dada por
 $$I_G(p_1, \ldots, p_K) = \sum_{k=1}^K p_k(1-p_k),$$
 que es similar a la impureza de entropía que discutimos en la construcción 
 de árboles:
-$$I_G(p_1, \ldots, p_K) = \sum__{k=1}^K -p_k\log (p_k),$$
+
+$$I_G(p_1, \ldots, p_K) = \sum_{k=1}^K -p_k\log (p_k),$$
 Nótese por ejemplo que ambas toman su valor máximo en $p_k=1/K$ (distribución más
 uniforme posible sobre las clases), y que son iguales a cero cuando $p_k=1$ para
 alguna $k$. 
