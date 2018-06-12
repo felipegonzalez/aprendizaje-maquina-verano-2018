@@ -210,7 +210,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#ejercicio-4"><i class="fa fa-check"></i>Ejercicio</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#regularizacion-lasso"><i class="fa fa-check"></i><b>4.3</b> Regularización lasso</a></li>
-<li class="chapter" data-level="4.4" data-path="regresion-regularizada.html"><a href="regresion-regularizada.html#tarea"><i class="fa fa-check"></i><b>4.4</b> Tarea</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html"><i class="fa fa-check"></i><b>5</b> Descenso estocástico</a><ul>
 <li class="chapter" data-level="5.1" data-path="descenso-estocastico.html"><a href="descenso-estocastico.html#algoritmo-de-descenso-estocastico"><i class="fa fa-check"></i><b>5.1</b> Algoritmo de descenso estocástico</a></li>
@@ -1077,17 +1076,8 @@ coeficientes</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">pred_prueba &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="kw">lm</span>(grasacorp <span class="op">~</span>., <span class="dt">data =</span> dat_e <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>id, <span class="op">-</span>unif)), <span class="dt">newdata=</span>dat_p)
 <span class="kw">sqrt</span>(<span class="kw">mean</span>((pred_prueba<span class="op">-</span>dat_p<span class="op">$</span>grasacorp)<span class="op">^</span><span class="dv">2</span>))</code></pre>
 <pre><code>## [1] 4.311924</code></pre>
-</div>
-</div>
-<div id="tarea" class="section level2">
-<h2><span class="header-section-number">4.4</span> Tarea</h2>
-<p>Repite el ejercicio de spam (con todas las variables), y utiliza regresión ridge (glmnet). Escoge
-el parámetro de regularización con validación cruzada y recalcula la matriz de confusión. ¿Obtuviste
-ganancias en clasificación? Checa los nuevos coeficientes y compara con los que obtuviste usando
-regresión logística sin regularización. (Nota: los coeficientes que devuelve glmnet son no estandarizados,
-aún cuando el cálculo se hace estandarizando - si quieres obtener coeficientes estandarizados puedes
-estandarizar a mano antes de correr glmnet).</p>
 
+</div>
 </div>
 </div>
             </section>
