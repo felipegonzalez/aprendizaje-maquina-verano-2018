@@ -25,7 +25,7 @@
 <meta name="author" content="Felipe González">
 
 
-<meta name="date" content="2018-06-11">
+<meta name="date" content="2018-06-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -797,7 +797,7 @@ apartar esta muestra si el proceso de validación incluye muchos métodos
 con varios parámetros afinados (como la <span class="math inline">\(\lambda\)</span> de regresión ridge).</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;./imagenes/div_muestra.png&quot;</span>)</code></pre>
-<p><img src="./imagenes/div_muestra.png" width="450" /></p>
+<p><img src="imagenes/div_muestra.png" width="450" /></p>
 <p>Cuando tenemos datos abundantes, este enfoque es el usual. Por ejemplo,
 podemos dividir la muestra en 50-25-25 por ciento. Ajustamos modelos
 con el primer 50%, evaluamos y seleccionamos con el segundo 25% y finalmente,
@@ -822,7 +822,7 @@ construimos al azar una partición, con tamaños similares, de la muestra de ent
 <span class="math inline">\({\mathcal L}=\{ (x_i,y_i)\}_{i=1}^n\)</span>:</p>
 <p><span class="math display">\[ {\mathcal L}={\mathcal L}_1\cup {\mathcal L}_2\cup\cdots\cup {\mathcal L}_k.\]</span></p>
 <pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;./imagenes/div_muestra_cv.png&quot;</span>)</code></pre>
-<p><img src="./imagenes/div_muestra_cv.png" width="320" /></p>
+<p><img src="imagenes/div_muestra_cv.png" width="320" /></p>
 <p>Construimos <span class="math inline">\(k\)</span> modelos distintos, digamos <span class="math inline">\(\hat{f}_j\)</span>, usando solamente
 la muestra <span class="math inline">\({\mathcal L}-{\mathcal L}_j\)</span>. Este modelo lo evaluamos
 usando la parte que no usamos, <span class="math inline">\({\mathcal L}_j\)</span>, para obtener una
@@ -993,7 +993,7 @@ esta cantidad sin restricciones, y este mínimo se encuentra en el centro
 de estas curvas de nivel. Para el problema restringido, buscamos más
 bien la curva de nivel más baja que intersecta la restricción:</p>
 <pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&#39;./imagenes/ridge_lasso.png&#39;</span>)</code></pre>
-<p><img src="./imagenes/ridge_lasso.png" /><!-- -->
+<p><img src="imagenes/ridge_lasso.png" width="318" />
 Y obsérvese ahora que la solución de lasso <em>puede hacer algunos coeficientes
 igual a 0</em>. Es decir,</p>
 
