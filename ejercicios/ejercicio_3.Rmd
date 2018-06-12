@@ -13,24 +13,6 @@ usar los factores de expansión de la muestra.
 ```{r}
 library(tidyverse)
 library(readr)
-concentrado <- read_csv('../datos/enigh_2016/concentradohogar.csv')
-hogares <- read_csv('../datos/enigh_2016/hogares.csv')
-problems(concentrado)
-head(concentrado)
-names(concentrado)
-concen_2 <- left_join(concentrado, hogares)
-names(concen_2)[1] <- "folioviv"
-datos <- concen_2 %>% select(folioviv, foliohog, tam_loc, educa_jefe, 
-                             celular, tv_paga, conex_inte, num_auto, num_tosta, num_lavad, num_compu, ing_cor, factor, num_trab_d, tarjeta) %>%
-                      mutate(tam_loc = recode(tam_loc, `1`='100 mil+',`2`='15mil-100mil',
-                                              `3`='2.5mil-15mil',`4`='Menos de 2.5 mil')) %>%
-                      mutate(celular = recode(celular, `1`='Si', `2`='No')) %>%
-                      mutate(tv_paga = recode(tv_paga, `1`='Si', `2`='No')) %>%
-                      mutate(celular = recode(celular, `1`='Si', `2`='No')) %>%
-                      mutate(conex_inte = recode(conex_inte, `1`='Si', `2`='No')) %>%
-                      mutate(tarjeta = recode(tarjeta, `1`='Si', `2`='No'))
-
-write_csv(datos, path ='../datos/vars_enigh_2016.csv')            
 ```
 
 ### Datos
