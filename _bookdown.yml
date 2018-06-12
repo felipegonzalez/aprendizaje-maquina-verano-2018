@@ -1,5 +1,5 @@
 book_filename: "am-curso-verano"
-chapter_name: "Chapter "
+chapter_name: "Sección "
 repo: https://github.com/seankross/bookdown-start
 clean: [packages.bib, bookdown.bbl]
 new_session: yes
